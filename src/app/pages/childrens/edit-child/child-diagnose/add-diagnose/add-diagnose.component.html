@@ -1,0 +1,256 @@
+<form
+novalidate=""
+class="form"
+[formGroup]="diagnosesForm"
+(ngSubmit)="addDiagnose()"
+>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">
+    {{ "addNewDiagnose" | translate }}
+  </h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Dismiss click')"
+  ></button>
+</div>
+<div class="modal-body">
+  <div class="row mb-6">
+    <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+      "إضافة تشخيص / اختيار تشخيص" | translate
+    }}</label>
+    <div class="col-lg-3 fv-row">
+      <div class="form-check form-check-solid form-switch fv-row">
+        <input
+          class="form-check-input w-45px h-30px"
+          type="checkbox"
+          id="allowmarketing"
+          (change)="changeSelect()"
+        /><label class="form-check-label" style="margin-top: 5px"
+          ><span class="fw-bold ps-2 fs-6">{{
+            selectORWrite == true
+              ? ("إضافة تشخيص" | translate)
+              : ("اختيار تشخيص" | translate)
+          }}</span></label
+        >
+      </div>
+    </div>
+   
+  </div>
+    <div class="row mb-6" *ngIf="selectORWrite == false">
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        translate.defaultLang == "ar" ? "تشخيص الحالة حسب التقرير الطبي" : "Diagnose"
+      }}</label>
+      <div class="col-lg-8 fv-row">
+        <select
+          class="form-select form-select-solid form-select-lg"
+          formControlName="diagnose_id"
+        >
+          <option [value]="null">
+            {{
+              translate.defaultLang == "ar" ? "اختر التشخيص" : "Select Diagnose"
+            }}
+          </option>
+          <option
+            [value]="nationalites.id"
+            *ngFor="let nationalites of diagnosesList"
+          >
+            {{ nationalites?.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row mb-6" *ngIf="selectORWrite == true">
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        "name" | translate
+      }}</label>
+      <div class="col-lg-3 fv-row">
+        <input
+          [class.is-invalid]="f['name'].touched && f['name'].invalid"
+          type="text"
+          class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+          placeholder="{{ 'name' | translate }}"
+          formControlName="name"
+        />
+        <div *ngIf="f['name'].invalid && f['name'].touched" style="color: red">
+          {{ "NameIsRequired" | translate }}
+        </div>
+      </div>
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        "description" | translate
+      }}</label>
+      <div class="col-lg-3 fv-row">
+        <input
+          [class.is-invalid]="
+            f['description'].touched && f['description'].invalid
+          "
+          type="text"
+          class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+          placeholder="{{ 'description' | translate }}"
+          formControlName="description"
+        />
+        <div
+          *ngIf="f['description'].invalid && f['description'].touched"
+          style="color: red"
+        ></div>
+      </div>
+    </div>
+    <div class="row mb-6">
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        "تاريخ تشخيص الحالة" | translate
+      }}</label>
+      <div class="col-lg-3 fv-row">
+        <div class="input-group">
+          <input
+            style="
+              border-top-right-radius: 7px;
+              border-bottom-right-radius: 7px;
+              border: 1px solid #dbdfe9;
+            "
+            type="text"
+            placeholder="{{ 'تاريخ تشخيص الحالة' | translate }}"
+            class="form-control form-control-lg form-control-solid"
+            bsDatepicker
+            formControlName="date"
+            #d5="bsDatepicker"
+            [bsConfig]="{
+              containerClass: 'theme-blue',
+              dateInputFormat: 'YYYY-MM-DD',
+              isAnimated: true
+            }"
+          />
+
+          <div class="input-group-append">
+            <div
+              style="
+                height: 46px;
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;
+              "
+              class="input-group-text"
+              (click)="d5.toggle()"
+            >
+              <i class="fa fa-calendar" style="cursor: pointer"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        "الجهة التي قامت بالتشخيص" | translate
+      }}</label>
+      <div class="col-lg-3 fv-row">
+        <input
+          [class.is-invalid]="
+            f['institution'].touched && f['institution'].invalid
+          "
+          type="text"
+          class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+          placeholder="{{ 'الجهة التي قامت بالتشخيص' | translate }}"
+          formControlName="institution"
+        />
+        <div
+          *ngIf="f['institution'].invalid && f['institution'].touched"
+          style="color: red"
+        ></div>
+      </div>
+    </div>
+    <div class="row mb-6">
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        "ماهي أول الأعراض التي لفتت انتباهكم لحالة الطفل" | translate
+      }}</label>
+      <div class="col-lg-3 fv-row">
+        <input
+          [class.is-invalid]="f['symptoms'].touched && f['symptoms'].invalid"
+          type="text"
+          class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+          placeholder="{{ 'ماهي أول الأعراض التي لفتت انتباهكم لحالة الطفل' | translate }}"
+          formControlName="symptoms"
+        />
+        <div
+          *ngIf="f['symptoms'].invalid && f['symptoms'].touched"
+          style="color: red"
+        ></div>
+      </div>
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        "عمر الطفل عند ظهور الأعراض" | translate
+      }}</label>
+      <div class="col-lg-3 fv-row">
+        <input
+          [class.is-invalid]="
+            f['symptoms_age'].touched && f['symptoms_age'].invalid
+          "
+          type="text"
+          class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+          placeholder="{{ 'عمر الطفل عند ظهور الأعراض' | translate }}"
+          formControlName="symptoms_age"
+        />
+        <div
+          *ngIf="f['symptoms_age'].invalid && f['symptoms_age'].touched"
+          style="color: red"
+        ></div>
+      </div>
+    </div>
+    <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "التقرير الطبي" | translate
+        }}</label>
+        <div class="col-lg-10 fv-row">
+          <div class="file-upload-container">
+            <input
+              type="file"
+              id="file"
+              (change)="onFileSelectedNational($event)"
+            />
+            <label for="file" class="custom-file-upload">
+              {{ "selectFile" | translate }}
+            </label>
+          </div>
+
+          <div class="file-details-container" *ngIf="selectedFileNationalID">
+            <div class="file-details">
+              <div class="file-name">{{ selectedFileNationalID?.name }}</div>
+              <div class="file-info">
+                <span class="file-type">{{
+                  selectedFileNationalID?.type
+                }}</span>
+                <span class="file-size">{{
+                  selectedFileNationalID?.size
+                }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+<div class="modal-footer">
+  <button
+    type="submit"
+    class="btn btn-primary"
+    style="height: 44px; margin-top: 2px"
+  >
+    <ng-container>{{ "saveChanges" | translate }}</ng-container>
+    <app-keenicon
+      *ngIf="loading === false"
+      name="abstract-10"
+      class="fs-2"
+    ></app-keenicon>
+    <span
+      *ngIf="loading === true"
+      class="spinner-border spinner-border-sm align-middle ms-2"
+    ></span>
+  </button>
+  <button
+    (click)="activeModal.dismiss('Dismiss click')"
+    style="margin: 2px"
+    type="button"
+    class="btn btn-secondary"
+  >
+    <ng-container>
+      <i class="fa fa-share" aria-hidden="true"></i
+      >{{ "Back" | translate }}</ng-container
+    >
+  </button>
+</div>
+</form>

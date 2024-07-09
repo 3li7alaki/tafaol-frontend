@@ -1,0 +1,11 @@
+/node_modules/
+/.angular/
+/.angular/cache
+/.idea/
+/dist/
+/dist.zip/
+dist.zip
+/dist.zip
+.DS_Store
+.vscode/extensions.json
+.vscode/settings.json

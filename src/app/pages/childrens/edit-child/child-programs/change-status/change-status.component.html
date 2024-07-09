@@ -1,0 +1,178 @@
+<div class="card mb-5 mb-xl-10">
+  <div
+    class="card-header border-0 cursor-pointer"
+    role="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#kt_account_profile_details"
+    aria-expanded="true"
+    aria-controls="kt_account_profile_details"
+  >
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0">{{ "" | translate }}</h3>
+    </div>
+  </div>
+  <div id="kt_account_profile_details" class="collapse show">
+    <form [formGroup]="programForm" novalidate="" class="form">
+      <div class="card-body border-top p-9">
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label fw-bold fs-6">{{
+            translate.defaultLang == "ar" ? "اسم البرنامج" : "Program Name"
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{
+                translate.defaultLang == 'ar' ? 'اسم البرنامج' : 'Program Name'
+              }}"
+              formControlName="program_id"
+            />
+          </div>
+          <label class="col-lg-2 col-form-label fw-bold fs-6">{{
+            translate.defaultLang == "ar" ? "الحالة" : "Status"
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{
+                translate.defaultLang == 'ar' ? 'الحالات' : 'Status'
+              }}"
+              formControlName="status_id"
+            />
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-md-10">
+            <h3>{{ "changeStatus" | translate }}</h3>
+          </div>
+          <div
+            class="card-toolbar col-sm-2"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            data-bs-trigger="hover"
+            title="Click to add a user"
+          >
+            <a (click)="open()" class="btn btn-sm btn-light-primary">
+              <span><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
+              {{ "addNewStatus" | translate }}
+            </a>
+          </div>
+        </div>
+        <div class="card-body py-3">
+          <!-- begin::Table container -->
+          <div class="table-responsive">
+            <!-- begin::Table -->
+            <table
+              class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
+            >
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder text-muted">
+                  <th class="min-w-130px">{{ "oldStatus" | translate }}</th>
+                  <th class="min-w-130px">{{ "newStatus" | translate }}</th>
+                  <th class="min-w-120px">{{ "date" | translate }}</th>
+                  <th class="min-w-120px">{{ "note" | translate }}</th>
+                  <th class="min-w-100px text-end">
+                    {{ "Actions" | translate }}
+                  </th>
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody>
+                <tr *ngFor="let statuses of statusList">
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="d-flex justify-content-start flex-column">
+                        <a class="text-dark fw-bolder text-hover-primary fs-6">
+                          {{
+                            translate.defaultLang == "en"
+                              ? statuses?.old_status?.name
+                              : statuses?.old_status?.name_ar
+                          }}
+                        </a>
+                        <!-- <span class="text-muted fw-bold text-muted d-block fs-7">
+                                {{ statuses.email }}
+                              </span> -->
+                      </div>
+                    </div>
+                  </td>
+
+                  <td>
+                    <a
+                      class="text-dark fw-bolder text-hover-primary d-block fs-6"
+                    >
+                      {{
+                        translate.defaultLang == "en"
+                          ? statuses?.new_status?.name
+                          : statuses?.new_status?.name_ar
+                      }}
+                    </a>
+                  </td>
+                  <td>
+                    <a
+                      class="text-dark fw-bolder text-hover-primary d-block fs-6"
+                    >
+                      {{ statuses.date }}
+                    </a>
+                  </td>
+                  <td>
+                    <a
+                      class="text-dark fw-bolder text-hover-primary d-block fs-6"
+                    >
+                      {{ statuses.note }}
+                    </a>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-end flex-shrink-0">
+                      <a
+                        (click)="openEdit(statuses.child_program_id, statuses.id)"
+                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                      >
+                        <span
+                          [inlineSVG]="
+                            './assets/media/icons/duotune/art/art005.svg'
+                          "
+                          class="svg-icon svg-icon-3"
+                        ></span>
+                      </a>
+                      <a
+                        (click)="deleteStatus(statuses.child_program_id, statuses.id)"
+                        class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-1"
+                      >
+                        <span
+                          [inlineSVG]="
+                            './assets/media/icons/duotune/general/gen027.svg'
+                          "
+                          class="svg-icon svg-icon-3"
+                        ></span>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+            <!-- end::Table -->
+          </div>
+          <!-- end::Table container -->
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button
+        (click)="goBackToPrevPage()"
+          style="margin: 2px"
+          type="button"
+          class="btn btn-secondary"
+        >
+          <ng-container>
+            <i class="fa fa-share" aria-hidden="true"></i
+            >{{ "Back" | translate }}</ng-container
+          >
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

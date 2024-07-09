@@ -1,0 +1,426 @@
+<form [formGroup]="rolesFrom" (ngSubmit)="addRoles()">
+  <div class="d-flex flex-column flex-lg-row">
+    <!--begin::Sidebar-->
+    <div class="flex-column flex-lg-row-auto w-100 w-lg-200px w-xl-300px mb-10">
+      <!--begin::Card-->
+      <div class="card card-flush">
+        <!--begin::Card header-->
+        <div class="card-header">
+          <!--begin::Card title-->
+          <div class="card-title">
+            <h2 class="mb-0">
+              <div class="col-auto fv-row">
+                <label for="">{{ "RoleName" | translate }}</label>
+                <input
+                  [class.is-invalid]="
+                    f['name'].touched && f['name'].invalid && f['name'].errors
+                  "
+                  type="text"
+                  class="form-control form-control-lg form-control-solid"
+                  placeholder="{{ 'RoleName' | translate }}"
+                  formControlName="name"
+                />
+                <div
+                  *ngIf="
+                    f['name'].invalid && f['name'].touched && f['name'].errors
+                  "
+                  style="color: red"
+                >
+                  {{ "NameIsRequired" | translate }}
+                </div>
+              </div>
+            </h2>
+          </div>
+          <!--end::Card title-->
+        </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body pt-0">
+          <!--begin::Permissions-->
+          <div class="d-flex flex-column text-gray-600">
+            <!-- <ng-container *ngIf="permissionsList.Admins">
+              <ng-container *ngFor="let permission of permissionsList.Admins">
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet bg-primary me-3"></span>
+                  {{ permission.title_ar }}
+                </div>
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet bg-primary me-3"></span>
+                  <em>and {{ role.permissions.length - 5 }} more...</em>
+                </div>
+              </ng-container>
+            </ng-container> -->
+          </div>
+          <!--end::Permissions-->
+        </div>
+        <!--end::Card body-->
+        <!--begin::Card footer-->
+        <div class="card-footer pt-0">
+          <button
+            type="submit"
+            class="btn btn-primary btn-sm"
+            data-role-id="developer"
+            data-bs-toggle="modal"
+            data-bs-target="#kt_modal_update_role"
+            style="height: 44px; margin-top: 2px"
+          >
+            {{ "saveChanges" | translate }}
+            <app-keenicon
+              *ngIf="loading === false"
+              name="abstract-10"
+              class="fs-2"
+            ></app-keenicon>
+            <span
+              *ngIf="loading === true"
+              class="spinner-border spinner-border-sm align-middle ms-2"
+            ></span>
+          </button>
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            data-role-id="developer"
+            data-bs-toggle="modal"
+            data-bs-target="#kt_modal_update_role"
+            routerLink="/apps/roles"
+            style="margin-top: 2px"
+          >
+            <ng-container>
+              <i class="fa fa-share" aria-hidden="true"></i
+              >{{ "Back" | translate }}</ng-container
+            >
+          </button>
+        </div>
+        <!--end::Card footer-->
+      </div>
+      <!--end::Card-->
+    </div>
+    <!--end::Sidebar-->
+    <!--begin::Content-->
+    <div class="flex-lg-row-fluid ms-lg-10">
+      <!--begin::Card-->
+      <div class="card card-flush mb-6 mb-xl-9">
+        <!--begin::Card header-->
+        <div class="card-header pt-5">
+          <!--begin::Card title-->
+          <div class="card-title">
+            <h2 class="d-flex align-items-center">
+              {{ "GeneralPermissions" | translate }}
+            </h2>
+          </div>
+          <!--end::Card title-->
+          <!--begin::Card toolbar-->
+          <div class="card-toolbar">
+            {{ "youCanChooseOneRoleOrMore" | translate }}
+          </div>
+          <!--end::Card toolbar-->
+        </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body pt-0">
+          <div class="row mb-6">
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+              "General" | translate
+            }}</label>
+            <div class="col-lg-8 fv-row">
+              <ng-select
+                [(ngModel)]="generalSelected"
+                [items]="generalRoles"
+                [multiple]="true"
+                [closeOnSelect]="false"
+                [searchable]="false"
+                formControlName="generalRoles"
+                [bindLabel]="
+                  translate.currentLang == 'ar' ? 'title_ar' : 'title'
+                "
+                bindValue="id"
+                placeholder="{{ 'selectPermissions' | translate }}"
+              >
+                <ng-template ng-header-tmp>
+                  <div>
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm"
+                      (click)="onSelectAllGeneral()"
+                    >
+                      {{ "SelectAll" | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm"
+                      (click)="onClearAllGeneral()"
+                    >
+                      {{ "ClearAll" | translate }}
+                    </button>
+                  </div>
+                </ng-template>
+              </ng-select>
+            </div>
+          </div>
+
+          <!--begin::Table-->
+          <!-- <app-crud [datatableConfig]="datatableConfig" (deleteEvent)="deleteUser($event)" [reload]="reloadEvent"></app-crud> -->
+          <!--end::Table-->
+        </div>
+        <!--end::Card body-->
+      </div>
+      <div class="card card-flush mb-6 mb-xl-9">
+        <!--begin::Card header-->
+        <div class="card-header pt-5">
+          <!--begin::Card title-->
+          <div class="card-title">
+            <h2 class="d-flex align-items-center">
+              {{ "AdminRoles" | translate }}
+            </h2>
+          </div>
+          <!--end::Card title-->
+          <!--begin::Card toolbar-->
+          <div class="card-toolbar">
+            {{ "youCanChooseOneRoleOrMore" | translate }}
+          </div>
+          <!--end::Card toolbar-->
+        </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body pt-0">
+          <div class="row mb-6">
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+              "Admins" | translate
+            }}</label>
+            <div class="col-lg-8 fv-row">
+              <ng-select
+                [(ngModel)]="adminSelected"
+                [items]="adminPermission"
+                [multiple]="true"
+                [closeOnSelect]="false"
+                [searchable]="false"
+                formControlName="adminPermission"
+                [bindLabel]="
+                  translate.currentLang == 'ar' ? 'title_ar' : 'title'
+                "
+                bindValue="id"
+                placeholder="{{ 'selectPermissions' | translate }}"
+              >
+                <ng-template ng-header-tmp>
+                  <div>
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm"
+                      (click)="onSelectAllAdmin()"
+                    >
+                      {{ "SelectAll" | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm"
+                      (click)="onClearAllAdmin()"
+                    >
+                      {{ "ClearAll" | translate }}
+                    </button>
+                  </div>
+                </ng-template>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <!--end::Card body-->
+      </div>
+      <div class="card card-flush mb-6 mb-xl-9">
+        <!--begin::Card header-->
+        <div class="card-header pt-5">
+          <!--begin::Card title-->
+          <div class="card-title">
+            <h2 class="d-flex align-items-center">
+              {{ "EvaluationRoles" | translate }}
+            </h2>
+          </div>
+          <!--end::Card title-->
+          <!--begin::Card toolbar-->
+          <div class="card-toolbar">
+            {{ "youCanChooseOneRoleOrMore" | translate }}
+          </div>
+          <!--end::Card toolbar-->
+        </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body pt-0">
+          <div class="row mb-6">
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+              "Evaluation" | translate
+            }}</label>
+            <div class="col-lg-8 fv-row">
+              <ng-select
+                [(ngModel)]="EvaluationSelected"
+                [items]="EvaluationRoles"
+                [multiple]="true"
+                [closeOnSelect]="false"
+                [searchable]="true"
+                formControlName="EvaluationRoles"
+                [bindLabel]="
+                  translate.currentLang == 'ar' ? 'title_ar' : 'title'
+                "
+                bindValue="id"
+                placeholder="{{ 'selectPermissions' | translate }}"
+              >
+              <ng-template ng-header-tmp>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    (click)="onSelectAllEvaluation()"
+                  >
+                    {{ "SelectAll" | translate }}
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    (click)="onClearAllEvaluation()"
+                  >
+                    {{ "ClearAll" | translate }}
+                  </button>
+                </div>
+              </ng-template>
+              </ng-select>
+            </div>
+          </div>
+
+          <!--begin::Table-->
+          <!-- <app-crud [datatableConfig]="datatableConfig" (deleteEvent)="deleteUser($event)" [reload]="reloadEvent"></app-crud> -->
+          <!--end::Table-->
+        </div>
+        <!--end::Card body-->
+      </div>
+      <div class="card card-flush mb-6 mb-xl-9">
+        <!--begin::Card header-->
+        <div class="card-header pt-5">
+          <!--begin::Card title-->
+          <div class="card-title">
+            <h2 class="d-flex align-items-center">
+              {{ "ProgramPermissions" | translate }}
+            </h2>
+          </div>
+          <!--end::Card title-->
+          <!--begin::Card toolbar-->
+          <div class="card-toolbar">
+            {{ "youCanChooseOneRoleOrMore" | translate }}
+          </div>
+          <!--end::Card toolbar-->
+        </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body pt-0">
+          <div class="row mb-6">
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+              "Program" | translate
+            }}</label>
+            <div class="col-lg-8 fv-row">
+              <ng-select
+                [(ngModel)]="programsSelected"
+                [items]="programsRoles"
+                [multiple]="true"
+                [closeOnSelect]="false"
+                [searchable]="true"
+                formControlName="programsRoles"
+                [bindLabel]="
+                  translate.currentLang == 'ar' ? 'title_ar' : 'title'
+                "
+                bindValue="id"
+                placeholder="{{ 'selectPermissions' | translate }}"
+              >
+              <ng-template ng-header-tmp>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    (click)="onSelectAllPrograms()"
+                  >
+                    {{ "SelectAll" | translate }}
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    (click)="onClearAllPrograms()"
+                  >
+                    {{ "ClearAll" | translate }}
+                  </button>
+                </div>
+              </ng-template>
+              </ng-select>
+            </div>
+          </div>
+
+          <!--begin::Table-->
+          <!-- <app-crud [datatableConfig]="datatableConfig" (deleteEvent)="deleteUser($event)" [reload]="reloadEvent"></app-crud> -->
+          <!--end::Table-->
+        </div>
+        <!--end::Card body-->
+      </div>
+      <div class="card card-flush mb-6 mb-xl-9">
+        <!--begin::Card header-->
+        <div class="card-header pt-5">
+          <!--begin::Card title-->
+          <div class="card-title">
+            <h2 class="d-flex align-items-center">
+              {{ "childrenPermissions" | translate }}
+            </h2>
+          </div>
+          <!--end::Card title-->
+          <!--begin::Card toolbar-->
+          <div class="card-toolbar">
+            {{ "youCanChooseOneRoleOrMore" | translate }}
+          </div>
+          <!--end::Card toolbar-->
+        </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body pt-0">
+          <div class="row mb-6">
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+              "children" | translate
+            }}</label>
+            <div class="col-lg-8 fv-row">
+              <ng-select
+                [(ngModel)]="childrenSelected"
+                [items]="childrenRoles"
+                [multiple]="true"
+                [closeOnSelect]="false"
+                [searchable]="true"
+                formControlName="childrenRoles"
+                [bindLabel]="
+                  translate.currentLang == 'ar' ? 'title_ar' : 'title'
+                "
+                bindValue="id"
+                placeholder="{{ 'selectPermissions' | translate }}"
+              >
+              <ng-template ng-header-tmp>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    (click)="onSelectAllChildren()"
+                  >
+                    {{ "SelectAll" | translate }}
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    (click)="onClearAllChildren()"
+                  >
+                    {{ "ClearAll" | translate }}
+                  </button>
+                </div>
+              </ng-template>
+              </ng-select>
+            </div>
+          </div>
+
+          <!--begin::Table-->
+          <!-- <app-crud [datatableConfig]="datatableConfig" (deleteEvent)="deleteUser($event)" [reload]="reloadEvent"></app-crud> -->
+          <!--end::Table-->
+        </div>
+        <!--end::Card body-->
+      </div>
+      <!--end::Card-->
+    </div>
+    <!--end::Content-->
+  </div>
+</form>

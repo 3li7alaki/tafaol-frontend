@@ -1,0 +1,382 @@
+<div class="card mb-5 mb-xl-10">
+  <div
+    class="card-header border-0 cursor-pointer"
+    role="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#kt_account_profile_details"
+    aria-expanded="true"
+    aria-controls="kt_account_profile_details"
+  >
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0">{{ "editEvaluation" | translate }}</h3>
+    </div>
+    <button
+      type="button"
+      class="btn btn-danger btn-active-danger"
+      data-role-id="developer"
+      data-bs-toggle="modal"
+      data-bs-target="#kt_modal_update_role"
+      (click)="deleteDiagnoses(program)"
+      style="height: 48px; margin-top: 11px"
+    >
+      {{ "Delete" | translate }}
+      <app-keenicon
+        *ngIf="loadingDelete === false"
+        name="delete-folder"
+        class="fs-2"
+      ></app-keenicon>
+      <span
+        *ngIf="loadingDelete === true"
+        class="spinner-border spinner-border-sm align-middle ms-2"
+      ></span>
+    </button>
+  </div>
+  <div id="kt_account_profile_details" class="collapse show card">
+    <form
+      novalidate=""
+      class="form"
+      [formGroup]="statusForm"
+      (ngSubmit)="addGaurd()"
+    >
+      <div class="card-body border-top p-9">
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "MENU.FORM" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg"
+              formControlName="form_id"
+            >
+              <option [value]="null">
+                {{
+                  translate.defaultLang == "ar" ? "اختر النموذج" : "Select Form"
+                }}
+              </option>
+              <option [value]="statuses.id" *ngFor="let statuses of formList">
+                {{ statuses?.name }}
+              </option>
+            </select>
+          </div>
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "note" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="f['note'].touched && f['note'].invalid"
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'note' | translate }}"
+              formControlName="note"
+            />
+            <div
+              *ngIf="f['note'].invalid && f['note'].touched"
+              style="color: red"
+            ></div>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-1 col-form-label required fw-bold fs-6"
+            >{{ "date" | translate }} 1</label
+          >
+          <div class="col-lg-3 fv-row">
+            <div class="input-group">
+              <input
+                style="
+                  border-top-right-radius: 7px;
+                  border-bottom-right-radius: 7px;
+                  border: 1px solid #dbdfe9;
+                "
+                type="text"
+                placeholder="{{ 'date' | translate }}"
+                class="form-control form-control-lg form-control-solid"
+                bsDatepicker
+                formControlName="date_1"
+                #d1="bsDatepicker"
+                [bsConfig]="{
+                  containerClass: 'theme-blue',
+                  dateInputFormat: 'YYYY-MM-DD',
+                  isAnimated: true
+                }"
+              />
+
+              <div class="input-group-append">
+                <div
+                  style="
+                    height: 46px;
+                    border-top-right-radius: 0px;
+                    border-bottom-right-radius: 0px;
+                  "
+                  class="input-group-text"
+                  (click)="d1.toggle()"
+                >
+                  <i class="fa fa-calendar" style="cursor: pointer"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <label class="col-lg-1 col-form-label fw-bold fs-6"
+            >{{ "date" | translate }} 2</label
+          >
+          <div class="col-lg-3 fv-row">
+            <div class="input-group">
+              <input
+                style="
+                  border-top-right-radius: 7px;
+                  border-bottom-right-radius: 7px;
+                  border: 1px solid #dbdfe9;
+                "
+                type="text"
+                placeholder="{{ 'date' | translate }}"
+                class="form-control form-control-lg form-control-solid"
+                bsDatepicker
+                formControlName="date_2"
+                #d2="bsDatepicker"
+                [bsConfig]="{
+                  containerClass: 'theme-blue',
+                  dateInputFormat: 'YYYY-MM-DD',
+                  isAnimated: true
+                }"
+              />
+
+              <div class="input-group-append">
+                <div
+                  style="
+                    height: 46px;
+                    border-top-right-radius: 0px;
+                    border-bottom-right-radius: 0px;
+                  "
+                  class="input-group-text"
+                  (click)="d2.toggle()"
+                >
+                  <i class="fa fa-calendar" style="cursor: pointer"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <label class="col-lg-1 col-form-label fw-bold fs-6"
+            >{{ "date" | translate }} 3</label
+          >
+          <div class="col-lg-3 fv-row">
+            <div class="input-group">
+              <input
+                style="
+                  border-top-right-radius: 7px;
+                  border-bottom-right-radius: 7px;
+                  border: 1px solid #dbdfe9;
+                "
+                type="text"
+                placeholder="{{ 'date' | translate }}"
+                class="form-control form-control-lg form-control-solid"
+                bsDatepicker
+                formControlName="date_3"
+                #d3="bsDatepicker"
+                [bsConfig]="{
+                  containerClass: 'theme-blue',
+                  dateInputFormat: 'YYYY-MM-DD',
+                  isAnimated: true
+                }"
+              />
+
+              <div class="input-group-append">
+                <div
+                  style="
+                    height: 46px;
+                    border-top-right-radius: 0px;
+                    border-bottom-right-radius: 0px;
+                  "
+                  class="input-group-text"
+                  (click)="d3.toggle()"
+                >
+                  <i class="fa fa-calendar" style="cursor: pointer"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+
+        <div formArrayName="questions">
+          <div
+            *ngFor="let questions of items().controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div class="row mb-6">
+              <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+                "MENU.QUESTIONS" | translate
+              }}</label>
+              <div class="col-lg-3 fv-row">
+                <select
+                  class="form-select form-select-solid form-select-lg"
+                  formControlName="question_id"
+                >
+                  <option [value]="null">
+                    {{
+                      translate.defaultLang == "ar"
+                        ? "اختر سؤال"
+                        : "Select Question"
+                    }}
+                  </option>
+                  <option
+                    [value]="statuses.id"
+                    *ngFor="let statuses of questionList"
+                  >
+                    {{ statuses?.title }}
+                  </option>
+                </select>
+              </div>
+              <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+                "note" | translate
+              }}</label>
+              <div class="col-lg-3 fv-row">
+                <input
+                  type="text"
+                  class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                  placeholder="{{ 'note' | translate }}"
+                  formControlName="note"
+                />
+              </div>
+            </div>
+            <div *ngIf="hasOptions(i)" class="row mb-6">
+              <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+                "answer" | translate
+              }}</label>
+              <div class="col-lg-8 fv-row">
+                <input
+                  type="text"
+                  class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                  placeholder="{{ 'answer' | translate }}"
+                  formControlName="answer"
+                />
+              </div>
+            </div>
+            <div *ngIf="!hasOptions(i)" class="row mb-6">
+              <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+                "MENU.QUESTIONS" | translate
+              }}</label>
+              <div class="col-lg-8 fv-row">
+                <select
+                  class="form-select form-select-solid form-select-lg"
+                  formControlName="answer"
+                >
+                  <option [value]="null">
+                    {{
+                      translate.defaultLang == "ar"
+                        ? "اختر سؤال"
+                        : "Select Question"
+                    }}
+                  </option>
+                  <option
+                    [value]="statuses"
+                    *ngFor="let statuses of questionList[i].options"
+                  >
+                    {{ statuses }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-1 col-form-label required fw-bold fs-6">{{
+            translate.defaultLang == "ar" ? "انتهى" : "Done"
+          }}</label>
+          <div class="col-lg-2 fv-row">
+            <div class="form-check form-check-solid form-switch fv-row">
+              <input
+                class="form-check-input w-45px h-30px"
+                type="checkbox"
+                id="allowmarketing"
+                formControlName="done"
+              /><label class="form-check-label" style="margin-top: 5px"
+                ><span class="fw-bold ps-2 fs-6">{{
+                  f.done.value == true
+                    ? ("yes" | translate)
+                    : ("no" | translate)
+                }}</span></label
+              >
+            </div>
+          </div>
+          <label class="col-lg-1 col-form-label required fw-bold fs-6">{{
+            translate.defaultLang == "ar" ? "نجح" : "Pass"
+          }}</label>
+          <div class="col-lg-2 fv-row">
+            <div class="form-check form-check-solid form-switch fv-row">
+              <input
+                class="form-check-input w-45px h-30px"
+                type="checkbox"
+                id="allowmarketing"
+                formControlName="pass"
+              /><label class="form-check-label" style="margin-top: 5px"
+                ><span class="fw-bold ps-2 fs-6">{{
+                  f.pass.value == true
+                    ? ("yes" | translate)
+                    : ("no" | translate)
+                }}</span></label
+              >
+            </div>
+          </div>
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "attachment" | translate
+          }}</label>
+          <div class="col-lg-4 fv-row">
+            <div class="file-upload-container">
+              <input
+                type="file"
+                id="file"
+                (change)="onFileSelectedNational($event)"
+              />
+              <label for="file" class="custom-file-upload">
+                {{ "selectFiles" | translate }}
+              </label>
+            </div>
+
+            <div class="file-details-container" *ngIf="selectedFileNationalID">
+              <div class="file-details">
+                <div class="file-name">{{ selectedFileNationalID?.name }}</div>
+                <div class="file-info">
+                  <span class="file-type">{{
+                    selectedFileNationalID?.type
+                  }}</span>
+                  <span class="file-size">{{
+                    selectedFileNationalID?.size
+                  }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          style="height: 44px; margin-top: 2px"
+        >
+          <ng-container>{{ "saveChanges" | translate }}</ng-container>
+          <app-keenicon
+            *ngIf="loading === false"
+            name="abstract-10"
+            class="fs-2"
+          ></app-keenicon>
+          <span
+            *ngIf="loading === true"
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </button>
+        <button
+          (click)="goBackToPrevPage()"
+          style="margin: 2px"
+          type="button"
+          class="btn btn-secondary"
+        >
+          <ng-container>
+            <i class="fa fa-share" aria-hidden="true"></i
+            >{{ "Back" | translate }}</ng-container
+          >
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

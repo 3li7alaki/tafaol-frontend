@@ -1,0 +1,238 @@
+<form
+  class="form w-100"
+  novalidate="novalidate"
+  id="kt_login_signup_form"
+  [formGroup]="registrationForm"
+  (ngSubmit)="submit()"
+>
+  <!--begin::Heading-->
+  <div class="text-center mb-11">
+    <!--begin::Title-->
+    <h1 class="text-gray-900 fw-bolder mb-3">
+      {{ "AUTH.GENERAL.SIGNUP_BUTTON" | translate }}
+    </h1>
+    <!--end::Title-->
+
+    <!--begin::Subtitle-->
+
+    <!--end::Subtitle--->
+  </div>
+  <!--begin::Heading-->
+
+  <!--begin::Login options-->
+
+  <!-- begin::Alert error-->
+  <ng-container *ngIf="hasError">
+    <div class="mb-lg-15 alert alert-danger">
+      <div class="alert-text font-weight-bold">
+        The registration details are incorrect
+      </div>
+    </div>
+  </ng-container>
+  <!-- end::Alert error-->
+
+  <!--begin::Form group-->
+  <div class="fv-row mb-8">
+    <label class="form-label fw-bolder text-gray-900 fs-6">{{'AUTH.INPUT.FULLNAME' | translate}}</label>
+    <input
+      class="form-control bg-transparent"
+      type="text"
+      name="fullname"
+      formControlName="fullname"
+      placeholder="{{'AUTH.INPUT.FULLNAME' | translate}}"
+      autocomplete="off"
+      [ngClass]="{
+        'is-invalid': registrationForm.controls['fullname'].invalid && registrationForm.controls['fullname'].touched,
+        'is-valid': registrationForm.controls['fullname'].valid
+      }"
+    />
+    <ng-container
+      [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{
+        validation: 'required',
+        message: 'الأسم مطلوب',
+        control: registrationForm.controls['fullname']
+      }"
+    ></ng-container>
+  </div>
+  <div class="fv-row mb-8">
+    <label class="form-label fw-bolder text-gray-900 fs-6">{{'phone' | translate}}</label>
+    <input
+      class="form-control bg-transparent"
+      type="text"
+      name="phone"
+      formControlName="phone"
+      placeholder="{{'phone' | translate}}"
+      autocomplete="off"
+      [ngClass]="{
+        'is-invalid': registrationForm.controls['phone'].invalid && registrationForm.controls['phone'].touched,
+        'is-valid': registrationForm.controls['phone'].valid
+      }"
+    />
+    <ng-container
+      [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{
+        validation: 'required',
+        message: 'رقم الهاتف مطلوب',
+        control: registrationForm.controls['phone']
+      }"
+    ></ng-container>
+  </div>
+  <!--end::Form group-->
+
+  <!--begin::Form group-->
+  <div class="fv-row mb-8">
+    <label class="form-label fw-bolder text-gray-900 fs-6">{{'AUTH.INPUT.EMAIL' | translate}}</label>
+    <input
+      class="form-control bg-transparent"
+      type="email"
+      placeholder="{{'AUTH.INPUT.EMAIL' | translate}}"
+      name="email"
+      formControlName="email"
+      autocomplete="off"
+      [ngClass]="{
+        'is-invalid': registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched,
+        'is-valid': registrationForm.controls['email'].valid
+      }"
+    />
+    <ng-container
+      [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{
+        validation: 'required',
+        message: 'البريد الإلكتروني مطلوب',
+        control: registrationForm.controls['email']
+      }"
+    ></ng-container>
+    <ng-container
+      [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{
+        validation: 'email',
+        message: 'البريد الإلكتروني غير صحيح',
+        control: registrationForm.controls['email']
+      }"
+    ></ng-container>
+  </div>
+  <!--end::Form group-->
+
+  <!--begin::Form group-->
+  <div class="fv-row mb-8">
+    <label class="form-label fw-bolder text-gray-900 fs-6">{{'AUTH.INPUT.PASSWORD' | translate}}</label>
+    <input
+      class="form-control bg-transparent"
+      type="password"
+      placeholder="{{'AUTH.INPUT.PASSWORD' | translate}}"
+      name="password"
+      formControlName="password"
+      autocomplete="off"
+      [ngClass]="{
+        'is-invalid': registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched,
+        'is-valid': registrationForm.controls['password'].valid
+      }"
+    />
+    <ng-container
+      [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{
+        validation: 'required',
+        message: 'كلمة المرور مطلوبة',
+        control: registrationForm.controls['password']
+      }"
+    ></ng-container>
+  </div>
+  <!--end::Form group-->
+
+  <!--begin::Form group-->
+  <div class="fv-row mb-8">
+    <label class="form-label fw-bolder text-gray-900 fs-6"
+      >{{'AUTH.INPUT.CONFIRM_PASSWORD' | translate}}</label
+    >
+    <input
+      class="form-control bg-transparent"
+      type="password"
+      placeholder="{{'AUTH.INPUT.CONFIRM_PASSWORD' | translate}}"
+      name="cPassword"
+      autocomplete="off"
+      formControlName="cPassword"
+      [ngClass]="{
+        'is-invalid': registrationForm.controls['cPassword'].invalid && registrationForm.controls['fullname'].touched,
+        'is-valid': registrationForm.controls['cPassword'].valid
+      }"
+    />
+    <ng-container
+      [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{
+        validation: 'required',
+        message: 'Confirm Password is required',
+        control: registrationForm.controls['cPassword']
+      }"
+    ></ng-container>
+    <ng-container
+      *ngIf="
+        registrationForm.controls['cPassword'].errors &&
+        registrationForm.controls['cPassword'].errors.ConfirmPassword
+      "
+    >
+      <div class="fv-plugins-message-container">
+        <div class="fv-help-block">
+          كلمة المرور والتآكيد غير متطابقين
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <!--end::Form group-->
+
+  <!--begin::Form group-->
+
+  <!--end::Form group-->
+
+  <!--begin::Form group-->
+  <div class="d-grid mb-10">
+    <button
+      type="submit"
+      id="kt_sign_up_submit"
+      [disabled]="
+        registrationForm.invalid
+      "
+      class="btn btn-primary"
+    >
+      <ng-container *ngIf="isLoading  === false">
+        <span class="indicator-label">أنشئ حسابك</span>
+      </ng-container>
+      <ng-container *ngIf="isLoading">
+        <span class="indicator-progress" [style.display]="'block'">
+          الرجاء الإنتظار...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </ng-container>
+    </button>
+  </div>
+  <!--end::Form group-->
+
+  <!--begin::Sign up-->
+  <div class="text-gray-500 text-center fw-semibold fs-6">
+    لديك حساب بالفعل
+
+    <a routerLink="/auth/login" class="link-primary fw-semibold"> قم بتسجيل الدخول </a>
+  </div>
+  <!--end::Sign up-->
+</form>
+
+<ng-template
+  #formError
+  let-control="control"
+  let-message="message"
+  let-validation="validation"
+>
+  <ng-container
+    *ngIf="control.hasError(validation) && (control.dirty || control.touched)"
+  >
+    <div class="fv-plugins-message-container">
+      <div class="fv-help-block">
+        <span role="alert">
+          {{ message }}
+        </span>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

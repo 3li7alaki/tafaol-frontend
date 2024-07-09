@@ -1,0 +1,139 @@
+<div class="card">
+  <!-- begin::Header -->
+  <div class="card-header border-0 pt-5">
+    <h3 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-3 mb-1">{{
+        "programsList" | translate
+      }}</span>
+    </h3>
+    <div
+      class="card-toolbar"
+      data-bs-toggle="tooltip"
+      data-bs-placement="top"
+      data-bs-trigger="hover"
+      title="Click to add a user"
+    >
+      <a class="btn btn-sm btn-light-primary" (click)="open()">
+        <span><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
+        {{ "addNewProgram" | translate }}
+      </a>
+    </div>
+  </div>
+  <!-- end::Header -->
+  <!-- begin::Body -->
+  <div class="card-body py-3">
+    <!-- begin::Table container -->
+    <div class="table-responsive">
+      <!-- begin::Table -->
+      <table
+        class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
+      >
+        <!-- begin::Table head -->
+        <thead>
+          <tr class="fw-bolder text-muted">
+            <th class="min-w-130px">{{ "name" | translate }}</th>
+            <th class="min-w-120px">{{ "status" | translate }}</th>
+            <th class="min-w-120px">{{ "startTime" | translate }}</th>
+            <th class="min-w-120px">{{ "endTime" | translate }}</th>
+            <th class="min-w-100px text-end">{{ "Actions" | translate }}</th>
+          </tr>
+        </thead>
+        <!-- end::Table head -->
+        <!-- begin::Table body -->
+        <tbody>
+          <tr *ngFor="let question of programList">
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start flex-column">
+                  <a
+                    [routerLink]="[
+                      '/apps/questions/edit-question/' + question.id
+                    ]"
+                    class="text-dark fw-bolder text-hover-primary fs-6"
+                  >
+                    {{ question.name }}
+                  </a>
+                  <!-- <span class="text-muted fw-bold text-muted d-block fs-7">
+                          {{ question.email }}
+                        </span> -->
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <a class="text-dark fw-bolder text-hover-primary d-block fs-6">
+                {{
+                  translate.defaultLang == "ar"
+                    ? question.status.name_ar
+                    : question.status.name
+                }}
+              </a>
+            </td>
+            <td>
+              <a class="text-dark fw-bolder text-hover-primary d-block fs-6">
+                {{ question.start_time }}
+              </a>
+            </td>
+            <td>
+              <a class="text-dark fw-bolder text-hover-primary d-block fs-6">
+                {{ question.end_time }}
+              </a>
+            </td>
+            <td>
+              <div class="d-flex justify-content-end flex-shrink-0">
+                <a
+                  (click)="openEdit(question.child_program.id)"
+                  class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                >
+                  <span
+                    [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                    class="svg-icon svg-icon-3"
+                  ></span>
+                </a>
+                <a
+                  (click)="deleteChildrens(question.child_program.id)"
+                  class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-1"
+                >
+                  <span
+                    [inlineSVG]="
+                      './assets/media/icons/duotune/general/gen027.svg'
+                    "
+                    class="svg-icon svg-icon-3"
+                  ></span>
+                </a>
+                <a
+                  (click)="changeStatus(question.child_program.id)"
+                  class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-1"
+                >
+                  <span class="svg-icon svg-icon-3">
+                    <app-keenicon name="eye" class="fs-2"></app-keenicon>
+                  </span>
+                </a>
+                <a
+                  (click)="openScheduling(question.child_program.id)"
+                  class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-1"
+                >
+                  <span class="svg-icon svg-icon-3">
+                    {{ translate.defaultLang == "ar" ? "جدولة" : "Scheduling" }}
+                  </span>
+                </a>
+                <a
+                  (click)="openEvaluation(question.child_program.id)"
+                  class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-1"
+                >
+                  <span class="svg-icon svg-icon-3">
+                    {{ translate.defaultLang == "ar" ? "تقييم" : "Evaluation" }}
+                  </span>
+                </a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <!-- end::Table body -->
+      </table>
+      <!-- end::Table -->
+    </div>
+    <!-- end::Table container -->
+  </div>
+  <!-- begin::Body -->
+</div>

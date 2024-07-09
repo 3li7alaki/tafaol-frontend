@@ -1,0 +1,806 @@
+<div id="kt_account_profile_details" class="collapse show card">
+  <form
+    novalidate=""
+    class="form"
+    [formGroup]="childrenForm"
+    (ngSubmit)="editChild()"
+  >
+    <div class="card-body border-top p-9">
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "fatherName" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'fatherName' | translate }}"
+            formControlName="father_name"
+          />
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "fatherJob" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'fatherJob' | translate }}"
+            formControlName="father_job"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "fatherNationality" | translate
+        }}</label>
+        <div class="col-lg-8 fv-row">
+          <select
+            class="form-select form-select-solid form-select-lg"
+            formControlName="father_nationality_id"
+          >
+            <option [value]="null">
+              {{ "selectNationality" | translate }}
+            </option>
+            <option
+              [value]="nationalites.id"
+              *ngFor="let nationalites of nationalityList"
+            >
+              {{
+                translate.currentLang == "ar"
+                  ? nationalites?.name_ar
+                  : nationalites?.name
+              }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "fatherPhone" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'fatherPhone' | translate }}"
+              formControlName="father_phone"
+              style="
+                border-top-right-radius: 7px;
+                border-bottom-right-radius: 7px;
+                border: 1px solid #dbdfe9;
+              "
+            />
+            <div class="input-group-append">
+              <div
+                style="
+                  height: 46px;
+                  border-top-right-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                "
+                class="input-group-text"
+              >
+                973+
+              </div>
+            </div>
+          </div>
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "fatherWorkPhone" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'fatherWorkPhone' | translate }}"
+            formControlName="father_work_phone"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "motherName" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'motherName' | translate }}"
+            formControlName="mother_name"
+          />
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "motherJob" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'motherJob' | translate }}"
+            formControlName="mother_job"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "motherNationality" | translate
+        }}</label>
+        <div class="col-lg-8 fv-row">
+          <select
+            class="form-select form-select-solid form-select-lg"
+            formControlName="mother_nationality_id"
+          >
+            <option [value]="null">
+              {{ "selectNationality" | translate }}
+            </option>
+            <option
+              [value]="nationalites.id"
+              *ngFor="let nationalites of nationalityList"
+            >
+              {{
+                translate.currentLang == "ar"
+                  ? nationalites?.name_ar
+                  : nationalites?.name
+              }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "motherPhone" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'motherPhone' | translate }}"
+              formControlName="mother_phone"
+              style="
+                border-top-right-radius: 7px;
+                border-bottom-right-radius: 7px;
+                border: 1px solid #dbdfe9;
+              "
+            />
+            <div class="input-group-append">
+              <div
+                style="
+                  height: 46px;
+                  border-top-right-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                "
+                class="input-group-text"
+              >
+                973+
+              </div>
+            </div>
+          </div>
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "motherWorkPhone" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'motherWorkPhone' | translate }}"
+            formControlName="mother_work_phone"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "housePhone" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'housePhone' | translate }}"
+            formControlName="house_phone"
+          />
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "closePersonPhone" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'closePersonPhone' | translate }}"
+            formControlName="close_person_phone"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "siblingsCount" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'siblingsCount' | translate }}"
+            formControlName="siblings_count"
+          />
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "siblingOrder" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'siblingOrder' | translate }}"
+            formControlName="sibling_order"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "fatherAgeAtBirth" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'fatherAgeAtBirth' | translate }}"
+            formControlName="father_age_at_birth"
+          />
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "motherAgeAtBirth" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'motherAgeAtBirth' | translate }}"
+            formControlName="mother_age_at_birth"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "parentRelation" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'parentRelation' | translate }}"
+            formControlName="parent_relation"
+          />
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "pregnancyIssue" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'pregnancyIssue' | translate }}"
+            formControlName="pregnancy_issue"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "birthIssue" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'birthIssue' | translate }}"
+            formControlName="birth_issue"
+          />
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "familialIssue" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'familialIssue' | translate }}"
+            formControlName="familial_issue"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "heartCheck" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <div class="form-check form-check-solid form-switch fv-row">
+            <input
+              class="form-check-input w-45px h-30px"
+              type="checkbox"
+              id="allowmarketing"
+              formControlName="heart_check"
+            /><label class="form-check-label" style="margin-top: 5px"
+              ><span class="fw-bold ps-2 fs-6">{{
+                f.heart_check.value == true
+                  ? ("yes" | translate)
+                  : ("no" | translate)
+              }}</span></label
+            >
+          </div>
+        </div>
+        <label
+          *ngIf="f.heart_check.value == true"
+          class="col-lg-2 col-form-label required fw-bold fs-6"
+          >{{ "heartCheckDate" | translate }}</label
+        >
+        <div *ngIf="f.heart_check.value == true" class="col-lg-3 fv-row">
+          <div class="input-group">
+            <input
+              style="
+                border-top-right-radius: 7px;
+                border-bottom-right-radius: 7px;
+                border: 1px solid #dbdfe9;
+              "
+              type="text"
+              placeholder="{{ 'heartCheckDate' | translate }}"
+              class="form-control form-control-lg form-control-solid"
+              bsDatepicker
+              formControlName="heart_check_date"
+              #d1="bsDatepicker"
+              [bsConfig]="{
+                containerClass: 'theme-blue',
+                dateInputFormat: 'YYYY-MM-DD',
+                isAnimated: true
+              }"
+            />
+
+            <div class="input-group-append">
+              <div
+                style="
+                  height: 46px;
+                  border-top-right-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                "
+                class="input-group-text"
+                (click)="d1.toggle()"
+              >
+                <i class="fa fa-calendar" style="cursor: pointer"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="f.heart_check.value == true" class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "heartCheckResult" | translate
+        }}</label>
+        <div class="col-lg-8 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'heartCheckResult' | translate }}"
+            formControlName="heart_check_result"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "thyroidCheck" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <div class="form-check form-check-solid form-switch fv-row">
+            <input
+              class="form-check-input w-45px h-30px"
+              type="checkbox"
+              id="allowmarketing"
+              formControlName="thyroid_check"
+            /><label class="form-check-label" style="margin-top: 5px"
+              ><span class="fw-bold ps-2 fs-6">{{
+                f.thyroid_check.value == true
+                  ? ("yes" | translate)
+                  : ("no" | translate)
+              }}</span></label
+            >
+          </div>
+        </div>
+        <label
+          *ngIf="f.thyroid_check.value == true"
+          class="col-lg-2 col-form-label required fw-bold fs-6"
+          >{{ "thyroidCheckDate" | translate }}</label
+        >
+        <div *ngIf="f.thyroid_check.value == true" class="col-lg-3 fv-row">
+          <div class="input-group">
+            <input
+              style="
+                border-top-right-radius: 7px;
+                border-bottom-right-radius: 7px;
+                border: 1px solid #dbdfe9;
+              "
+              type="text"
+              placeholder="{{ 'thyroidCheckDate' | translate }}"
+              class="form-control form-control-lg form-control-solid"
+              bsDatepicker
+              formControlName="thyroid_check_date"
+              #d1="bsDatepicker"
+              [bsConfig]="{
+                containerClass: 'theme-blue',
+                dateInputFormat: 'YYYY-MM-DD',
+                isAnimated: true
+              }"
+            />
+            <div class="input-group-append">
+              <div
+                style="
+                  height: 46px;
+                  border-top-right-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                "
+                class="input-group-text"
+                (click)="d1.toggle()"
+              >
+                <i class="fa fa-calendar" style="cursor: pointer"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="f.thyroid_check.value == true" class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "thyroidCheckResult" | translate
+        }}</label>
+        <div class="col-lg-8 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'thyroidCheckResult' | translate }}"
+            formControlName="thyroid_check_result"
+          />
+        </div>
+      </div>
+
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "sightCheck" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <div class="form-check form-check-solid form-switch fv-row">
+            <input
+              class="form-check-input w-45px h-30px"
+              type="checkbox"
+              id="allowmarketing"
+              formControlName="sight_check"
+            /><label class="form-check-label" style="margin-top: 5px"
+              ><span class="fw-bold ps-2 fs-6">{{
+                f.sight_check.value == true
+                  ? ("yes" | translate)
+                  : ("no" | translate)
+              }}</span></label
+            >
+          </div>
+        </div>
+        <label
+          *ngIf="f.sight_check.value == true"
+          class="col-lg-2 col-form-label required fw-bold fs-6"
+          >{{ "sightCheckDate" | translate }}</label
+        >
+        <div *ngIf="f.sight_check.value == true" class="col-lg-3 fv-row">
+          <div class="input-group">
+            <input
+              style="
+                border-top-right-radius: 7px;
+                border-bottom-right-radius: 7px;
+                border: 1px solid #dbdfe9;
+              "
+              type="text"
+              placeholder="{{ 'sightCheckDate' | translate }}"
+              class="form-control form-control-lg form-control-solid"
+              bsDatepicker
+              formControlName="sight_check_date"
+              #d1="bsDatepicker"
+              [bsConfig]="{
+                containerClass: 'theme-blue',
+                dateInputFormat: 'YYYY-MM-DD',
+                isAnimated: true
+              }"
+            />
+            <div class="input-group-append">
+              <div
+                style="
+                  height: 46px;
+                  border-top-right-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                "
+                class="input-group-text"
+                (click)="d1.toggle()"
+              >
+                <i class="fa fa-calendar" style="cursor: pointer"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="f.sight_check.value == true" class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "sightCheckResult" | translate
+        }}</label>
+        <div class="col-lg-8 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'sightCheckResult' | translate }}"
+            formControlName="sight_check_result"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "hearingCheck" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <div class="form-check form-check-solid form-switch fv-row">
+            <input
+              class="form-check-input w-45px h-30px"
+              type="checkbox"
+              id="allowmarketing"
+              formControlName="hearing_check"
+            /><label class="form-check-label" style="margin-top: 5px"
+              ><span class="fw-bold ps-2 fs-6">{{
+                f.hearing_check.value == true
+                  ? ("yes" | translate)
+                  : ("no" | translate)
+              }}</span></label
+            >
+          </div>
+        </div>
+        <label
+          *ngIf="f.hearing_check.value == true"
+          class="col-lg-2 col-form-label required fw-bold fs-6"
+          >{{ "hearingCheckDate" | translate }}</label
+        >
+        <div *ngIf="f.hearing_check.value == true" class="col-lg-3 fv-row">
+          <div class="input-group">
+            <input
+              style="
+                border-top-right-radius: 7px;
+                border-bottom-right-radius: 7px;
+                border: 1px solid #dbdfe9;
+              "
+              type="text"
+              placeholder="{{ 'hearingCheckDate' | translate }}"
+              class="form-control form-control-lg form-control-solid"
+              bsDatepicker
+              formControlName="hearing_check_date"
+              #d1="bsDatepicker"
+              [bsConfig]="{
+                containerClass: 'theme-blue',
+                dateInputFormat: 'YYYY-MM-DD',
+                isAnimated: true
+              }"
+            />
+            <div class="input-group-append">
+              <div
+                style="
+                  height: 46px;
+                  border-top-right-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                "
+                class="input-group-text"
+                (click)="d1.toggle()"
+              >
+                <i class="fa fa-calendar" style="cursor: pointer"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="f.hearing_check.value == true" class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "hearingCheckResult" | translate
+        }}</label>
+        <div class="col-lg-8 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'hearingCheckResult' | translate }}"
+            formControlName="hearing_check_result"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "epileptic" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'epileptic' | translate }}"
+            formControlName="epileptic"
+          />
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "breathingIssues" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'breathingIssues' | translate }}"
+            formControlName="breathing_issues"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "teethIssues" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'teethIssues' | translate }}"
+            formControlName="teeth_issues"
+          />
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "surgeriesDone" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'surgeriesDone' | translate }}"
+            formControlName="surgeries_done"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "examsApplied" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'examsApplied' | translate }}"
+            formControlName="exams_applied"
+          />
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "problemsFaced" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'problemsFaced' | translate }}"
+            formControlName="problems_faced"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "trainingNeeded" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'trainingNeeded' | translate }}"
+            formControlName="training_needed"
+          />
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "other" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'other' | translate }}"
+            formControlName="other"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label fw-bold fs-6">{{
+          "fatherNationalID" | translate
+        }}</label>
+        <div class="col-lg-3">
+          <img
+            *ngIf="imageUrlNationalID"
+            class="image-input-wrapper"
+            [src]="imageUrlNationalID"
+            alt=""
+          />
+          <label for="file-upload2" class="custom-file-upload">
+            <i class="fa fa-cloud-upload"></i> {{ "uploadPhoto" | translate }}
+          </label>
+          <input
+            id="file-upload2"
+            type="file"
+            (change)="onFileSelectedNational($event)"
+          />
+        </div>
+        <label class="col-lg-2 col-form-label fw-bold fs-6">{{
+          "motherNationalID" | translate
+        }}</label>
+        <div class="col-lg-3">
+          <img
+            *ngIf="imageUrlMother"
+            class="image-input-wrapper"
+            [src]="imageUrlMother"
+            alt=""
+          />
+          <label for="file-upload3" class="custom-file-upload">
+            <i class="fa fa-cloud-upload"></i> {{ "uploadPhoto" | translate }}
+          </label>
+          <input
+            id="file-upload3"
+            type="file"
+            (change)="onFileSelectedNationalMother($event)"
+          />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "attachments" | translate
+        }}</label>
+        <div class="col-lg-10 fv-row">
+          <div class="file-upload-container">
+            <input
+              type="file"
+              id="file"
+              multiple
+              (change)="getFileDetails($event)"
+            />
+            <label for="file" class="custom-file-upload">
+              {{ "selectFiles" | translate }}
+            </label>
+          </div>
+
+          <div class="file-details-container">
+            <div *ngFor="let file of myFiles" class="file-details">
+              <div class="file-name">{{ file.name }}</div>
+              <div class="file-info">
+                <span class="file-type">{{ file.type }}</span>
+                <span class="file-size">{{ file.size }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer d-flex justify-content-end py-6 px-9">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        style="height: 44px; margin-top: 2px"
+      >
+        <ng-container>{{ "saveChanges" | translate }}</ng-container>
+        <app-keenicon
+          *ngIf="loading === false"
+          name="abstract-10"
+          class="fs-2"
+        ></app-keenicon>
+        <span
+          *ngIf="loading === true"
+          class="spinner-border spinner-border-sm align-middle ms-2"
+        ></span>
+      </button>
+      <button
+        routerLink="/apps/childrens"
+        style="margin: 2px"
+        type="button"
+        class="btn btn-secondary"
+      >
+        <ng-container>
+          <i class="fa fa-share" aria-hidden="true"></i
+          >{{ "Back" | translate }}</ng-container
+        >
+      </button>
+    </div>
+  </form>
+</div>

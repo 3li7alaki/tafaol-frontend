@@ -1,0 +1,42 @@
+<div class="row g-5 g-xl-8">
+  <div *ngFor="let diagnose of diagnosesList" class="col-xl-4">
+    <a (click)="openEdit(diagnose)" style="cursor: pointer">
+      <app-stats-widget2
+        class="card card-xl-stretch mb-xl-8"
+        avatar="{{ 'https://cdn-icons-png.flaticon.com/512/4320/4320498.png' }}"
+        title="{{ diagnose.name }}"
+        description="{{ diagnose.description }}"
+      ></app-stats-widget2>
+    </a>
+  </div>
+</div>
+<div style="margin-top: 6px" class="col-md-4">
+  <!--begin::Card-->
+  <div class="card h-md-100">
+    <!--begin::Card body-->
+    <div class="card-body d-flex flex-center">
+      <!--begin::Button-->
+      <button
+        type="button"
+        class="btn btn-clear d-flex flex-column flex-center"
+        (click)="open()"
+      >
+        <!--begin::Illustration-->
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/4320/4320498.png"
+          alt=""
+          class="mw-100 mh-150px mb-7"
+        />
+        <!--end::Illustration-->
+        <!--begin::Label-->
+        <div class="fw-bold fs-3 text-gray-600 text-hover-primary">
+          {{ "addNewDiagnose" | translate }}
+        </div>
+        <!--end::Label-->
+      </button>
+      <!--begin::Button-->
+    </div>
+    <!--begin::Card body-->
+  </div>
+  <!--begin::Card-->
+</div>

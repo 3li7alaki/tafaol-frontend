@@ -1,0 +1,199 @@
+<div class="card mb-5 mb-xl-10">
+    <div
+      class="card-header border-0 cursor-pointer"
+      role="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#kt_account_profile_details"
+      aria-expanded="true"
+      aria-controls="kt_account_profile_details"
+    >
+      <div class="card-title m-0">
+        <h3 class="fw-bolder m-0">{{ "editGaurdian" | translate }}</h3>
+      </div>
+    </div>
+    <div id="kt_account_profile_details" class="collapse show">
+      <form
+        novalidate=""
+        class="form"
+        [formGroup]="gaurdianFrom"
+        (ngSubmit)="addGaurd()"
+      >
+        <div class="card-body border-top p-9">
+          <div class="row mb-6">
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+              "AUTH.INPUT.FULLNAME" | translate
+            }}</label>
+            <div class="col-lg-8 fv-row">
+              <input
+                [class.is-invalid]="f['name'].touched && f['name'].invalid"
+                type="text"
+                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                placeholder="{{ 'AUTH.INPUT.FULLNAME' | translate }}"
+                formControlName="name"
+              />
+              <div
+                *ngIf="f['name'].invalid && f['name'].touched"
+                style="color: red"
+              >
+                {{ "NameIsRequired" | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+              "phone" | translate
+            }}</label>
+            <div class="col-lg-8 fv-row">
+              <input
+                [class.is-invalid]="f['phone'].touched && f['phone'].invalid"
+                type="text"
+                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                placeholder="{{ 'phone' | translate }}"
+                formControlName="phone"
+              />
+              <div
+                *ngIf="f['phone'].invalid && f['phone'].touched"
+                style="color: red"
+              >
+                {{ "phoneIsRequired" | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+              "AUTH.INPUT.EMAIL" | translate
+            }}</label>
+            <div class="col-lg-8 fv-row">
+              <input
+                [class.is-invalid]="f['email'].touched && f['email'].invalid"
+                type="email"
+                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                placeholder="{{ 'AUTH.INPUT.EMAIL' | translate }}"
+                formControlName="email"
+              />
+              <div
+                *ngIf="f['email'].invalid && f['email'].touched"
+                style="color: red"
+              >
+                {{ "emailIsRequired" | translate }}
+              </div>
+            </div>
+          </div>
+  
+          <div class="row mb-6">
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+              "AUTH.INPUT.PASSWORD" | translate
+            }}</label>
+            <div class="col-lg-8 fv-row">
+              <div class="input-group">
+                <input
+                  [type]="eye ? 'text' : 'password'"
+                  placeholder="{{ 'AUTH.INPUT.PASSWORD' | translate }}"
+                  formControlName="password"
+                  class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                  [class.is-invalid]="
+                    f['password'].touched && f['password'].invalid
+                  "
+                />
+  
+                <div class="input-group-append">
+                  <span
+                    class="input-group-text"
+                    style="height: 46px"
+                    (click)="togglePassword()"
+                    ><i
+                      class="fa"
+                      [ngClass]="{
+                        'fa-eye-slash': !eye,
+                        'fa-eye': eye
+                      }"
+                    ></i
+                  ></span>
+                </div>
+                <div
+                  *ngIf="f['password'].invalid && f['password'].touched"
+                  style="color: red"
+                >
+                  {{ "passwordIsRequired" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+              "AUTH.INPUT.CONFIRM_PASSWORD" | translate
+            }}</label>
+            <div class="col-lg-8 fv-row">
+              <div class="input-group">
+                <input
+                  [type]="eye ? 'text' : 'password'"
+                  placeholder="{{ 'AUTH.INPUT.CONFIRM_PASSWORD' | translate }}"
+                  formControlName="password_confirmation"
+                  class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                  [class.is-invalid]="
+                    f['password_confirmation'].touched &&
+                    f['password_confirmation'].invalid
+                  "
+                />
+  
+                <div class="input-group-append">
+                  <span
+                    class="input-group-text"
+                    style="height: 46px"
+                    (click)="togglePassword()"
+                    ><i
+                      class="fa"
+                      [ngClass]="{
+                        'fa-eye-slash': !eye,
+                        'fa-eye': eye
+                      }"
+                    ></i
+                  ></span>
+                </div>
+                <div
+                  *ngIf="
+                    f['password_confirmation'].invalid &&
+                    f['password_confirmation'].touched
+                  "
+                  style="color: red"
+                >
+                  {{ "passwordIsRequired" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div class="card-footer d-flex justify-content-end py-6 px-9">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="height: 44px; margin-top: 2px"
+          >
+            <ng-container>{{ "saveChanges" | translate }}</ng-container>
+            <app-keenicon
+              *ngIf="loading === false"
+              name="abstract-10"
+              class="fs-2"
+            ></app-keenicon>
+            <span
+              *ngIf="loading === true"
+              class="spinner-border spinner-border-sm align-middle ms-2"
+            ></span>
+          </button>
+          <button
+            routerLink="/apps/gaurdian"
+            style="margin: 2px"
+            type="button"
+            class="btn btn-secondary"
+          >
+            <ng-container>
+              <i class="fa fa-share" aria-hidden="true"></i
+              >{{ "Back" | translate }}</ng-container
+            >
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

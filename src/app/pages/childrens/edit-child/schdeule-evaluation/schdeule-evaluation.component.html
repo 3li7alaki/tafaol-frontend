@@ -1,0 +1,159 @@
+<form
+  novalidate=""
+  [formGroup]="programsForm"
+  (ngSubmit)="addGaurd()"
+  class="form"
+>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ "schedule" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Dismiss click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        translate.defaultLang == "ar" ? "تنيبه" : "Notify"
+      }}</label>
+      <div class="col-lg-8 fv-row">
+        <div class="form-check form-check-solid form-switch fv-row">
+          <input
+            class="form-check-input w-45px h-30px"
+            type="checkbox"
+            id="allowmarketing"
+            formControlName="notify"
+          /><label class="form-check-label" style="margin-top: 5px"
+            ><span class="fw-bold ps-2 fs-6">{{
+              f.notify.value == true ? ("yes" | translate) : ("no" | translate)
+            }}</span></label
+          >
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <button
+            style="height: 44px"
+            type="button"
+            (click)="addLevel()"
+            class="btn btn-primary"
+          >
+            {{ "addSchedule" | translate }}
+            <app-keenicon name="abstract-10" class="fs-2"></app-keenicon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div formArrayName="schedule">
+      <div
+        *ngFor="let schedule of items().controls; let i = index"
+        [formGroupName]="i"
+      >
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "date" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <div class="input-group">
+              <input
+                style="
+                  border-top-right-radius: 7px;
+                  border-bottom-right-radius: 7px;
+                  border: 1px solid #dbdfe9;
+                "
+                type="text"
+                placeholder="{{ 'date' | translate }}"
+                class="form-control form-control-lg form-control-solid"
+                bsDatepicker
+                formControlName="date"
+                #d5="bsDatepicker"
+                [bsConfig]="{
+                  containerClass: 'theme-blue',
+                  dateInputFormat: 'YYYY-MM-DD',
+                  isAnimated: true
+                }"
+              />
+
+              <div class="input-group-append">
+                <div
+                  style="
+                    height: 46px;
+                    border-top-right-radius: 0px;
+                    border-bottom-right-radius: 0px;
+                  "
+                  class="input-group-text"
+                  (click)="d5.toggle()"
+                >
+                  <i class="fa fa-calendar" style="cursor: pointer"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "startTime" | translate
+          }}</label>
+          <div class="col-lg-2 fv-row">
+            <input type="time" class="form-control" formControlName="from" />
+          </div>
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "endTime" | translate
+          }}</label>
+          <div class="col-lg-2 fv-row">
+            <input type="time" class="form-control" formControlName="to" />
+          </div>
+          <div class="col-md-2">
+            <button
+              style="height: 44px"
+              [disabled]="i < 1"
+              type="button"
+              class="btn btn-danger btn-active-danger"
+              data-role-id="developer"
+              data-bs-toggle="modal"
+              data-bs-target="#kt_modal_update_role"
+              (click)="removeLevel(i)"
+            >
+              {{ "Delete" | translate }}
+              <app-keenicon name="delete-folder" class="fs-2"></app-keenicon>
+            </button>
+          </div>
+        </div>
+        <hr />
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      style="height: 44px; margin-top: 2px"
+    >
+      <ng-container>{{ "saveChanges" | translate }}</ng-container>
+      <app-keenicon
+        *ngIf="loading === false"
+        name="abstract-10"
+        class="fs-2"
+      ></app-keenicon>
+      <span
+        *ngIf="loading === true"
+        class="spinner-border spinner-border-sm align-middle ms-2"
+      ></span>
+    </button>
+    <button
+      (click)="activeModal.dismiss('Dismiss click')"
+      style="margin: 2px"
+      type="button"
+      class="btn btn-secondary"
+    >
+      <ng-container>
+        <i class="fa fa-share" aria-hidden="true"></i
+        >{{ "Back" | translate }}</ng-container
+      >
+    </button>
+  </div>
+</form>

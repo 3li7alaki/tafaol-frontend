@@ -1,0 +1,129 @@
+<!-- <div class="card mb-5 mb-xl-10">
+  <div
+    class="card-header border-0 cursor-pointer"
+    role="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#kt_account_profile_details"
+    aria-expanded="true"
+    aria-controls="kt_account_profile_details"
+  >
+    <div class="card-title m-0">
+      <div class="d-flex overflow-auto h-55px">
+        <ul
+          class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap"
+        >
+          <li class="nav-item">
+            <a
+              class="nav-link text-active-primary me-6"
+              [routerLink]="['basic-data']"
+              routerLinkActive="active"
+            >
+              {{ "child_basic_info" | translate }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link text-active-primary me-6"
+              [routerLink]="['data']"
+              routerLinkActive="active"
+            >
+              Overview
+            </a>
+          </li>
+        </ul>
+      </div>
+      <h3 class="fw-bolder m-0"></h3>
+    </div>
+  </div>
+</div> -->
+<div class="card mb-5 mb-xl-10">
+  <div class="card-body pt-9 pb-0">
+    <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+      <div class="me-7 mb-4">
+        <div
+          class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative"
+        >
+          <img
+            *ngIf="children?.photo != null"
+            [src]="children.photo"
+            alt="Metronic"
+          />
+          <img *ngIf="children?.photo == null" src="/assets/logo.png" alt="" />
+          <div
+            class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"
+          ></div>
+        </div>
+      </div>
+
+      <div class="flex-grow-1">
+        <div
+          class="d-flex justify-content-between align-items-start flex-wrap mb-2"
+        >
+          <div class="d-flex flex-column">
+            <div class="d-flex align-items-center mb-2">
+              <a
+                class="text-gray-800 text-hover-primary fs-2 fw-bolder me-1 cursor-pointer"
+              >
+                {{ children.full_name }}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-wrap fw-bold fs-6 mb-4 pe-2"></div>
+
+        <div class="d-flex overflow-auto h-55px">
+          <ul
+            class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap"
+          >
+            <li class="nav-item">
+              <a
+                class="nav-link text-active-primary me-6"
+                [routerLink]="['basic-data']"
+                routerLinkActive="active"
+              >
+                {{ "child_basic_info" | translate }}
+              </a>
+            </li>
+            <li class="nav-item" *ngIf="showDiagnoses">
+              <a
+                class="nav-link text-active-primary me-6"
+                [routerLink]="['diagnoses']"
+                routerLinkActive="active"
+              >
+                {{ "childDiagnose" | translate }}
+              </a>
+            </li>
+            <li class="nav-item" *ngIf="showDiagnoses">
+              <a
+                class="nav-link text-active-primary me-6"
+                [routerLink]="['programs']"
+                routerLinkActive="active"
+              >
+                {{ "childPrograms" | translate }}
+              </a>
+            </li>
+            <!-- <li class="nav-item" *ngIf="showDiagnoses">
+              <a
+                class="nav-link text-active-primary me-6"
+                [routerLink]="['evaluation']"
+                routerLinkActive="active"
+              >
+                {{ "MENU.EVALUATION" | translate }}
+              </a>
+            </li> -->
+            <li class="nav-item">
+              <a
+                class="nav-link text-active-primary me-6"
+                [routerLink]="['data']"
+                routerLinkActive="active"
+              >
+                {{ "child_data" | translate }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

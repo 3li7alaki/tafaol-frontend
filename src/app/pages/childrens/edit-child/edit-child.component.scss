@@ -1,0 +1,77 @@
+.custom-file-upload {
+    border: 1px solid #00afef;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #00afef;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.custom-file-upload:hover {
+    background-color: #fff;
+    color: #00afef;
+
+    .fa-cloud-upload {
+        color: #00afef
+    }
+}
+
+input[type="file"] {
+    display: none;
+}
+
+img {
+    width: 50%;
+    border-radius: 25px;
+    border: 2px solid #00afef;
+    margin-bottom: 9px;
+    display: block;
+}
+
+.fa-cloud-upload {
+    color: #fff;
+};
+.file-upload-container {
+   
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .custom-file-upload {
+    border: 1px solid #00afef;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #00afef;
+    color: #fff;
+    border-radius: 4px;
+  }
+  
+  .file-details-container {
+    margin-top: 10px;
+  }
+  
+  .file-details {
+    width: 30%;
+    background-color: #f5f5f5;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+  }
+  
+  .file-name {
+    font-weight: bold;
+  }
+  
+  .file-info {
+    color: #888;
+  }
+  
+  .file-type {
+    margin-right: 10px;
+  }
+  
+  .file-size {
+    font-size: 0.9em;
+  }

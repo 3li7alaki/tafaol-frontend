@@ -1,0 +1,376 @@
+<div class="card mb-5 mb-xl-10">
+  <div
+    class="card-header border-0 cursor-pointer"
+    role="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#kt_account_profile_details"
+    aria-expanded="true"
+    aria-controls="kt_account_profile_details"
+  >
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0">{{ "editProgram" | translate }}</h3>
+    </div>
+    <button
+      type="button"
+      class="btn btn-danger btn-active-danger"
+      data-role-id="developer"
+      data-bs-toggle="modal"
+      data-bs-target="#kt_modal_update_role"
+      (click)="deleteDiagnoses(program.id)"
+      style="height: 48px; margin-top: 11px"
+    >
+      {{ "Delete" | translate }}
+      <app-keenicon
+        *ngIf="loadingDelete === false"
+        name="delete-folder"
+        class="fs-2"
+      ></app-keenicon>
+      <span
+        *ngIf="loadingDelete === true"
+        class="spinner-border spinner-border-sm align-middle ms-2"
+      ></span>
+    </button>
+  </div>
+  <div id="kt_account_profile_details" class="collapse show">
+    <form
+      [formGroup]="programForm"
+      (ngSubmit)="addProgram()"
+      novalidate=""
+      class="form"
+    >
+      <div class="card-body border-top p-9">
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "name" | translate
+          }}</label>
+          <div class="col-lg-8 fv-row">
+            <input
+              [class.is-invalid]="f['name'].touched && f['name'].invalid"
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'name' | translate }}"
+              formControlName="name"
+            />
+            <div
+              *ngIf="f['name'].invalid && f['name'].touched"
+              style="color: red"
+            >
+              {{ "NameIsRequired" | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "description" | translate
+          }}</label>
+          <div class="col-lg-8 fv-row">
+            <input
+              [class.is-invalid]="
+                f['description'].invalid && f['description'].touched
+              "
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'description' | translate }}"
+              formControlName="description"
+            />
+            <div
+              *ngIf="f['description'].invalid && f['description'].touched"
+              style="color: red"
+            >
+              {{
+                translate.currentLang == "ar"
+                  ? "الوصف مطلوب"
+                  : "Description is Required"
+              }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "allDiagnoses" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <div class="form-check form-check-solid form-switch fv-row">
+              <input
+                class="form-check-input w-45px h-30px"
+                type="checkbox"
+                id="allowmarketing"
+                formControlName="all_diagnoses"
+              /><label class="form-check-label" style="margin-top: 5px"
+                ><span class="fw-bold ps-2 fs-6">{{
+                   f.all_diagnoses.value == true
+                    ? ("yes" | translate)
+                    : ("no" | translate)
+                }}</span></label
+              >
+            </div>
+          </div>
+          <label
+            *ngIf="f.all_diagnoses.value == false"
+            class="col-lg-2 col-form-label required fw-bold fs-6"
+            >{{ "MENU.DIAGNOSE" | translate }}</label
+          >
+          <div *ngIf="f.all_diagnoses.value == false" class="col-lg-3 fv-row">
+            <ng-select
+              [(ngModel)]="diagnoseSelected"
+              [items]="diagnosesList"
+              [multiple]="true"
+              [closeOnSelect]="false"
+              [searchable]="true"
+              formControlName="diagnoses"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="{{
+                translate.currentLang == 'ar'
+                  ? 'اختر التشخيصات'
+                  : 'Select Diagnoses'
+              }}"
+            >
+            </ng-select>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "allAges" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <div class="form-check form-check-solid form-switch fv-row">
+              <input
+                class="form-check-input w-45px h-30px"
+                type="checkbox"
+                id="allowmarketing"
+                formControlName="all_ages"
+              /><label class="form-check-label" style="margin-top: 5px"
+                ><span class="fw-bold ps-2 fs-6">{{
+                 f.all_ages.value == true
+                    ? ("yes" | translate)
+                    : ("no" | translate)
+                }}</span></label
+              >
+            </div>
+          </div>
+          <label
+            *ngIf="f.all_ages.value == false"
+            class="col-lg-2 col-form-label required fw-bold fs-6"
+            >{{ "max_age" | translate }}</label
+          >
+          <div *ngIf="f.all_ages.value == false" class="col-lg-3 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'max_age' | translate }}"
+              formControlName="max_age_male"
+            />
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label
+            *ngIf="f.all_ages.value == false"
+            class="col-lg-2 col-form-label required fw-bold fs-6"
+            >{{ "max_age_female" | translate }}</label
+          >
+          <div *ngIf="f.all_ages.value == false" class="col-lg-3 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'max_age_female' | translate }}"
+              formControlName="max_age_female"
+            />
+          </div>
+          <label
+            *ngIf="f.all_ages.value == false"
+            class="col-lg-2 col-form-label required fw-bold fs-6"
+            >{{ "min_age" | translate }}</label
+          >
+          <div *ngIf="f.all_ages.value == false" class="col-lg-3 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'min_age' | translate }}"
+              formControlName="min_age"
+            />
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "gender" | translate
+          }}</label>
+          <div class="col-lg-8 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg"
+              name="gender"
+              formControlName="gender"
+            >
+              <option [value]="'all'">{{ "all" | translate }}</option>
+              <option value="male">
+                {{ "male" | translate }}
+              </option>
+              <option value="female">
+                {{ "female" | translate }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-12">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6"
+            >{{'startTime' | translate}}</label
+          >
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="
+                f['startTime'].invalid && f['startTime'].touched
+              "
+              type="time"
+              class="form-control"
+              formControlName="startTime"
+            />
+
+            <div
+              *ngIf="f['startTime'].invalid && f['startTime'].touched"
+              style="color: red"
+            >
+              وقت البداية مطلوب
+            </div>
+          </div>
+          <label class="col-lg-2 col-form-label required fw-bold fs-6"
+            >{{'endTime' | translate}}</label
+          >
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="f['endTime'].invalid && f['endTime'].touched"
+              type="time"
+              class="form-control"
+              formControlName="endTime"
+            />
+
+            <div
+              *ngIf="f['endTime'].invalid && f['endTime'].touched"
+              style="color: red"
+            >
+              وقت النهاية مطلوب
+            </div>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "programDays" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <mat-button-toggle-group
+              formControlName="days"
+              [class.is-invalid]="f['days'].invalid && f['days'].touched"
+              multiple
+            >
+              <mat-button-toggle *ngFor="let day of days" [value]="day.name">
+                {{ translate.defaultLang == "ar" ? day.name_ar : day.name }}
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+            <div
+              *ngIf="f['days'].invalid && f['days'].touched"
+              style="color: red"
+            >
+              ايام الدورة مطلوبة
+            </div>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "ministryRegistered" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <div class="form-check form-check-solid form-switch fv-row">
+              <input
+                class="form-check-input w-45px h-30px"
+                type="checkbox"
+                id="allowmarketing"
+                formControlName="ministry_registered"
+              /><label class="form-check-label" style="margin-top: 5px"
+                ><span class="fw-bold ps-2 fs-6">{{
+                 f.ministry_registered.value == true
+                    ? ("yes" | translate)
+                    : ("no" | translate)
+                }}</span></label
+              >
+            </div>
+          </div>
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "active" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <div class="form-check form-check-solid form-switch fv-row">
+              <input
+                class="form-check-input w-45px h-30px"
+                type="checkbox"
+                id="allowmarketing"
+                formControlName="active"
+              /><label class="form-check-label" style="margin-top: 5px"
+                ><span class="fw-bold ps-2 fs-6">{{
+                  f.active.value == true
+                    ? ("yes" | translate)
+                    : ("no" | translate)
+                }}</span></label
+              >
+            </div>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "attachments" | translate
+          }}</label>
+          <div class="col-lg-10 fv-row">
+            <div class="file-upload-container">
+              <input
+                type="file"
+                id="file"
+                multiple
+                (change)="getFileDetails($event)"
+              />
+              <label for="file" class="custom-file-upload">
+                {{ "selectFiles" | translate }}
+              </label>
+            </div>
+
+            <div class="file-details-container">
+              <div *ngFor="let file of myFiles" class="file-details">
+                <div class="file-name">{{ file.name }}</div>
+                <div class="file-info">
+                  <span class="file-type">{{ file.type }}</span>
+                  <span class="file-size">{{ file.size }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          style="height: 44px; margin-top: 2px"
+        >
+          <ng-container>{{ "saveChanges" | translate }}</ng-container>
+          <app-keenicon
+            *ngIf="loading === false"
+            name="abstract-10"
+            class="fs-2"
+          ></app-keenicon>
+          <span
+            *ngIf="loading === true"
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </button>
+        <button
+          routerLink="/apps/programs"
+          style="margin: 2px"
+          type="button"
+          class="btn btn-secondary"
+        >
+          <ng-container>
+            <i class="fa fa-share" aria-hidden="true"></i
+            >{{ "Back" | translate }}</ng-container
+          >
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

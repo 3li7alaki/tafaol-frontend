@@ -1,0 +1,70 @@
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
+import { ToastrService } from "ngx-toastr";
+import { ApiService } from "src/app/services/api.service";
+
+@Component({
+  selector: "app-gaurdian-list",
+  templateUrl: "./gaurdian-list.component.html",
+  styleUrl: "./gaurdian-list.component.scss",
+})
+export class GaurdianListComponent implements OnInit {
+  gaurdianList: any[];
+  permissionList: any[] = JSON.parse(
+    localStorage.getItem("permissions") || "{}"
+  );
+  showAddGuardian = false;
+  showEditGuardian = false;
+  showDeleteGuardian = false;
+  user = JSON.parse(localStorage.getItem("user") || "{}");
+  constructor(
+    private apiService: ApiService,
+    private cdr: ChangeDetectorRef,
+    private toastr: ToastrService,
+    public translate: TranslateService
+  ) {
+    if (this.user.type != "super_admin") {
+      this.showAddGuardian =
+        this.permissionList?.includes("create-guardians");
+      this.showEditGuardian =
+        this.permissionList?.includes("update-guardians");
+     this.showDeleteGuardian =
+        this.permissionList?.includes("delete-guardians");
+    } else {
+      this.showAddGuardian = true;
+      this.showEditGuardian = true;
+      this.showDeleteGuardian = true;
+    }
+  }
+  ngOnInit(): void {
+    this.getGaurdians();
+  };
+
+  getGaurdians(){
+    this.apiService.getGaurdians().subscribe(
+      (res) => {
+        console.log(res);
+        this.gaurdianList = res;
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        console.log(error);
+        this.toastr.error(error.error.message, error.status);
+      }
+    );
+  };
+  deleteGaurdians(id: any) {
+    this.apiService.deleteGaurdian(id).subscribe(
+      (res) => {
+        this.toastr.success(this.translate.instant('gaurdianDeletedSuccessfully'));
+        this.getGaurdians()
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.toastr.error(error);
+        console.log(error);
+        this.cdr.detectChanges();
+      }
+    );
+  }
+}

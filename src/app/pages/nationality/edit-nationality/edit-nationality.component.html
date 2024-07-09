@@ -1,0 +1,123 @@
+<div class="card mb-5 mb-xl-10">
+  <div
+    class="card-header border-0 cursor-pointer"
+    role="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#kt_account_profile_details"
+    aria-expanded="true"
+    aria-controls="kt_account_profile_details"
+  >
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0">{{ "editNationality" | translate }}</h3>
+    </div>
+    <button
+    *ngIf="showDeleteNationalites"
+      type="button"
+      class="btn btn-danger btn-active-danger"
+      data-role-id="developer"
+      data-bs-toggle="modal"
+      data-bs-target="#kt_modal_update_role"
+      (click)="openModal(template, nationality.id)"
+      style="height: 48px; margin-top: 11px"
+    >
+      {{ "Delete" | translate }}
+      <app-keenicon
+        *ngIf="loadingDelete === false"
+        name="delete-folder"
+        class="fs-2"
+      ></app-keenicon>
+      <span
+        *ngIf="loadingDelete === true"
+        class="spinner-border spinner-border-sm align-middle ms-2"
+      ></span>
+    </button>
+  </div>
+  <div id="kt_account_profile_details" class="collapse show">
+    <form
+      novalidate=""
+      class="form"
+      [formGroup]="nationalityFrom"
+      (ngSubmit)="editNationality()"
+    >
+      <div class="card-body border-top p-9">
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "arabicName" | translate
+          }}</label>
+          <div class="col-lg-8 fv-row">
+            <input
+              [class.is-invalid]="f['name'].touched && f['name'].invalid"
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'arabicName' | translate }}"
+              formControlName="name_ar"
+            />
+            <div
+              *ngIf="f['name_ar'].invalid && f['name_ar'].touched"
+              style="color: red"
+            >
+              {{ "NameIsRequired" | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "englishName" | translate
+          }}</label>
+          <div class="col-lg-8 fv-row">
+            <input
+              [class.is-invalid]="f['name'].touched && f['name'].invalid"
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'englishName' | translate }}"
+              formControlName="name"
+            />
+            <div
+              *ngIf="f['name'].invalid && f['name'].touched"
+              style="color: red"
+            >
+              {{ "NameIsRequired" | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          style="height: 44px; margin-top: 2px"
+        >
+          <ng-container>{{ "saveChanges" | translate }}</ng-container>
+          <app-keenicon
+            *ngIf="loading === false"
+            name="abstract-10"
+            class="fs-2"
+          ></app-keenicon>
+          <span
+            *ngIf="loading === true"
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </button>
+        <button
+          routerLink="/apps/nationality"
+          style="margin: 2px"
+          type="button"
+          class="btn btn-secondary"
+        >
+          <ng-container>
+            <i class="fa fa-share" aria-hidden="true"></i
+            >{{ "Back" | translate }}</ng-container
+          >
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>هل أنت متأكد من الحذف ؟</p>
+    <button type="button" class="btn btn-danger" style="margin: 5px;" (click)="deleteNationality(deleteID)" >{{'yes' | translate}}</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >{{'no' | translate}}</button>
+  </div>
+</ng-template>

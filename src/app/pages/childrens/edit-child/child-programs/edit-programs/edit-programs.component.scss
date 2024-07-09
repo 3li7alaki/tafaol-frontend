@@ -1,0 +1,15 @@
+mat-button-toggle {
+    display: inline-block;
+    padding: 9px 14px;
+    margin: 5px;
+    border: 1px solid #ccc !important;
+    border-radius: 4px;
+    background-color: transparent;
+    color: var(--kt-form-label-color);
+}
+
+mat-button-toggle.mat-button-toggle-checked {
+    background-color: #00afef;
+    border: #00afef !important;
+    color: #fff;
+}

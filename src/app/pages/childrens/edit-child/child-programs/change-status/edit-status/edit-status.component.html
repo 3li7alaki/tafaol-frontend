@@ -1,0 +1,155 @@
+<form [formGroup]="statusForm" (ngSubmit)="addGaurd()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        {{ "changeStatus" | translate }}
+      </h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="activeModal.dismiss('Dismiss click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "oldStatus" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <select
+            class="form-select form-select-solid form-select-lg"
+            formControlName="old_status_id"
+          >
+            <option [value]="null">
+              {{
+                translate.defaultLang == "ar" ? "اختر الحالة" : "Select Status"
+              }}
+            </option>
+            <option
+              [value]="statuses.id"
+              *ngFor="let statuses of statusList"
+            >
+              {{
+                translate.defaultLang == "en"
+                  ? statuses?.name
+                  : statuses?.name_ar
+              }}
+            </option>
+          </select>
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "newStatus" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <select
+            class="form-select form-select-solid form-select-lg"
+            formControlName="new_status_id"
+          >
+            <option [value]="null">
+              {{
+                translate.defaultLang == "ar" ? "اختر الحالة" : "Select Status"
+              }}
+            </option>
+            <option
+              [value]="statuses.id"
+              *ngFor="let statuses of statusList"
+            >
+              {{
+                translate.defaultLang == "en"
+                  ? statuses?.name
+                  : statuses?.name_ar
+              }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "date" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <div class="input-group">
+            <input
+              style="
+                border-top-right-radius: 7px;
+                border-bottom-right-radius: 7px;
+                border: 1px solid #dbdfe9;
+              "
+              type="text"
+              placeholder="{{ 'date' | translate }}"
+              class="form-control form-control-lg form-control-solid"
+              bsDatepicker
+              formControlName="date"
+              #d5="bsDatepicker"
+              [bsConfig]="{
+                containerClass: 'theme-blue',
+                dateInputFormat: 'YYYY-MM-DD',
+                isAnimated: true
+              }"
+            />
+  
+            <div class="input-group-append">
+              <div
+                style="
+                  height: 46px;
+                  border-top-right-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                "
+                class="input-group-text"
+                (click)="d5.toggle()"
+              >
+                <i class="fa fa-calendar" style="cursor: pointer"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "note" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <input
+            [class.is-invalid]="f['note'].touched && f['note'].invalid"
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            placeholder="{{ 'note' | translate }}"
+            formControlName="note"
+          />
+          <div
+            *ngIf="f['note'].invalid && f['note'].touched"
+            style="color: red"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        style="height: 44px; margin-top: 2px"
+      >
+        <ng-container>{{ "saveChanges" | translate }}</ng-container>
+        <app-keenicon
+          *ngIf="loading === false"
+          name="abstract-10"
+          class="fs-2"
+        ></app-keenicon>
+        <span
+          *ngIf="loading === true"
+          class="spinner-border spinner-border-sm align-middle ms-2"
+        ></span>
+      </button>
+      <button
+        (click)="activeModal.dismiss('Dismiss click')"
+        style="margin: 2px"
+        type="button"
+        class="btn btn-secondary"
+      >
+        <ng-container>
+          <i class="fa fa-share" aria-hidden="true"></i
+          >{{ "Back" | translate }}</ng-container
+        >
+      </button>
+    </div>
+  </form>
+  

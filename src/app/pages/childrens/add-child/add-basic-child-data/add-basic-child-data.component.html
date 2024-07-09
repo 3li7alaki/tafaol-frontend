@@ -1,0 +1,398 @@
+<div class="card mb-5 mb-xl-10">
+  <div
+    class="card-header border-0 cursor-pointer"
+    role="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#kt_account_profile_details"
+    aria-expanded="true"
+    aria-controls="kt_account_profile_details"
+  >
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0">{{ "addNewChild" | translate }}</h3>
+    </div>
+  </div>
+  <div id="kt_account_profile_details" class="collapse show">
+    <form novalidate="" class="form" [formGroup]="childrenForm" (ngSubmit)="addChild()">
+      <div class="card-body border-top p-9">
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label fw-bold fs-6">{{
+            "childImage" | translate
+          }}</label>
+          <div class="col-lg-3">
+            <img
+              *ngIf="imageUrl"
+              class="image-input-wrapper"
+              [src]="imageUrl"
+              alt=""
+            />
+            <label for="file-upload" class="custom-file-upload">
+              <i class="fa fa-cloud-upload"></i> {{ "uploadPhoto" | translate }}
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              (change)="onFileSelected($event)"
+            />
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "childFullName" | translate
+          }}</label>
+          <div class="col-lg-8 fv-row">
+            <input
+              [class.is-invalid]="
+                f['full_name'].touched && f['full_name'].invalid
+              "
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'childFullName' | translate }}"
+              formControlName="full_name"
+            />
+            <div
+              *ngIf="f['full_name'].invalid && f['full_name'].touched"
+              style="color: red"
+            >
+              {{ "NameIsRequired" | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "birthDate" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <div class="input-group">
+              <input
+                style="
+                  border-top-right-radius: 7px;
+                  border-bottom-right-radius: 7px;
+                  border: 1px solid #dbdfe9;
+                "
+                type="text"
+                placeholder="{{ 'birthDate' | translate }}"
+                class="form-control form-control-lg form-control-solid"
+                bsDatepicker
+                formControlName="birth_date"
+                #d5="bsDatepicker"
+                [bsConfig]="{
+                  containerClass: 'theme-blue',
+                  dateInputFormat: 'YYYY-MM-DD',
+                  isAnimated: true
+                }"
+              />
+
+              <div class="input-group-append">
+                <div
+                  style="
+                    height: 46px;
+                    border-top-right-radius: 0px;
+                    border-bottom-right-radius: 0px;
+                  "
+                  class="input-group-text"
+                  (click)="d5.toggle()"
+                >
+                  <i class="fa fa-calendar" style="cursor: pointer"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "birthPlace" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="
+                f['birth_place'].touched && f['birth_place'].invalid
+              "
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'birthPlace' | translate }}"
+              formControlName="birth_place"
+            />
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "gender" | translate
+          }}</label>
+          <div class="col-lg-8 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg"
+              name="role_id"
+              formControlName="gender"
+            >
+              <option [value]="''">{{ "selectGender" | translate }}</option>
+              <option value="male">
+                {{ "male" | translate }}
+              </option>
+              <option value="female">
+                {{ "female" | translate }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "MENU.NATIONALITY" | translate
+          }}</label>
+          <div class="col-lg-8 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg"
+              name="role_id"
+              formControlName="nationality_id"
+            >
+              <option [value]="null">
+                {{ "selectNationality" | translate }}
+              </option>
+              <option [value]="nationalites.id" *ngFor="let nationalites of nationalityList">
+                {{
+                  translate.currentLang == "ar"
+                    ? nationalites?.name_ar
+                    : nationalites?.name
+                }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "cpr" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="f['cpr'].touched && f['cpr'].invalid"
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'cpr' | translate }}"
+              formControlName="cpr"
+            />
+          </div>
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "otherNumbers" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="
+                f['other_number'].touched && f['other_number'].invalid
+              "
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'otherNumbers' | translate }}"
+              formControlName="other_number"
+            />
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "livesWith" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="
+                f['lives_with'].touched && f['lives_with'].invalid
+              "
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'livesWith' | translate }}"
+              formControlName="lives_with"
+            />
+          </div>
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "guardianRelation" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="
+                f['guardian_relation'].touched && f['guardian_relation'].invalid
+              "
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'guardianRelation' | translate }}"
+              formControlName="guardian_relation"
+            />
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "otherCenter" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="
+                f['other_center'].touched && f['other_center'].invalid
+              "
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'otherCenter' | translate }}"
+              formControlName="other_center"
+            />
+          </div>
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "otherCenterYear" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="
+                f['other_center_year'].touched && f['other_center_year'].invalid
+              "
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'otherCenterYear' | translate }}"
+              formControlName="other_center_year"
+            />
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "area" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="f['area'].touched && f['area'].invalid"
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'area' | translate }}"
+              formControlName="area"
+            />
+          </div>
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "block" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="f['block'].touched && f['block'].invalid"
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'block' | translate }}"
+              formControlName="other_center_year"
+            />
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "street" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="f['street'].touched && f['street'].invalid"
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'street' | translate }}"
+              formControlName="street"
+            />
+          </div>
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "building" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <input
+              [class.is-invalid]="
+                f['building'].touched && f['building'].invalid
+              "
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="{{ 'building' | translate }}"
+              formControlName="other_center_year"
+            />
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "ministryRegistered" | translate
+          }}</label>
+          <div class="col-lg-3 fv-row">
+            <div class="form-check form-check-solid form-switch fv-row">
+              <input
+                class="form-check-input w-45px h-30px"
+                type="checkbox"
+                id="allowmarketing"
+                formControlName="ministry_registered"
+              /><label class="form-check-label" style="margin-top: 5px"
+                ><span class="fw-bold ps-2 fs-6">{{
+                 f.ministry_registered.value == true
+                    ? ("yes" | translate)
+                    : ("no" | translate)
+                }}</span></label
+              >
+            </div>
+          </div>
+          <label class="col-lg-2 col-form-label fw-bold fs-6">{{
+            "nationalID" | translate
+          }}</label>
+          <div class="col-lg-3">
+            <img
+              *ngIf="imageUrlNationalID"
+              class="image-input-wrapper"
+              [src]="imageUrlNationalID"
+              alt=""
+            />
+            <label for="file-upload2" class="custom-file-upload">
+              <i class="fa fa-cloud-upload"></i> {{ "uploadPhoto" | translate }}
+            </label>
+            <input
+              id="file-upload2"
+              type="file"
+              (change)="onFileSelectedNational($event)"
+            />
+          </div>
+        </div>
+        <!-- <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "attachments" | translate
+          }}</label>
+          <div class="col-lg-10 fv-row">
+            <div class="file-upload-container">
+              <input
+                type="file"
+                id="file"
+                multiple
+                (change)="getFileDetails($event)"
+              />
+              <label for="file" class="custom-file-upload"> {{'selectFiles' | translate}} </label>
+            </div>
+  
+            <div class="file-details-container">
+              <div *ngFor="let file of myFiles" class="file-details">
+                <div class="file-name">{{ file.name }}</div>
+                <div class="file-info">
+                  <span class="file-type">{{ file.type }}</span>
+                  <span class="file-size">{{ file.size }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          style="height: 44px; margin-top: 2px"
+        >
+          <ng-container>{{ "saveChanges" | translate }}</ng-container>
+          <app-keenicon
+            *ngIf="loading === false"
+            name="abstract-10"
+            class="fs-2"
+          ></app-keenicon>
+          <span
+            *ngIf="loading === true"
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </button>
+        <button
+          routerLink="/apps/childrens"
+          style="margin: 2px"
+          type="button"
+          class="btn btn-secondary"
+        >
+          <ng-container>
+            <i class="fa fa-share" aria-hidden="true"></i
+            >{{ "Back" | translate }}</ng-container
+          >
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

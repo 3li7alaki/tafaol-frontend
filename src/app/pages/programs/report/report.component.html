@@ -1,0 +1,164 @@
+<div class="card">
+  <!-- begin::Header -->
+  <div class="card-header border-0 pt-5">
+    <h3 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-3 mb-1">{{
+        "MENU.PROGRAMSREPORT" | translate
+      }}</span>
+    </h3>
+    <div
+      class="card-toolbar"
+      data-bs-toggle="tooltip"
+      data-bs-placement="top"
+      data-bs-trigger="hover"
+      title="Click to add a user"
+    >
+      <!-- <button
+        class="btn btn-sm btn-light-primary"
+        (click)="isVisiable = !isVisiable"
+      >
+        <span><i class="fa fa-filter" aria-hidden="true"></i></span>
+      </button> -->
+    </div>
+  </div>
+  <!-- end::Header -->
+
+  <!-- begin::Body -->
+  <div class="card-body py-3">
+    <form [formGroup]="filterForm" (ngSubmit)="getPoints()" *ngIf="isVisiable">
+      <div class="row">
+        <div class="col-auto">
+          <select
+            class="form-select form-select-solid form-select-lg fw-bold"
+            formControlName="program_id"
+            style="background-color: white"
+          >
+            <option value="">{{ "MENU.PROGRAMS" | translate }}</option>
+            <option *ngFor="let teacher of programList" [value]="teacher.id">
+              {{ teacher.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-auto">
+          <select
+            class="form-select form-select-solid form-select-lg fw-bold"
+            formControlName="status_id"
+            style="background-color: white"
+          >
+            <option value="">{{ "MENU.STATUS" | translate }}</option>
+            <option *ngFor="let student of statusList" [value]="student.id">
+              {{
+                translate.defaultLang == "en" ? student.name : student.name_ar
+              }}
+            </option>
+          </select>
+        </div>
+
+        <div class="d-flex justify-content-end py-6 px-9">
+          <button type="submit" class="btn btn-primary">
+            <ng-container *ngIf="!isLoading">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </ng-container>
+            <ng-container *ngIf="isLoading"
+              ><i class="fa fa-spinner fa-sharp fa-beat" aria-hidden="true"></i
+            ></ng-container>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- begin::Table container -->
+    <div class="table-responsive">
+      <!-- begin::Table -->
+      <table
+        class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
+      >
+        <!-- begin::Table head -->
+        <thead>
+          <tr class="fw-bolder text-muted">
+            <th class="min-w-130px">{{ "AUTH.INPUT.FULLNAME" | translate }}</th>
+            <th class="min-w-140px">{{ "programID" | translate }}</th>
+            <th class="min-w-140px">{{ "cpr" | translate }}</th>
+            <th class="min-w-120px">{{ "gaurdianName" | translate }}</th>
+            <th class="min-w-120px">{{ "gaurdianPhone" | translate }}</th>
+            <th class="min-w-140px">{{ "status" | translate }}</th>
+          </tr>
+        </thead>
+        <!-- end::Table head -->
+        <!-- begin::Table body -->
+        <tbody>
+          <tr *ngFor="let history of history">
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start flex-column">
+                  <a
+                    [routerLink]="[
+                      '/apps/childrens/edit-child/' + history.id + '/basic-data'
+                    ]"
+                  >
+                    <p class="text-dark fw-bolder text-hover-primary fs-6">
+                      {{ history.full_name }}
+                    </p>
+                  </a>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start flex-column">
+                  <p class="text-dark fw-bolder text-hover-primary fs-6">
+                    {{ history.child_programs.program_id }}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start flex-column">
+                  <p class="text-dark fw-bolder text-hover-primary fs-6">
+                    {{ history.cpr }}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start flex-column">
+                  <p class="text-dark fw-bolder text-hover-primary fs-6">
+                    {{ history.guardian.name }}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start flex-column">
+                  <p class="text-dark fw-bolder text-hover-primary fs-6">
+                    {{ history.guardian.phone }}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start flex-column">
+                  <p class="text-dark fw-bolder text-hover-primary fs-6">
+                    {{
+                      translate.defaultLang == "ar"
+                        ? history.status.name_ar
+                        : history.status.name
+                    }}
+                  </p>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <!-- end::Table body -->
+      </table>
+      <!-- end::Table -->
+    </div>
+    <!-- end::Table container -->
+  </div>
+  <!-- begin::Body -->
+</div>

@@ -1,0 +1,47 @@
+<div class="row g-5 g-xl-8">
+  <div *ngFor="let nationality of nationalityList" class="col-xl-4">
+    <a
+      [routerLink]="'/apps/nationality/edit-nationality/' + nationality.id"
+      style="cursor: pointer"
+    >
+      <app-stats-widget2
+        class="card card-xl-stretch mb-xl-8"
+        avatar="{{ 'https://cdn-icons-png.freepik.com/512/5086/5086930.png' }}"
+        title="{{
+          translate.currentLang == 'en' ? nationality.name : nationality.name_ar
+        }}"
+        description="System & Software Architect"
+      ></app-stats-widget2>
+    </a>
+  </div>
+</div>
+<div *ngIf="showAddNationalites" style="margin-top: 6px" class="col-md-4">
+  <!--begin::Card-->
+  <div class="card h-md-100">
+    <!--begin::Card body-->
+    <div class="card-body d-flex flex-center">
+      <!--begin::Button-->
+      <button
+        type="button"
+        class="btn btn-clear d-flex flex-column flex-center"
+        [routerLink]="'/apps/nationality/add-nationality'"
+      >
+        <!--begin::Illustration-->
+        <img
+          src="assets/media/illustrations/sketchy-1/4.png"
+          alt=""
+          class="mw-100 mh-150px mb-7"
+        />
+        <!--end::Illustration-->
+        <!--begin::Label-->
+        <div class="fw-bold fs-3 text-gray-600 text-hover-primary">
+          {{ "addNewNationality" | translate }}
+        </div>
+        <!--end::Label-->
+      </button>
+      <!--begin::Button-->
+    </div>
+    <!--begin::Card body-->
+  </div>
+  <!--begin::Card-->
+</div>

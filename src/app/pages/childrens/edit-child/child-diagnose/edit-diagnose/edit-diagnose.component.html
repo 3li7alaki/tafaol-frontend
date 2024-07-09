@@ -1,0 +1,217 @@
+<form
+  novalidate=""
+  class="form"
+  [formGroup]="diagnosesForm"
+  (ngSubmit)="addDiagnose()"
+>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ "editDiagnose" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Dismiss click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row mb-6">
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        translate.defaultLang == "ar" ? "التشخيص" : "Diagnose"
+      }}</label>
+      <div class="col-lg-8 fv-row">
+        <select
+          class="form-select form-select-solid form-select-lg"
+          formControlName="diagnose_id"
+        >
+          <option [value]="null">
+            {{
+              translate.defaultLang == "ar" ? "اختر التشخيص" : "Select Diagnose"
+            }}
+          </option>
+          <option
+            [value]="nationalites.id"
+            *ngFor="let nationalites of diagnosesList"
+          >
+            {{ nationalites?.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <!-- <div class="row mb-6">
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        "name" | translate
+      }}</label>
+      <div class="col-lg-3 fv-row">
+        <input
+          type="text"
+          class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+          placeholder="{{ 'name' | translate }}"
+          formControlName="name"
+        />
+      </div>
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        "description" | translate
+      }}</label>
+      <div class="col-lg-3 fv-row">
+        <input
+          type="text"
+          class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+          placeholder="{{ 'description' | translate }}"
+          formControlName="description"
+        />
+      </div>
+    </div> -->
+    <div class="row mb-6">
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        "date" | translate
+      }}</label>
+      <div class="col-lg-3 fv-row">
+        <div class="input-group">
+          <input
+            style="
+              border-top-right-radius: 7px;
+              border-bottom-right-radius: 7px;
+              border: 1px solid #dbdfe9;
+            "
+            type="text"
+            placeholder="{{ 'date' | translate }}"
+            class="form-control form-control-lg form-control-solid"
+            bsDatepicker
+            formControlName="date"
+            #d5="bsDatepicker"
+            [bsConfig]="{
+              containerClass: 'theme-blue',
+              dateInputFormat: 'YYYY-MM-DD',
+              isAnimated: true
+            }"
+          />
+
+          <div class="input-group-append">
+            <div
+              style="
+                height: 46px;
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;
+              "
+              class="input-group-text"
+              (click)="d5.toggle()"
+            >
+              <i class="fa fa-calendar" style="cursor: pointer"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        "institution" | translate
+      }}</label>
+      <div class="col-lg-3 fv-row">
+        <input
+          type="text"
+          class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+          placeholder="{{ 'institution' | translate }}"
+          formControlName="institution"
+        />
+      </div>
+    </div>
+    <div class="row mb-6">
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        "symptoms" | translate
+      }}</label>
+      <div class="col-lg-3 fv-row">
+        <input
+          type="text"
+          class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+          placeholder="{{ 'symptoms' | translate }}"
+          formControlName="symptoms"
+        />
+      </div>
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        "symptomsAge" | translate
+      }}</label>
+      <div class="col-lg-3 fv-row">
+        <input
+          type="text"
+          class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+          placeholder="{{ 'symptomsAge' | translate }}"
+          formControlName="symptoms_age"
+        />
+      </div>
+    </div>
+    <div class="row mb-6">
+      <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+        "attachment" | translate
+      }}</label>
+      <div class="col-lg-10 fv-row">
+        <div class="file-upload-container">
+          <input
+            type="file"
+            id="file"
+            (change)="onFileSelectedNational($event)"
+          />
+          <label for="file" class="custom-file-upload">
+            {{ "selectFile" | translate }}
+          </label>
+        </div>
+
+        <div class="file-details-container" *ngIf="selectedFileNationalID">
+          <div class="file-details">
+            <div class="file-name">{{ selectedFileNationalID?.name }}  <i
+              *ngIf="imageUrlNationalID"
+              (click)="goToLink(imageUrlNationalID.path)"
+              class="fa fa-eye"
+            > </i></div>
+            <div class="file-info">
+              <span class="file-type">{{ selectedFileNationalID?.type }}</span>
+              <span class="file-size">{{ selectedFileNationalID?.size }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="file-details-container" *ngIf="!selectedFileNationalID">
+          <div class="file-details">
+            <div class="file-name">{{ imageUrlNationalID?.name }}  <i
+              *ngIf="imageUrlNationalID"
+              (click)="goToLink(imageUrlNationalID.path)"
+              class="fa fa-eye"
+            > </i></div>
+            <div class="file-info">
+              <span class="file-type">{{ imageUrlNationalID?.type }}</span>
+              <span class="file-size">{{ imageUrlNationalID?.size }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      style="height: 44px; margin-top: 2px"
+    >
+      <ng-container>{{ "saveChanges" | translate }}</ng-container>
+      <app-keenicon
+        *ngIf="loading === false"
+        name="abstract-10"
+        class="fs-2"
+      ></app-keenicon>
+      <span
+        *ngIf="loading === true"
+        class="spinner-border spinner-border-sm align-middle ms-2"
+      ></span>
+    </button>
+    <button
+      (click)="activeModal.dismiss('Dismiss click')"
+      style="margin: 2px"
+      type="button"
+      class="btn btn-secondary"
+    >
+      <ng-container>
+        <i class="fa fa-share" aria-hidden="true"></i
+        >{{ "Back" | translate }}</ng-container
+      >
+    </button>
+  </div>
+</form>
