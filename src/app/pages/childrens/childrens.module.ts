@@ -26,7 +26,6 @@ import { EditChildComponent } from "./edit-child/edit-child.component";
 import { ChildDataComponent } from "./edit-child/child-data/child-data.component";
 import { BasicChildDataComponent } from "./edit-child/basic-child-data/basic-child-data.component";
 import { AddBasicChildDataComponent } from "./add-child/add-basic-child-data/add-basic-child-data.component";
-import { AddChildDataComponent } from "./add-child/add-child-data/add-child-data.component";
 import { ChildDiagnoseComponent } from "./edit-child/child-diagnose/child-diagnose.component";
 import { AddDiagnoseComponent } from "./edit-child/child-diagnose/add-diagnose/add-diagnose.component";
 import { EditDiagnoseComponent } from "./edit-child/child-diagnose/edit-diagnose/edit-diagnose.component";
@@ -55,7 +54,6 @@ defineLocale('ar', arLocale);
     ChildDataComponent,
     BasicChildDataComponent,
     AddBasicChildDataComponent,
-    AddChildDataComponent,
     ChildDiagnoseComponent,
     AddDiagnoseComponent,
     EditDiagnoseComponent,
@@ -87,10 +85,6 @@ defineLocale('ar', arLocale);
           {
             path: "add-basic-data",
             component: AddBasicChildDataComponent,
-          },
-          {
-            path: "add-data",
-            component: AddChildDataComponent,
           },
         ],
       },

@@ -157,6 +157,27 @@
         </div>
         <div class="row mb-6">
           <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+            "guardian" | translate
+            }}</label>
+          <div class="col-lg-8 fv-row">
+            <select
+                    class="form-select form-select-solid form-select-lg"
+                    name="guardian"
+                    formControlName="guardian_id"
+            >
+              <option [value]="null">
+                {{ "guardian" | translate }}
+              </option>
+              <option [value]="guardian.id" *ngFor="let guardian of guardianList">
+                {{
+                    guardian?.name + ' +' + guardian?.phone
+                }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
             "cpr" | translate
           }}</label>
           <div class="col-lg-3 fv-row">
@@ -196,7 +217,13 @@
               class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
               placeholder="{{ 'livesWith' | translate }}"
               formControlName="lives_with"
+              list="livesWithOptions"
             />
+            <datalist id="livesWithOptions">
+              <option value="{{ 'bothParents' | translate }}">
+              <option value="{{ 'motherOnly' | translate }}">
+              <option value="{{ 'fatherOnly' | translate }}">
+            </datalist>
           </div>
           <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
             "guardianRelation" | translate
@@ -293,10 +320,26 @@
               type="text"
               class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
               placeholder="{{ 'building' | translate }}"
-              formControlName="other_center_year"
+              formControlName="building"
             />
           </div>
-        </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+              "apartment" | translate
+              }}</label>
+            <div class="col-lg-3 fv-row">
+              <input
+                      [class.is-invalid]="
+                f['apartment'].touched && f['apartment'].invalid
+              "
+                      type="text"
+                      class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                      placeholder="{{ 'apartment' | translate }}"
+                      formControlName="apartment"
+              />
+            </div>
+            </div>
         <div class="row mb-6">
           <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
             "ministryRegistered" | translate

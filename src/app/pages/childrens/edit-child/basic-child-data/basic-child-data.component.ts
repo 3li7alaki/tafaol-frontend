@@ -17,6 +17,7 @@ export class BasicChildDataComponent implements OnInit {
   children: any;
   childrenForm: FormGroup;
   nationalityList: any[];
+  guardianList: any[];
   loading = false;
   selectedFile: File;
   imageUrl: string;
@@ -47,6 +48,17 @@ export class BasicChildDataComponent implements OnInit {
         console.log(error);
         this.toastr.error(error.error);
       }
+    );
+    this.apiService.getGaurdians().subscribe(
+        (res) => {
+          console.log(res);
+          this.guardianList = res;
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          console.log(error);
+          this.toastr.error(error);
+        }
     );
   }
   ngOnInit(): void {
@@ -93,8 +105,10 @@ export class BasicChildDataComponent implements OnInit {
       street: [this.children.street, [Validators.required]],
       block: [this.children.block, [Validators.required]],
       area: [this.children.area, [Validators.required]],
+      apartment: [this.children.apartment, [Validators.required]],
       age: [this.children.age, [Validators.required]],
       nationality_id: [this.children.nationality_id, [Validators.required]],
+      guardian_id: [this.children.guardian_id, [Validators.required]],
     });
     this.imageUrl = this.children.photo;
     this.imageUrlNationalID = this.children.national_id;
@@ -170,6 +184,7 @@ export class BasicChildDataComponent implements OnInit {
     formData.append("birth_place", this.f.birth_place.value);
     formData.append("gender", this.f.gender.value);
     formData.append("nationality_id", this.f.nationality_id.value);
+    formData.append("guardian_id", this.f.guardian_id.value);
     if (this.selectedFile != null) {
       formData.append("photo", this.selectedFile);
     }
@@ -191,6 +206,7 @@ export class BasicChildDataComponent implements OnInit {
     formData.append("street", this.f.street.value);
     formData.append("block", this.f.block.value);
     formData.append("area", this.f.area.value);
+    formData.append("apartment", this.f.apartment.value);
 
     this.loading = true;
     console.log(formData);
@@ -199,7 +215,6 @@ export class BasicChildDataComponent implements OnInit {
         this.loading = false;
         console.log(res);
         this.toastr.success(this.translate.instant("childEditedSuccessfully"));
-       
         this.cdr.detectChanges();
       },
       (error) => {

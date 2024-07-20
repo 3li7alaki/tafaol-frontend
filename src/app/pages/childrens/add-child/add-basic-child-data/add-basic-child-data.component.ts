@@ -14,6 +14,7 @@ import { ApiService } from "src/app/services/api.service";
 export class AddBasicChildDataComponent implements OnInit {
   childrenForm: FormGroup;
   nationalityList: any[];
+  guardianList: any[];
   loading = false;
   selectedFile: File;
   imageUrl: string;
@@ -44,6 +45,17 @@ export class AddBasicChildDataComponent implements OnInit {
         this.toastr.error(error);
       }
     );
+    this.apiService.getGaurdians().subscribe(
+        (res) => {
+            console.log(res);
+            this.guardianList = res;
+            this.cdr.detectChanges();
+        },
+        (error) => {
+            console.log(error);
+            this.toastr.error(error);
+        }
+        );
   }
 
   initForm() {
@@ -63,7 +75,9 @@ export class AddBasicChildDataComponent implements OnInit {
       street: ["", [Validators.required]],
       block: ["", [Validators.required]],
       area: ["", [Validators.required]],
+      apartment: ["", [Validators.required]],
       nationality_id: [null, [Validators.required]],
+      guardian_id: [null, [Validators.required]],
     });
   }
   get f() {
@@ -104,22 +118,9 @@ export class AddBasicChildDataComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  getFileDetails(e: any) {
-    //console.log (e.target.files);
-    for (var i = 0; i < e.target.files.length; i++) {
-      this.myFiles.push(e.target.files[i]);
-    }
-    console.log(this.myFiles);
-  }
-
   addChild() {
     const formData = new FormData();
-    for (let i = 0; i < this.myFiles.length; i++) {
-      const file = this.myFiles[i];
-      formData.append(`attachments[${i}][name]`, file.name);
-      formData.append(`attachments[${i}][path]`, file);
-      formData.append(`attachments[${i}][description]`, ""); // Add description as needed
-    }
+
 
     // Log the FormData object to the console
     formData.append("full_name", this.f.full_name.value);
@@ -130,6 +131,7 @@ export class AddBasicChildDataComponent implements OnInit {
     formData.append("birth_place", this.f.birth_place.value);
     formData.append("gender", this.f.gender.value);
     formData.append("nationality_id", this.f.nationality_id.value);
+    formData.append("guardian_id", this.f.guardian_id.value);
     if (this.selectedFile) {
       formData.append("photo", this.selectedFile);
     }
@@ -150,6 +152,7 @@ export class AddBasicChildDataComponent implements OnInit {
     formData.append("street", this.f.street.value);
     formData.append("block", this.f.block.value);
     formData.append("area", this.f.area.value);
+    formData.append("apartment", this.f.apartment.value);
 
     this.loading = true;
     console.log(formData);
@@ -158,7 +161,7 @@ export class AddBasicChildDataComponent implements OnInit {
         this.loading = false;
         console.log(res);
         this.toastr.success(this.translate.instant("childAddedSuccessfully"));
-        this.router.navigate(["/apps/childrens/add-child/add-data"]);
+        this.router.navigate(["/apps/childrens/edit-child/"+res["id"]+"/diagnoses"]);
         this.cdr.detectChanges();
         localStorage.setItem('child', JSON.stringify(res))
       },

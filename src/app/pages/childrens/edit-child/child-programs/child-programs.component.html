@@ -31,6 +31,7 @@
         <!-- begin::Table head -->
         <thead>
           <tr class="fw-bolder text-muted">
+            <th class="min-w-130px">{{ "programID" | translate }}</th>
             <th class="min-w-130px">{{ "name" | translate }}</th>
             <th class="min-w-120px">{{ "status" | translate }}</th>
             <th class="min-w-120px">{{ "startTime" | translate }}</th>
@@ -42,6 +43,11 @@
         <!-- begin::Table body -->
         <tbody>
           <tr *ngFor="let question of programList">
+            <td>
+              <a class="text-dark fw-bolder text-hover-primary d-block fs-6">
+                {{ question.child_program.id }}
+              </a>
+            </td>
             <td>
               <div class="d-flex align-items-center">
                 <div class="d-flex justify-content-start flex-column">

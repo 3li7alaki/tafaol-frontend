@@ -275,10 +275,11 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-  editChildrenData(value: any, id: any): Observable<any> {
+  editChildrenData(value: any, id: any, put: boolean): Observable<any> {
+    let method = put ? "PUT" : "POST";
     return this.http
       .post<any>(
-        new ApiUrls().childrenUrl + "/" + id + "/data-file" + "?_method=PUT",
+        new ApiUrls().childrenUrl + "/" + id + "/data-file" + "?_method=" + method,
         value,
         {
           headers: this.getHeaders(),

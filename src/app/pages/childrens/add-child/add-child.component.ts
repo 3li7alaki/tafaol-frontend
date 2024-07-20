@@ -114,12 +114,6 @@ export class AddChildComponent implements OnInit {
 
   addChild() {
     const formData = new FormData();
-    for (let i = 0; i < this.myFiles.length; i++) {
-      const file = this.myFiles[i];
-      formData.append(`attachments[${i}][name]`, file.name);
-      formData.append(`attachments[${i}][path]`, file);
-      formData.append(`attachments[${i}][description]`, ""); // Add description as needed
-    }
 
     // Log the FormData object to the console
     formData.append("full_name", this.f.full_name.value);
@@ -148,7 +142,6 @@ export class AddChildComponent implements OnInit {
     formData.append("area", this.f.area.value);
 
     this.loading = true;
-    console.log(formData);
     this.apiService.addChildren(formData).subscribe(
       (res) => {
         this.loading = false;

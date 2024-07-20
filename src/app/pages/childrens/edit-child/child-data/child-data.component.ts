@@ -33,8 +33,7 @@ export class ChildDataComponent implements OnInit {
     private datePipe: DatePipe
   ) {
     this.children = JSON.parse(localStorage.getItem("extraDetailsChild")!);
-
-    console.log(this.children)
+    this.id = JSON.parse(localStorage.getItem("children")!).id;
   }
   ngOnInit(): void {
     
@@ -56,12 +55,12 @@ export class ChildDataComponent implements OnInit {
       father_name: [this.children?.father_name],
       father_job: [this.children?.father_job],
       father_nationality_id: [this.children?.father_nationality_id],
-      father_phone: [this.children?.father_phone],
+      father_phone: [this.children?.father_phone?.replace('973', ''),],
       father_work_phone: [this.children?.father_work_phone],
       mother_name: [this.children?.mother_name],
       mother_job: [this.children?.mother_job],
       mother_nationality_id: [this.children?.mother_nationality_id],
-      mother_phone: [this.children?.mother_phone, ,],
+      mother_phone: [this.children?.mother_phone?.replace('973', '')],
       mother_work_phone: [this.children?.mother_work_phone],
       house_phone: [this.children?.house_phone],
       close_person_phone: [this.children?.close_person_phone],
@@ -133,23 +132,9 @@ export class ChildDataComponent implements OnInit {
     // Read the contents of the file as a data URL
     reader.readAsDataURL(file);
   }
-  getFileDetails(e: any) {
-    console.log(e.target.files);
-    for (var i = 0; i < e.target.files.length; i++) {
-      this.myFiles.push(e.target.files[i]);
-    }
-    console.log(this.myFiles);
-  }
+
   editChild() {
     const formData = new FormData();
-    for (let i = 0; i < this.myFiles.length; i++) {
-      const file = this.myFiles[i];
-      if (file.path) {
-      } else {
-        formData.append(`attachments[${i}][name]`, file.name);
-        formData.append(`attachments[${i}][path]`, file);
-      }
-    }
 
     // Log the FormData object to the console
     formData.append("father_name", this.f.father_name.value);
@@ -158,8 +143,10 @@ export class ChildDataComponent implements OnInit {
       "father_nationality_id",
       this.f.father_nationality_id.value
     );
-    formData.append("father_phone",'+973' +  this.f.father_phone.value);
-    formData.append("father_phone", this.f.father_phone.value);
+    formData.append("father_phone",
+        this.f.father_phone.value
+            ? '973' + this.f.father_phone.value
+            : "");
     formData.append("father_work_phone", this.f.father_work_phone.value);
     formData.append("mother_name", this.f.mother_name.value);
     formData.append("mother_job", this.f.mother_job.value);
@@ -167,7 +154,10 @@ export class ChildDataComponent implements OnInit {
       "mother_nationality_id",
       this.f.mother_nationality_id.value
     );
-    formData.append("mother_phone",'+973' + this.f.mother_phone.value);
+    formData.append("mother_phone",
+        this.f.mother_phone.value
+            ? '973' + this.f.mother_phone.value
+            : "");
     formData.append("mother_work_phone", this.f.mother_work_phone.value);
     formData.append("house_phone", this.f.house_phone.value);
     formData.append("close_person_phone", this.f.close_person_phone.value);
@@ -238,8 +228,8 @@ export class ChildDataComponent implements OnInit {
     formData.append("other", this.f.other.value);
 
     this.loading = true;
-    console.log(formData);
-    this.apiService.editChildrenData(formData, this.children.child_id).subscribe(
+    let put = !!this.children.id;
+    this.apiService.editChildrenData(formData, this.id, put).subscribe(
       (res) => {
         this.loading = false;
         console.log(res);
