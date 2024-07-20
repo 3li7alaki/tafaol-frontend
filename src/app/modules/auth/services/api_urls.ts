@@ -15,6 +15,7 @@ export class ApiUrls {
   evaluationsUrl = this.baseUrl + "admin/forms";
   statusUrl = this.baseUrl + "admin/statuses";
   programsUrl = this.baseUrl + "admin/programs";
+  attachmentsUrl = this.baseUrl + "admin/attachments";
   childrenProgramsUrl = this.baseUrl + "admin/childrenPrograms";
-  programsReportUrl = this.baseUrl + 'admin/programsReport'
+  programsReportUrl = this.baseUrl + 'admin/programsReport';
 }

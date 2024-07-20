@@ -43,6 +43,9 @@ import { EditEvaluationComponent } from "./edit-child/evaluation/edit-evaluation
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { arLocale } from 'ngx-bootstrap/locale';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ChildAttachmentsComponent } from "./edit-child/child-attachments/child-attachments.component";
+import { AddAttachmentsComponent } from "./edit-child/child-attachments/add-attachments/add-attachments.component";
+import { EditAttachmentsComponent } from "./edit-child/child-attachments/edit-attachments/edit-attachments.component";
 // ...
 
 defineLocale('ar', arLocale);
@@ -66,7 +69,10 @@ defineLocale('ar', arLocale);
     SchdeuleEvaluationComponent,
     EvaluationListComponent,
     AddEvaluationComponent,
-    EditEvaluationComponent
+    EditEvaluationComponent,
+    ChildAttachmentsComponent,
+    AddAttachmentsComponent,
+    EditAttachmentsComponent,
   ],
   imports: [
     CommonModule,
@@ -111,6 +117,10 @@ defineLocale('ar', arLocale);
             path: "programs",
             component: ChildProgramsComponent,
           },
+          {
+            path: "attachments",
+            component: ChildAttachmentsComponent,
+          }
         ],
       },
       {

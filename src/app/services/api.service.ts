@@ -686,4 +686,41 @@ export class ApiService {
       })
       .pipe(catchError(this.handleError));
   }
+  getAttachments(id: any): Observable<any> {
+    const url = `${new ApiUrls().programsUrl}`;
+    return this.http
+    .get<any>(new ApiUrls().childrenUrl + "/" + id + "/attachments", {
+      headers: this.getHeaders(),
+    })
+    .pipe(catchError(this.handleError));
+  }
+  deleteAttachment(id: any): Observable<any> {
+    return this.http
+      .delete<any>(new ApiUrls().attachmentsUrl + "/" + id, {
+        headers: this.getHeaders(),
+      })
+      .pipe(catchError(this.handleError));
+  }
+  addAttachment(value: any): Observable<any> {
+    return this.http
+      .post<any>(new ApiUrls().attachmentsUrl, value, {
+        headers: this.getHeaders(),
+      })
+      .pipe(catchError(this.handleError));
+  }
+  editAttachment(value: any, id: any): Observable<any> {
+    // put request
+    return this.http
+      .post<any>(new ApiUrls().attachmentsUrl + "/" + id + "?_method=PUT", value, {
+        headers: this.getHeaders(),
+      })
+      .pipe(catchError(this.handleError));
+  }
+  showAttachment(id: any): Observable<any> {
+    return this.http
+      .get<any>(new ApiUrls().attachmentsUrl + "/" + id, {
+        headers: this.getHeaders(),
+      })
+      .pipe(catchError(this.handleError));
+  }
 }

@@ -1,0 +1,104 @@
+<form novalidate="" [formGroup]="attachmentForm" (ngSubmit)="addGaurd()" class="form">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        {{ "addNewAttachment" | translate }}
+      </h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="activeModal.dismiss('Dismiss click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "name" | translate
+        }}</label>
+        <div class="col-lg-8 fv-row">
+          <!-- input text field -->
+            <input
+                type="text"
+                class="form-control form-control-lg form-control-solid"
+                placeholder="{{ 'name' | translate }}"
+                formControlName="name"
+            />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "description" | translate
+        }}</label>
+        <div class="col-lg-8 fv-row">
+          <!-- input text field -->
+            <input
+                type="text"
+                class="form-control form-control-lg form-control-solid"
+                placeholder="{{ 'description' | translate }}"
+                formControlName="description"
+            />
+        </div>
+      </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "attachment" | translate
+        }}</label>
+        <div class="col-lg-10 fv-row">
+          <div class="file-upload-container">
+            <input
+              type="file"
+              id="file"
+              (change)="onFileSelectedNational($event)"
+            />
+            <label for="file" class="custom-file-upload">
+              {{ "selectFiles" | translate }}
+            </label>
+          </div>
+
+          <div class="file-details-container" *ngIf="selectedFileNationalID">
+            <div class="file-details">
+              <div class="file-name">{{ selectedFileNationalID?.name }}</div>
+              <div class="file-info">
+                <span class="file-type">{{
+                  selectedFileNationalID?.type
+                }}</span>
+                <span class="file-size">{{
+                  selectedFileNationalID?.size
+                }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        style="height: 44px; margin-top: 2px"
+      >
+        <ng-container>{{ "saveChanges" | translate }}</ng-container>
+        <app-keenicon
+          *ngIf="loading === false"
+          name="abstract-10"
+          class="fs-2"
+        ></app-keenicon>
+        <span
+          *ngIf="loading === true"
+          class="spinner-border spinner-border-sm align-middle ms-2"
+        ></span>
+      </button>
+      <button
+        (click)="activeModal.dismiss('Dismiss click')"
+        style="margin: 2px"
+        type="button"
+        class="btn btn-secondary"
+      >
+        <ng-container>
+          <i class="fa fa-share" aria-hidden="true"></i
+          >{{ "Back" | translate }}</ng-container
+        >
+      </button>
+    </div>
+  </form>
+  
