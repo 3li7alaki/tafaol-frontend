@@ -72,9 +72,8 @@ export class ReportComponent implements OnInit {
   getPoints() {
     this.isLoading = true;
     const body = {
-      status_id: this.f.status_id.value == null ? "" : this.f.status_id.value,
-      program_id:
-        this.f.program_id.value == null ? "" : this.f.program_id.value,
+      status_id: this.f.status_id.value == "" ? null : this.f.status_id.value,
+      program_id: this.f.program_id.value == "" ? null : this.f.program_id.value,
     };
     this.apiService.getProgramReport(body).subscribe(
       (data: any) => {

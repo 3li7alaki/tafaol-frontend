@@ -334,6 +334,16 @@ export class ApiService {
       )
       .pipe(catchError(this.handleError));
   }
+  deleteChildrenDiagnose(id: any, diagnoseID: any): Observable<any> {
+    return this.http
+      .delete<any>(
+        new ApiUrls().childrenUrl + "/" + id + "/diagnoses/" + diagnoseID,
+        {
+          headers: this.getHeaders(),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
   getOneChildProgram(id: any): Observable<any> {
     return this.http
       .get<any>(new ApiUrls().childrenUrl + "/" + id + "/programs", {

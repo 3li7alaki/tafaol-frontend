@@ -148,4 +148,10 @@ export class EditEvaluationComponent implements OnInit {
       }
     );
   }
+
+  goToLink(url: string) {
+    window.open(url, "_blank");
+  }
+
+  protected readonly open = open;
 }

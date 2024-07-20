@@ -131,19 +131,19 @@ export class EditProgramsComponent implements OnInit {
   }
   addGaurd() {
     this.loading = true;
-    // if (this.f.schedule instanceof FormArray) {
-    //   const scheduleControls = (this.f.schedule as FormArray).controls;
+    if (this.f.schedule instanceof FormArray) {
+      const scheduleControls = (this.f.schedule as FormArray).controls;
 
-    //   for (let i = 0; i < scheduleControls.length; i++) {
-    //     const startTime = scheduleControls[i].get("from")?.value;
-    //     const endTime = scheduleControls[i].get("to")?.value;
+      for (let i = 0; i < scheduleControls.length; i++) {
+        const startTime = scheduleControls[i].get("from")?.value;
+        const endTime = scheduleControls[i].get("to")?.value;
 
-    //     if (startTime !== null && endTime !== null) {
-    //       scheduleControls[i].get("from")?.setValue(startTime + ":00");
-    //       scheduleControls[i].get("to")?.setValue(endTime + ":00");
-    //     }
-    //   }
-    // }
+        if (startTime !== null && endTime !== null) {
+          scheduleControls[i].get("from")?.setValue(startTime + ":00");
+          scheduleControls[i].get("to")?.setValue(endTime + ":00");
+        }
+      }
+    }
     
     const body = {
       program_id: this.f.program_id.value,

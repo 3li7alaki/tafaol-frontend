@@ -109,7 +109,7 @@ class="form"
               border: 1px solid #dbdfe9;
             "
             type="text"
-            placeholder="{{ 'تاريخ تشخيص الحالة' | translate }}"
+            placeholder="{{ 'date' | translate }}"
             class="form-control form-control-lg form-control-solid"
             bsDatepicker
             formControlName="date"
@@ -148,7 +148,13 @@ class="form"
           class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
           placeholder="{{ 'الجهة التي قامت بالتشخيص' | translate }}"
           formControlName="institution"
+          list="institutions"
         />
+        <datalist id="institutions">
+          <option value="مستشفى قوة دفاع البحرين">
+          <option value="مستشفى الملك حمد الجامعي">
+          <option value="مستشفى الطب النفسي">
+        </datalist>
         <div
           *ngIf="f['institution'].invalid && f['institution'].touched"
           style="color: red"

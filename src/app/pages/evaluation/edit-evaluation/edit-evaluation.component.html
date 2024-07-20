@@ -105,9 +105,10 @@
           </div>
         </div>
         <div class="row mb-6">
-          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
-            "attachments" | translate
-          }}</label>
+          <label class="col-lg-2 col-form-label required fw-bold fs-6">
+            {{ "attachments" | translate }}
+
+          </label>
           <div class="col-lg-10 fv-row">
             <div class="file-upload-container">
               <input
@@ -119,11 +120,15 @@
                 {{ "selectFiles" | translate }}
               </label>
             </div>
-
             <div class="file-details-container" *ngIf="selectedFileNationalID">
               <div class="file-details">
                 <div class="file-name">
                   {{ selectedFileNationalID?.name }}
+                  <i
+                          *ngIf="selectedFileNationalID"
+                          (click)="goToLink(selectedFileNationalID.path)"
+                          class="fa fa-eye"
+                  ></i>
                 </div>
                 <div class="file-info">
                 </div>

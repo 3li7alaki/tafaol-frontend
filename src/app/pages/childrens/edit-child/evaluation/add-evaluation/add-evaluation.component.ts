@@ -84,24 +84,11 @@ export class AddEvaluationComponent implements OnInit {
     );
   }
 
-  addLevel(questions?: any) {
-    this.items().push(this.newItem(questions));
-  }
-
-  newItem(questions?: any): FormGroup {
-    return this.formBuilder.group({
-      question_id: [questions?.id, Validators.required],
-      note: [questions?.note, Validators.required],
-      answer: [questions?.answer, Validators.required],
-    });
-  }
 
   items(): FormArray {
     return this.statusForm.get("questions") as FormArray;
   }
-  removeLevel(i: number) {
-    this.items().removeAt(i);
-  }
+
   addGaurd() {
     this.loading = true;
 
@@ -201,7 +188,7 @@ export class AddEvaluationComponent implements OnInit {
   newQuestion(question?: any): FormGroup {
     return this.formBuilder.group({
       question_id: [question?.id, Validators.required],
-      note: [question?.note, Validators.required],
+      note: [question?.note, Validators.nullValidator],
       answer: [question?.answer, Validators.required],
     });
   };

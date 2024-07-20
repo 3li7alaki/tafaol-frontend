@@ -49,6 +49,9 @@ export class EditEvaluationComponent implements OnInit {
       this.addLevel(element.answer);
     });
     this.selectedFileNationalID = this.evalutation.attachment;
+    if (this.evalutation.done) {
+        this.statusForm.disable();
+    }
   }
   initForm(): void {
     this.statusForm = this.formBuilder.group({

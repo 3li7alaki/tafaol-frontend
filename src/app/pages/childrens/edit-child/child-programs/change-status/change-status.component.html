@@ -70,7 +70,7 @@
               <!-- begin::Table head -->
               <thead>
                 <tr class="fw-bolder text-muted">
-                  <th class="min-w-130px">{{ "oldStatus" | translate }}</th>
+<!--                  <th class="min-w-130px">{{ "oldStatus" | translate }}</th>-->
                   <th class="min-w-130px">{{ "newStatus" | translate }}</th>
                   <th class="min-w-120px">{{ "date" | translate }}</th>
                   <th class="min-w-120px">{{ "note" | translate }}</th>
@@ -83,22 +83,22 @@
               <!-- begin::Table body -->
               <tbody>
                 <tr *ngFor="let statuses of statusList">
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="d-flex justify-content-start flex-column">
-                        <a class="text-dark fw-bolder text-hover-primary fs-6">
-                          {{
-                            translate.defaultLang == "en"
-                              ? statuses?.old_status?.name
-                              : statuses?.old_status?.name_ar
-                          }}
-                        </a>
-                        <!-- <span class="text-muted fw-bold text-muted d-block fs-7">
-                                {{ statuses.email }}
-                              </span> -->
-                      </div>
-                    </div>
-                  </td>
+<!--                  <td>-->
+<!--                    <div class="d-flex align-items-center">-->
+<!--                      <div class="d-flex justify-content-start flex-column">-->
+<!--                        <a class="text-dark fw-bolder text-hover-primary fs-6">-->
+<!--                          {{-->
+<!--                            translate.defaultLang == "en"-->
+<!--                              ? statuses?.old_status?.name-->
+<!--                              : statuses?.old_status?.name_ar-->
+<!--                          }}-->
+<!--                        </a>-->
+<!--                        &lt;!&ndash; <span class="text-muted fw-bold text-muted d-block fs-7">-->
+<!--                                {{ statuses.email }}-->
+<!--                              </span> &ndash;&gt;-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </td>-->
 
                   <td>
                     <a

@@ -1,11 +1,12 @@
 import { DatePipe } from "@angular/common";
-import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import {ChangeDetectorRef, Component, Input, OnInit, TemplateRef} from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { TranslateService } from "@ngx-translate/core";
 import { ToastrService } from "ngx-toastr";
 import { ApiService } from "src/app/services/api.service";
+import {BsModalService} from "ngx-bootstrap/modal";
 
 @Component({
   selector: "app-edit-diagnose",
@@ -21,6 +22,7 @@ export class EditDiagnoseComponent implements OnInit {
   imageUrlNationalID: any;
   children: any;
   diagnose: any;
+  modalRef: any;
   constructor(
     public activeModal: NgbActiveModal,
     private apiService: ApiService,
@@ -29,7 +31,8 @@ export class EditDiagnoseComponent implements OnInit {
     private toastr: ToastrService,
     public translate: TranslateService,
     private router: Router,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private modalService: BsModalService
   ) {
     this.children = JSON.parse(localStorage.getItem("children")!);
     this.diagnose = JSON.parse(localStorage.getItem("oneChild")!);
@@ -146,5 +149,34 @@ export class EditDiagnoseComponent implements OnInit {
   }
   goToLink(url: string) {
     window.open(url, "_blank");
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
+  deleteDiagnose() {
+    this.loading = true;
+    this.apiService
+      .deleteChildrenDiagnose(this.children.id, this.diagnose.id)
+      .subscribe(
+        (res) => {
+          this.loading = false;
+          console.log(res);
+          this.toastr.success(
+            this.translate.instant("diagnoseDeleteSuccessfully")
+          );
+          this.activeModal.close();
+          localStorage.removeItem("oneChild");
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          this.toastr.error(error.message);
+          this.loading = false;
+          console.log(error);
+          this.cdr.detectChanges();
+        }
+      );
+    this.modalRef.hide();
   }
 }

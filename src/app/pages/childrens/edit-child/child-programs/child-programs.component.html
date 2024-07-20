@@ -74,12 +74,12 @@
             </td>
             <td>
               <a class="text-dark fw-bolder text-hover-primary d-block fs-6">
-                {{ question.start_time }}
+                {{ question.child_program.schedule?.[0]?.from ?? question.start_time }}
               </a>
             </td>
             <td>
               <a class="text-dark fw-bolder text-hover-primary d-block fs-6">
-                {{ question.end_time }}
+                {{ question.child_program.schedule?.[0]?.to ?? question.end_time }}
               </a>
             </td>
             <td>

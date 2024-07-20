@@ -79,8 +79,11 @@
             <th class="min-w-130px">{{ "AUTH.INPUT.FULLNAME" | translate }}</th>
             <th class="min-w-140px">{{ "programID" | translate }}</th>
             <th class="min-w-140px">{{ "cpr" | translate }}</th>
-            <th class="min-w-120px">{{ "gaurdianName" | translate }}</th>
-            <th class="min-w-120px">{{ "gaurdianPhone" | translate }}</th>
+            <th class="min-w-120px">{{ "Program" | translate }}</th>
+            <th class="min-w-120px">{{ "applyDate" | translate }}</th>
+            <th class="min-w-120px">{{ "ageApplied" | translate }}</th>
+            <th class="min-w-120px">{{ "age" | translate }}</th>
+            <th class="min-w-120px">{{ "otherNumbers" | translate }}</th>
             <th class="min-w-140px">{{ "status" | translate }}</th>
           </tr>
         </thead>
@@ -107,7 +110,7 @@
               <div class="d-flex align-items-center">
                 <div class="d-flex justify-content-start flex-column">
                   <p class="text-dark fw-bolder text-hover-primary fs-6">
-                    {{ history.child_programs.program_id }}
+                    {{ history.child_programs.id }}
                   </p>
                 </div>
               </div>
@@ -125,7 +128,7 @@
               <div class="d-flex align-items-center">
                 <div class="d-flex justify-content-start flex-column">
                   <p class="text-dark fw-bolder text-hover-primary fs-6">
-                    {{ history.guardian.name }}
+                    {{ history.program.name }}
                   </p>
                 </div>
               </div>
@@ -134,7 +137,34 @@
               <div class="d-flex align-items-center">
                 <div class="d-flex justify-content-start flex-column">
                   <p class="text-dark fw-bolder text-hover-primary fs-6">
-                    {{ history.guardian.phone }}
+                    {{ history.child_programs.created_at?.split("T")[0] }}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start flex-column">
+                  <p class="text-dark fw-bolder text-hover-primary fs-6">
+                    {{ history.age_applied }}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start flex-column">
+                  <p class="text-dark fw-bolder text-hover-primary fs-6">
+                    {{ history.age }}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start flex-column">
+                  <p class="text-dark fw-bolder text-hover-primary fs-6">
+                    {{ history.guardian?.phone }}
                   </p>
                 </div>
               </div>

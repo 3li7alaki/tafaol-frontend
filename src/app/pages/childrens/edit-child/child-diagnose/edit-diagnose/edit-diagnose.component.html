@@ -65,7 +65,7 @@
     </div> -->
     <div class="row mb-6">
       <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
-        "date" | translate
+        "تاريخ تشخيص الحالة" | translate
       }}</label>
       <div class="col-lg-3 fv-row">
         <div class="input-group">
@@ -76,7 +76,7 @@
               border: 1px solid #dbdfe9;
             "
             type="text"
-            placeholder="{{ 'date' | translate }}"
+            placeholder="{{ 'تاريخ تشخيص الحالة' | translate }}"
             class="form-control form-control-lg form-control-solid"
             bsDatepicker
             formControlName="date"
@@ -104,44 +104,50 @@
         </div>
       </div>
       <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
-        "institution" | translate
+        "الجهة التي قامت بالتشخيص" | translate
       }}</label>
       <div class="col-lg-3 fv-row">
         <input
           type="text"
           class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-          placeholder="{{ 'institution' | translate }}"
+          placeholder="{{ 'الجهة التي قامت بالتشخيص' | translate }}"
           formControlName="institution"
+          list="institutions"
         />
+        <datalist id="institutions">
+          <option value="مستشفى قوة دفاع البحرين">
+          <option value="مستشفى الملك حمد الجامعي">
+          <option value="مستشفى الطب النفسي">
+        </datalist>
       </div>
     </div>
     <div class="row mb-6">
       <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
-        "symptoms" | translate
+        "ماهي أول الأعراض التي لفتت انتباهكم لحالة الطفل" | translate
       }}</label>
       <div class="col-lg-3 fv-row">
         <input
           type="text"
           class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-          placeholder="{{ 'symptoms' | translate }}"
+          placeholder="{{ 'ماهي أول الأعراض التي لفتت انتباهكم لحالة الطفل' | translate }}"
           formControlName="symptoms"
         />
       </div>
       <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
-        "symptomsAge" | translate
+        "عمر الطفل عند ظهور الأعراض" | translate
       }}</label>
       <div class="col-lg-3 fv-row">
         <input
           type="text"
           class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-          placeholder="{{ 'symptomsAge' | translate }}"
+          placeholder="{{ 'عمر الطفل عند ظهور الأعراض' | translate }}"
           formControlName="symptoms_age"
         />
       </div>
     </div>
     <div class="row mb-6">
       <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
-        "attachment" | translate
+        "التقرير الطبي" | translate
       }}</label>
       <div class="col-lg-10 fv-row">
         <div class="file-upload-container">
@@ -187,6 +193,13 @@
   </div>
   <div class="modal-footer">
     <button
+        type="button"
+        class="btn btn-danger btn-active-danger"
+        (click)="openModal(template)"
+        >
+      <ng-container>{{ "Delete" | translate }}</ng-container>
+    </button>
+    <button
       type="submit"
       class="btn btn-primary"
       style="height: 44px; margin-top: 2px"
@@ -215,3 +228,35 @@
     </button>
   </div>
 </form>
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">
+        {{ "deleteDiagnose" | translate }}
+        </h4>
+        <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="activeModal.dismiss('Dismiss click')"
+        ></button>
+    </div>
+    <div class="modal-body">
+        <p>{{ "deleteDiagnoseMessage" | translate }}</p>
+    </div>
+    <div class="modal-footer">
+        <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="activeModal.dismiss('Dismiss click')"
+        >
+        <ng-container>{{ "Back" | translate }}</ng-container>
+        </button>
+        <button
+        type="button"
+        class="btn btn-danger btn-active-danger"
+        (click)="deleteDiagnose()"
+        >
+        <ng-container>{{ "Delete" | translate }}</ng-container>
+        </button>
+    </div>
+</ng-template>
