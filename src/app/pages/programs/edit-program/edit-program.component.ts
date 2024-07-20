@@ -110,25 +110,10 @@ export class EditProgramComponent implements OnInit {
   get f() {
     return this.programForm.controls;
   }
-  getFileDetails(e: any) {
-    //console.log (e.target.files);
-    for (var i = 0; i < e.target.files.length; i++) {
-      this.myFiles.push(e.target.files[i]);
-    }
-    console.log(this.myFiles);
-  }
   addProgram() {
     console.log(this.f.all_diagnoses.value);
     const formData = new FormData();
-    for (let i = 0; i < this.myFiles.length; i++) {
-      const file = this.myFiles[i];
-      formData.append(`attachments[${i}][name]`, file.name);
-      if (file.path) {
-        formData.append(`attachments[${i}][path]`, file.path);
-      } else {
-        formData.append(`attachments[${i}][path]`, file);
-      }
-    }
+
     formData.append("name", this.f.name.value);
     formData.append("description", this.f.description.value);
     formData.append("gender", this.f.gender.value);
