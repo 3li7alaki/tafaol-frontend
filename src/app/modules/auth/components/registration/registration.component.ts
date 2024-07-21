@@ -79,7 +79,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     this.isLoading = true
     const body = {
       name: this.f.fullname.value,
-      phone: this.f.phone.value,
+      phone: '973'+this.f.phone.value,
       email: this.f.email.value,
       password: this.f.password.value,
       password_confirmation: this.f.cPassword.value,

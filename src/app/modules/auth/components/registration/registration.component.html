@@ -57,25 +57,30 @@
   </div>
   <div class="fv-row mb-8">
     <label class="form-label fw-bolder text-gray-900 fs-6">{{'phone' | translate}}</label>
-    <input
-      class="form-control bg-transparent"
-      type="text"
-      name="phone"
-      formControlName="phone"
-      placeholder="{{'phone' | translate}}"
-      autocomplete="off"
-      [ngClass]="{
+    <div class="input-group">
+      <input
+              class="form-control bg-transparent"
+              type="text"
+              name="phone"
+              formControlName="phone"
+              placeholder="{{'phone' | translate}}"
+              autocomplete="off"
+              [ngClass]="{
         'is-invalid': registrationForm.controls['phone'].invalid && registrationForm.controls['phone'].touched,
         'is-valid': registrationForm.controls['phone'].valid
       }"
-    />
+      />
+      <div class="input-group-append">
+        <span class="input-group-text">973+</span>
+      </div>
+    </div>
     <ng-container
-      [ngTemplateOutlet]="formError"
-      [ngTemplateOutletContext]="{
-        validation: 'required',
-        message: 'رقم الهاتف مطلوب',
-        control: registrationForm.controls['phone']
-      }"
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+      validation: 'required',
+      message: 'رقم التواصل مطلوب',
+      control: registrationForm.controls['phone']
+    }"
     ></ng-container>
   </div>
   <!--end::Form group-->
@@ -118,25 +123,36 @@
   <div class="fv-row mb-8">
     <label class="form-label fw-bolder text-gray-900 fs-6">{{'AUTH.INPUT.PASSWORD' | translate}}</label>
     <input
-      class="form-control bg-transparent"
-      type="password"
-      placeholder="{{'AUTH.INPUT.PASSWORD' | translate}}"
-      name="password"
-      formControlName="password"
-      autocomplete="off"
-      [ngClass]="{
-        'is-invalid': registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched,
-        'is-valid': registrationForm.controls['password'].valid
-      }"
+            class="form-control bg-transparent"
+            type="password"
+            placeholder="{{'AUTH.INPUT.PASSWORD' | translate}}"
+            name="password"
+            formControlName="password"
+            autocomplete="off"
+            [ngClass]="{
+      'is-invalid': registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched,
+      'is-valid': registrationForm.controls['password'].valid
+    }"
     />
     <ng-container
-      [ngTemplateOutlet]="formError"
-      [ngTemplateOutletContext]="{
-        validation: 'required',
-        message: 'كلمة المرور مطلوبة',
-        control: registrationForm.controls['password']
-      }"
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+      validation: 'required',
+      message: 'كلمة المرور مطلوبة',
+      control: registrationForm.controls['password']
+    }"
     ></ng-container>
+
+    <!-- Password Requirements List -->
+    <div class="text-muted small mt-2" style="opacity: 0.8;">
+      <ul class="list-unstyled">
+        <li>يجب أن تتضمن كلمة المرور:</li>
+        <li>- 8 أحرف على الأقل</li>
+        <li>- حرف كبير وحرف صغير</li>
+        <li>- رقم واحد على الأقل</li>
+        <li>- رمز خاص واحد على الأقل</li>
+      </ul>
+    </div>
   </div>
   <!--end::Form group-->
 
