@@ -53,8 +53,73 @@
             </option>
           </select>
         </div>
-
-        <div class="d-flex justify-content-end py-6 px-9">
+        <div class="d-flex justify-content-between py-6 px-9">
+          <div
+                  class="card-toolbar col-md-3"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  data-bs-trigger="hover"
+                  *ngIf="isVisiable"
+          >
+            <input
+                    type="text"
+                    class="form-control form-control-solid"
+                    placeholder="{{ 'searchByNameCPRID' | translate }}"
+                    (input)="search($event)"
+            />
+          </div>
+          <div
+                  class="card-toolbar col-md-3"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  data-bs-trigger="hover"
+                  *ngIf="isVisiable"
+          >
+              <input
+                      style="
+                border-top-right-radius: 7px;
+                border-bottom-right-radius: 7px;
+                border: 1px solid #dbdfe9;
+              "
+                      type="text"
+                      placeholder="{{ 'fromDate' | translate }}"
+                      class="form-control form-control-lg form-control-solid col-md-3"
+                      bsDatepicker
+                      (bsValueChange)="dateFrom($event)"
+                      #d5="bsDatepicker"
+                      [bsConfig]="{
+                containerClass: 'theme-blue',
+                dateInputFormat: 'YYYY-MM-DD',
+                isAnimated: true
+              }"
+              />
+          </div>
+          <div
+                  class="card-toolbar col-md-3"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  data-bs-trigger="hover"
+                  *ngIf="isVisiable"
+          >
+            <input
+                    style="
+                border-top-right-radius: 7px;
+                border-bottom-right-radius: 7px;
+                border: 1px solid #dbdfe9;
+              "
+                    type="text"
+                    placeholder="{{ 'toDate' | translate }}"
+                    class="form-control form-control-lg form-control-solid col-md-3"
+                    bsDatepicker
+                    (bsValueChange)="dateTo($event)"
+                    #d5="bsDatepicker"
+                    [bsConfig]="{
+                containerClass: 'theme-blue',
+                dateInputFormat: 'YYYY-MM-DD',
+                isAnimated: true
+              }"
+            />
+          </div>
           <button type="submit" class="btn btn-primary">
             <ng-container *ngIf="!isLoading">
               <i class="fa fa-search" aria-hidden="true"></i>
@@ -90,7 +155,7 @@
         <!-- end::Table head -->
         <!-- begin::Table body -->
         <tbody>
-          <tr *ngFor="let history of history">
+          <tr *ngFor="let history of filtered">
             <td>
               <div class="d-flex align-items-center">
                 <div class="d-flex justify-content-start flex-column">

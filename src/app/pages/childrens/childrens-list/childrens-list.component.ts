@@ -19,6 +19,7 @@ export class ChildrensListComponent implements OnInit {
   permissionList: any[] = JSON.parse(
     localStorage.getItem("permissions") || "{}"
   );
+  filteredList: any[];
   showAddChildren = false;
   showEditChildren = false;
   showDeleteChildren = false;
@@ -51,6 +52,7 @@ export class ChildrensListComponent implements OnInit {
       (res) => {
         console.log(res);
         this.childrensList = res;
+        this.filteredList = res;
         this.cdr.detectChanges();
       },
       (error) => {
@@ -83,5 +85,21 @@ export class ChildrensListComponent implements OnInit {
   }
   decline(): void {
     this.modalRef?.hide();
+  }
+
+  search(event: any) {
+    const inputElement = event.target as HTMLInputElement;
+    const input = inputElement.value
+    // filter the childrensList based on the input value
+    if (input) {
+      this.filteredList = this.childrensList.filter((item: any) => {
+        return (
+          item.full_name.toLowerCase().includes(input.toLowerCase()) ||
+          item.cpr?.toLowerCase().includes(input.toLowerCase())
+        );
+      });
+    } else {
+        this.filteredList = this.childrensList;
+    }
   }
 }

@@ -23,6 +23,10 @@ export class ReportComponent implements OnInit {
   programList: any;
   statusList: any;
   history: any;
+  filtered: any;
+  fromDate: any;
+    toDate: any;
+
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -80,7 +84,9 @@ export class ReportComponent implements OnInit {
         this.isLoading = false;
 
         this.history = data;
-        console.log(this.history);
+        this.filtered = data;
+        this.fromDate = null;
+        this.toDate = null;
         this.cdr.detectChanges();
       },
       (error) => {
@@ -92,5 +98,55 @@ export class ReportComponent implements OnInit {
 
   get f() {
     return this.filterForm.controls;
+  }
+
+  search(event: any) {
+    const inputElement = event.target as HTMLInputElement;
+    const input = inputElement.value
+    if (input) {
+      this.filtered = this.filtered.filter((item: any) => {
+        return (
+            item.full_name.toLowerCase().includes(input.toLowerCase()) ||
+            (item.cpr?.toLowerCase().includes(input.toLowerCase()) && input.length > 4) ||
+            item.child_programs.id.toString().includes(input.toLowerCase())
+        );
+      });
+    } else {
+      this.filtered = this.history;
+    }
+  }
+
+  dateFrom(date: any) {
+    if (date) {
+      this.filtered = this.history.filter((item: any) => {
+        let created_at = new Date(item.child_programs.created_at).setHours(0,0,0,0);
+        let input = new Date(date).setHours(0, 0, 0, 0)
+        this.fromDate = new Date(input)
+        let before = this.toDate ? new Date(created_at) <= this.toDate : true;
+        return (
+            new Date(created_at) >= new Date(input) && before
+        );
+      });
+    } else {
+      this.filtered = this.history;
+      this.fromDate = null;
+    }
+  }
+
+  dateTo(date: any) {
+    if (date) {
+      this.filtered = this.history.filter((item: any) => {
+        let created_at = new Date(item.child_programs.created_at).setHours(0,0,0,0);
+        let input = new Date(date).setHours(0, 0, 0, 0);
+        this.toDate = new Date(input);
+        let after =this.fromDate ? new Date(created_at) >= this.fromDate : true;
+        return (
+            new Date(created_at) <= new Date(input) && after
+        );
+      });
+    } else {
+      this.filtered = this.history;
+        this.toDate = null;
+    }
   }
 }

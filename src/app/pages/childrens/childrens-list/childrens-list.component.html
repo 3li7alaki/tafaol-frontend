@@ -7,6 +7,19 @@
       }}</span>
     </h3>
     <div
+            class="card-toolbar col-md-4"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            data-bs-trigger="hover"
+    >
+        <input
+            type="text"
+            class="form-control form-control-solid"
+            placeholder="{{ 'searchByNameCPR' | translate }}"
+            (input)="search($event)"
+        />
+    </div>
+    <div
       class="card-toolbar"
       data-bs-toggle="tooltip"
       data-bs-placement="top"
@@ -36,6 +49,7 @@
         <thead>
           <tr class="fw-bolder text-muted">
             <th class="min-w-130px">{{ "AUTH.INPUT.FULLNAME" | translate }}</th>
+            <th class="min-w-120px">{{ "cpr" | translate }}</th>
             <th class="min-w-120px">{{ "nationality" | translate }}</th>
             <th class="min-w-120px">{{ "gender" | translate }}</th>
             <th class="min-w-100px text-end">{{ "Actions" | translate }}</th>
@@ -44,7 +58,7 @@
         <!-- end::Table head -->
         <!-- begin::Table body -->
         <tbody>
-          <tr *ngFor="let children of childrensList">
+          <tr *ngFor="let children of filteredList">
             <td>
               <div class="d-flex align-items-center">
                 <div class="symbol symbol-45px me-5">
@@ -71,6 +85,12 @@
                     </span> -->
                 </div>
               </div>
+            </td>
+
+            <td>
+              <a class="text-dark fw-bolder text-hover-primary d-block fs-6">
+                {{ children.cpr }}
+              </a>
             </td>
 
             <td>
