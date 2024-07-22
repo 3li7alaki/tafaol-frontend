@@ -237,7 +237,7 @@
         type="button"
         class="btn-close"
         aria-label="Close"
-        (click)="activeModal.dismiss('Dismiss click')"
+        (click)="modalRef.hide()"
         ></button>
     </div>
     <div class="modal-body">
@@ -247,7 +247,7 @@
         <button
         type="button"
         class="btn btn-secondary"
-        (click)="activeModal.dismiss('Dismiss click')"
+        (click)="modalRef.hide()"
         >
         <ng-container>{{ "Back" | translate }}</ng-container>
         </button>

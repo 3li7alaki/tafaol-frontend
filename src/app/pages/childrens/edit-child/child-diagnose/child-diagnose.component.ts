@@ -56,9 +56,6 @@ export class ChildDiagnoseComponent implements OnInit {
     );
   }
   openEdit(id: any) {
-   
-    console.log(id)
-    console.log(this.children.id)
     this.apiService.getOneChildDiagnoseEdit(this.children.id, id.diagnose.id).subscribe(
       (res) => {
         console.log(res);
@@ -83,6 +80,5 @@ export class ChildDiagnoseComponent implements OnInit {
         this.toastr.error(error.error.message, error.status);
       }
     );
-  
   }
 }
