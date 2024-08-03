@@ -46,6 +46,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ChildAttachmentsComponent } from "./edit-child/child-attachments/child-attachments.component";
 import { AddAttachmentsComponent } from "./edit-child/child-attachments/add-attachments/add-attachments.component";
 import { EditAttachmentsComponent } from "./edit-child/child-attachments/edit-attachments/edit-attachments.component";
+import { ChildPlansComponent } from "./edit-child/child-plans/child-plans.component";
 // ...
 
 defineLocale('ar', arLocale);
@@ -73,6 +74,7 @@ defineLocale('ar', arLocale);
     ChildAttachmentsComponent,
     AddAttachmentsComponent,
     EditAttachmentsComponent,
+    ChildPlansComponent,
   ],
   imports: [
     CommonModule,
@@ -120,6 +122,10 @@ defineLocale('ar', arLocale);
           {
             path: "attachments",
             component: ChildAttachmentsComponent,
+          },
+          {
+            path: "plans",
+            component: ChildPlansComponent,
           }
         ],
       },

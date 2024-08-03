@@ -34,19 +34,6 @@
           >
         </div>
       </div>
-      <div class="col-md-2">
-        <div class="form-group">
-          <button
-            style="height: 44px"
-            type="button"
-            (click)="addLevel()"
-            class="btn btn-primary"
-          >
-            {{ "addSchedule" | translate }}
-            <app-keenicon name="abstract-10" class="fs-2"></app-keenicon>
-          </button>
-        </div>
-      </div>
     </div>
     <div formArrayName="schedule">
       <div
@@ -106,21 +93,6 @@
           }}</label>
           <div class="col-lg-2 fv-row">
             <input type="time" class="form-control" formControlName="to" />
-          </div>
-          <div class="col-md-2">
-            <button
-              style="height: 44px"
-              [disabled]="i < 1"
-              type="button"
-              class="btn btn-danger btn-active-danger"
-              data-role-id="developer"
-              data-bs-toggle="modal"
-              data-bs-target="#kt_modal_update_role"
-              (click)="removeLevel(i)"
-            >
-              {{ "Delete" | translate }}
-              <app-keenicon name="delete-folder" class="fs-2"></app-keenicon>
-            </button>
           </div>
         </div>
         <hr />

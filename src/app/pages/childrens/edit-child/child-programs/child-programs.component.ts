@@ -111,13 +111,13 @@ export class ChildProgramsComponent implements OnInit {
       }
     );
   }
-  openScheduling(id: any) {
+  openScheduling(program: any) {
+    localStorage.setItem("program", JSON.stringify(program));
     const modalRef = this.modalService.open(SchdeuleEvaluationComponent, {
       windowClass: "animated fadeInDown",
       size: "xl",
       centered: true,
     });
-    localStorage.setItem("program_id", id);
     modalRef.result.then(
       (data) => {
         this.getPrograms();

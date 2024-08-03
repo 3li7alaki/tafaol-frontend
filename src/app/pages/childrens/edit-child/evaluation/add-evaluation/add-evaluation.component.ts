@@ -21,6 +21,7 @@ export class AddEvaluationComponent implements OnInit {
   loading = false;
   formList: any;
   questionList: any;
+  adminList: any;
   program: any;
   selectedFileNationalID: File;
   imageUrlNationalID: string;
@@ -40,10 +41,12 @@ export class AddEvaluationComponent implements OnInit {
     this.getEvalutaions();
     this.initForm();
     this.getQuestions();
+    this.getAdmins();
   }
   initForm() {
     this.statusForm = this.formBuilder.group({
       form_id: [null, [Validators.required]],
+      user_id: [null],
       date_1: [""],
       date_2: [""],
       date_3: [""],
@@ -84,6 +87,19 @@ export class AddEvaluationComponent implements OnInit {
     );
   }
 
+  getAdmins() {
+    this.apiService.getAdmins().subscribe(
+      (res) => {
+        console.log(res);
+        this.adminList = res;
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        console.log(error);
+        this.toastr.error(error.error.message, error.status);
+      });
+  }
+
 
   items(): FormArray {
     return this.statusForm.get("questions") as FormArray;
@@ -111,20 +127,37 @@ export class AddEvaluationComponent implements OnInit {
     // Log the FormData object to the console
     formData.append("form_id", this.f.form_id.value);
     formData.append("note", this.f.note.value);
+
     formData.append(
       "date_1",
-      this.datePipe.transform(this.f.date_1.value, "yyyy-MM-dd")!
+      this.datePipe.transform(
+          typeof this.f.date_1.value === 'string'
+              ? this.f.date_1.value
+              : this.f.date_1.value?.setDate(this.f.date_1.value.getDate() + 1),
+            "yyyy-MM-dd"
+      )!
     );
     formData.append(
       "date_2",
-      this.datePipe.transform(this.f.date_2.value, "yyyy-MM-dd")!
+      this.datePipe.transform(
+            typeof this.f.date_2.value === 'string'
+                ? this.f.date_2.value
+                : this.f.date_2.value?.setDate(this.f.date_2.value.getDate() + 1),
+                "yyyy-MM-dd"
+        )!
     );
     formData.append(
-      "date_3",
-      this.datePipe.transform(this.f.date_3.value, "yyyy-MM-dd")!
+        "date_3",
+        this.datePipe.transform(
+                typeof this.f.date_3.value === 'string'
+                    ? this.f.date_3.value
+                    : this.f.date_3.value?.setDate(this.f.date_3.value.getDate() + 1),
+                    "yyyy-MM-dd"
+            )!
     );
     formData.append("done", this.f.done.value == true ? "1" : "0");
     formData.append("pass", this.f.pass.value == true ? "1" : "0");
+    formData.append("user_id", this.f.user_id.value);
     // formData.append("questions", this.f.questions.value);
     if (this.selectedFileNationalID) {
       formData.append("path", this.selectedFileNationalID);

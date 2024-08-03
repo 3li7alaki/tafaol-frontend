@@ -18,6 +18,7 @@ export class AddAttachmentsComponent implements OnInit {
   selectedFileNationalID: File;
   imageUrlNationalID: string;
   child: any;
+  type: string;
   constructor(
     public activeModal: NgbActiveModal,
     private apiService: ApiService,
@@ -26,9 +27,14 @@ export class AddAttachmentsComponent implements OnInit {
     private toastr: ToastrService,
     public translate: TranslateService,
     private router: Router,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) {
     this.child = JSON.parse(localStorage.getItem("children")!);
+    if (window.location.href.includes("plans")) {
+      this.type = "plans";
+    } else {
+        this.type = "children";
+    }
   }
   ngOnInit(): void {
     this.initForm();
@@ -75,7 +81,11 @@ export class AddAttachmentsComponent implements OnInit {
     formData.append("description", this.f.description.value);
     formData.append("path", this.selectedFileNationalID);
     formData.append("attachable_id", this.child.id);
-    formData.append("attachable_type", "child");
+    if (this.type === "plans") {
+      formData.append("attachable_type", "child_plan");
+    } else {
+      formData.append("attachable_type", "child");
+    }
 
     this.apiService.addAttachment(formData).subscribe(
       (res) => {

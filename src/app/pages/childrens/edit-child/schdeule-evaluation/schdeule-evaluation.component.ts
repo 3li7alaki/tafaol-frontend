@@ -15,6 +15,7 @@ export class SchdeuleEvaluationComponent implements OnInit {
   programsForm: FormGroup;
   loading = false;
   programID: any;
+  program: any;
   constructor(
     public activeModal: NgbActiveModal,
     private apiService: ApiService,
@@ -24,17 +25,29 @@ export class SchdeuleEvaluationComponent implements OnInit {
     public translate: TranslateService,
     private datePipe: DatePipe
   ) {
-    this.programID = JSON.parse(localStorage.getItem("program_id")!);
+    this.program = JSON.parse(localStorage.getItem("program")!);
+    this.programID = this.program.id;
   }
   ngOnInit(): void {
-    this.programsForm = this.formBuilder.group({
-      notify: [false],
-      schedule: this.formBuilder.array([
-        this.newItem(),
-        this.newItem(),
-        this.newItem(),
-      ]),
-    });
+    if (this.program.evaluation_schedule) {
+      this.programsForm = this.formBuilder.group({
+        notify: [false],
+        schedule: this.formBuilder.array([
+            this.newItem(this.program.evaluation_schedule[0]),
+            this.newItem(this.program.evaluation_schedule[1]),
+            this.newItem(this.program.evaluation_schedule[2]),
+        ]),
+      });
+    } else {
+        this.programsForm = this.formBuilder.group({
+            notify: [false],
+            schedule: this.formBuilder.array([
+            this.newItem(),
+            this.newItem(),
+            this.newItem(),
+            ]),
+        });
+    }
   }
 
   get f() {
@@ -79,11 +92,11 @@ export class SchdeuleEvaluationComponent implements OnInit {
       ); // Add description as needed
       formData.append(
         `schedule[${i}][from]`,
-        scheduleControls[i].get("from")?.value + ":00"
+        scheduleControls[i].get("from")?.value.length != 8 ? scheduleControls[i].get("from")?.value + ":00" : scheduleControls[i].get("from")?.value
       );
       formData.append(
         `schedule[${i}][to]`,
-        scheduleControls[i].get("to")?.value + ":00"
+        scheduleControls[i].get("to")?.value.length != 8 ? scheduleControls[i].get("to")?.value + ":00" : scheduleControls[i].get("to")?.value
       );
     }
     formData.append("notify", this.f.notify.value == true ? "1" : "0");

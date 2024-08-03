@@ -92,27 +92,28 @@ export class ChildAttachmentsComponent implements OnInit {
     // );
   }
   openEdit(id: any) {
-    const modalRef = this.modalService2.open(EditAttachmentsComponent, {
-      windowClass: "animated fadeInDown",
-      size: "xl",
-      centered: true,
-    });
     this.apiService.showAttachment(id).subscribe(
-      (res) => {
-        console.log(res);
-        localStorage.setItem("oneAttachment", JSON.stringify(res));
-        this.cdr.detectChanges();
-      },
-      (error) => {
-        console.log(error.message);
-        this.cdr.detectChanges();
-      }
-    );
-    modalRef.result.then(
-      (data) => {
-        this.getAttachment(this.child.id);
-      },
-      (reason) => {}
+        (res) => {
+          console.log(res);
+          localStorage.setItem("oneAttachment", JSON.stringify(res));
+          this.cdr.detectChanges();
+
+          const modalRef = this.modalService2.open(EditAttachmentsComponent, {
+            windowClass: "animated fadeInDown",
+            size: "xl",
+            centered: true,
+          });
+          modalRef.result.then(
+              (data) => {
+                this.getAttachment(this.child.id);
+              },
+              (reason) => {}
+          );
+        },
+        (error) => {
+          console.log(error.message);
+          this.cdr.detectChanges();
+        }
     );
     // const modalRef = this.modalService.open(EditProgramsComponent, {
     //   windowClass: "animated fadeInDown",

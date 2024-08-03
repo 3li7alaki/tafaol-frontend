@@ -35,6 +35,7 @@ export class EditAttachmentsComponent implements OnInit {
     private datePipe: DatePipe
   ) {
     // this.child = JSON.parse(localStorage.getItem("children")!);
+    console.log("")
     this.attachment = JSON.parse(localStorage.getItem("oneAttachment")!);
     console.log("oneAttachment", this.attachment);
   }

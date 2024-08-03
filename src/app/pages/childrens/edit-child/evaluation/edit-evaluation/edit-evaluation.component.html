@@ -40,7 +40,7 @@
     >
       <div class="card-body border-top p-9">
         <div class="row mb-6">
-          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          <label class="col-lg-1 col-form-label required fw-bold fs-6">{{
             "MENU.FORM" | translate
           }}</label>
           <div class="col-lg-3 fv-row">
@@ -58,7 +58,7 @@
               </option>
             </select>
           </div>
-          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          <label class="col-lg-1 col-form-label required fw-bold fs-6">{{
             "note" | translate
           }}</label>
           <div class="col-lg-3 fv-row">
@@ -73,6 +73,29 @@
               *ngIf="f['note'].invalid && f['note'].touched"
               style="color: red"
             ></div>
+          </div>
+          <label class="col-lg-1 col-form-label required fw-bold fs-6">{{
+            "evaluator" | translate
+            }}</label>
+          <div class="col-lg-3 fv-row">
+            <select
+                    class="form-select form-select-solid form-select-lg"
+                    formControlName="user_id"
+            >
+              <option [value]="null">
+                {{
+                translate.defaultLang == "ar"
+                        ? "اختر القائم بالتقييم"
+                        : "Select Evaluator"
+                }}
+              </option>
+              <option
+                      [value]="admin.id"
+                      *ngFor="let admin of adminList"
+              >
+                {{ admin.name }}
+              </option>
+            </select>
           </div>
         </div>
         <div class="row mb-6">
@@ -202,10 +225,53 @@
             [formGroupName]="i"
           >
             <div class="row mb-6">
+              <label class="fw-bold fs-6">
+                {{ questionList[i]?.title }}
+              </label>
+            </div>
+            <div *ngIf="hasOptions(i)" class="row mb-6">
               <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
-                "MENU.QUESTIONS" | translate
+                "answer" | translate
+                }}</label>
+              <div class="col-lg-8 fv-row">
+                <input
+                        type="text"
+                        class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                        placeholder="{{ 'answer' | translate }}"
+                        formControlName="answer"
+                />
+              </div>
+            </div>
+            <div *ngIf="!hasOptions(i)" class="row mb-6">
+              <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+                "answer" | translate
+                }}</label>
+              <div class="col-lg-8 fv-row">
+                <select
+                        class="form-select form-select-solid form-select-lg"
+                        formControlName="answer"
+                >
+                  <option [value]="null">
+                    {{
+                    translate.defaultLang == "ar"
+                            ? "اختر الجواب"
+                            : "Select Answer"
+                    }}
+                  </option>
+                  <option
+                          [value]="statuses"
+                          *ngFor="let statuses of questionList[i].options"
+                  >
+                    {{ statuses }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-6">
+              <label class="col-lg-2 col-form-label required fw-bold fs-6" hidden>{{
+                "question" | translate
               }}</label>
-              <div class="col-lg-3 fv-row">
+              <div class="col-lg-3 fv-row" hidden>
                 <select
                   class="form-select form-select-solid form-select-lg"
                   formControlName="question_id"
@@ -228,51 +294,13 @@
               <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
                 "note" | translate
               }}</label>
-              <div class="col-lg-3 fv-row">
+              <div class="col-lg-8 fv-row">
                 <input
                   type="text"
                   class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                   placeholder="{{ 'note' | translate }}"
                   formControlName="note"
                 />
-              </div>
-            </div>
-            <div *ngIf="hasOptions(i)" class="row mb-6">
-              <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
-                "answer" | translate
-              }}</label>
-              <div class="col-lg-8 fv-row">
-                <input
-                  type="text"
-                  class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                  placeholder="{{ 'answer' | translate }}"
-                  formControlName="answer"
-                />
-              </div>
-            </div>
-            <div *ngIf="!hasOptions(i)" class="row mb-6">
-              <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
-                "MENU.QUESTIONS" | translate
-              }}</label>
-              <div class="col-lg-8 fv-row">
-                <select
-                  class="form-select form-select-solid form-select-lg"
-                  formControlName="answer"
-                >
-                  <option [value]="null">
-                    {{
-                      translate.defaultLang == "ar"
-                        ? "اختر سؤال"
-                        : "Select Question"
-                    }}
-                  </option>
-                  <option
-                    [value]="statuses"
-                    *ngFor="let statuses of questionList[i].options"
-                  >
-                    {{ statuses }}
-                  </option>
-                </select>
               </div>
             </div>
             <hr />

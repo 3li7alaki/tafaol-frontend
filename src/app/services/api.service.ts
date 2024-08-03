@@ -704,6 +704,13 @@ export class ApiService {
     })
     .pipe(catchError(this.handleError));
   }
+  getPlans(id: any): Observable<any> {
+    return this.http
+      .get<any>(new ApiUrls().childrenUrl + "/" + id + "/plans", {
+        headers: this.getHeaders(),
+      })
+      .pipe(catchError(this.handleError));
+  }
   deleteAttachment(id: any): Observable<any> {
     return this.http
       .delete<any>(new ApiUrls().attachmentsUrl + "/" + id, {
