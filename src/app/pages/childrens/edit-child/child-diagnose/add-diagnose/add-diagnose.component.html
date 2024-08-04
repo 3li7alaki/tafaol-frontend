@@ -205,6 +205,7 @@ class="form"
           <div class="file-upload-container">
             <input
               type="file"
+              multiple="true"
               id="file"
               (change)="onFileSelectedNational($event)"
             />
@@ -212,17 +213,16 @@ class="form"
               {{ "selectFile" | translate }}
             </label>
           </div>
-
-          <div class="file-details-container" *ngIf="selectedFileNationalID">
+          <div class="file-details-container" *ngFor="let attachment of selectedFilesNationalID">
             <div class="file-details">
-              <div class="file-name">{{ selectedFileNationalID?.name }}</div>
+              <div class="file-name">{{ attachment?.name }}</div>
               <div class="file-info">
                 <span class="file-type">{{
-                  selectedFileNationalID?.type
-                }}</span>
+                  attachment?.type
+                  }}</span>
                 <span class="file-size">{{
-                  selectedFileNationalID?.size
-                }}</span>
+                  attachment?.size
+                  }}</span>
               </div>
             </div>
           </div>

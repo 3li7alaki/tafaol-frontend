@@ -19,6 +19,7 @@
         <select
                 class="form-select form-select-solid form-select-lg"
                 formControlName="form_id"
+                (change)="onFormSelectionChange($event)"
         >
           <option [value]="null">
             {{

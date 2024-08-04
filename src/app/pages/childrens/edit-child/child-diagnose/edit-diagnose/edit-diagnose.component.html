@@ -153,6 +153,7 @@
         <div class="file-upload-container">
           <input
             type="file"
+            multiple="true"
             id="file"
             (change)="onFileSelectedNational($event)"
           />
@@ -161,30 +162,38 @@
           </label>
         </div>
 
-        <div class="file-details-container" *ngIf="selectedFileNationalID">
+        <div class="file-details-container" *ngFor="let attachment of selectedFilesNationalID">
           <div class="file-details">
-            <div class="file-name">{{ selectedFileNationalID?.name }}  <i
-              *ngIf="imageUrlNationalID"
-              (click)="goToLink(imageUrlNationalID.path)"
-              class="fa fa-eye"
-            > </i></div>
+            <div class="file-name">{{ attachment?.name }}</div>
             <div class="file-info">
-              <span class="file-type">{{ selectedFileNationalID?.type }}</span>
-              <span class="file-size">{{ selectedFileNationalID?.size }}</span>
+                <span class="file-type">{{
+                  attachment?.type
+                  }}</span>
+              <span class="file-size">{{
+                attachment?.size
+                }}</span>
             </div>
           </div>
         </div>
         
-        <div class="file-details-container" *ngIf="!selectedFileNationalID">
+        <div class="file-details-container" *ngFor="let attachment of imageUrlsNationalID">
           <div class="file-details">
-            <div class="file-name">{{ imageUrlNationalID?.name }}  <i
-              *ngIf="imageUrlNationalID"
-              (click)="goToLink(imageUrlNationalID.path)"
+            <div class="file-name">{{ attachment?.name }}  <i
+              *ngIf="attachment"
+              (click)="goToLink(attachment.path)"
               class="fa fa-eye"
-            > </i></div>
+              style="cursor: pointer; margin: 0 8px;"
+            > </i>
+              <i
+                      *ngIf="attachment"
+                      (click)="deleteAttachment(attachment.id)"
+                      class="fa fa-x"
+                      style="cursor: pointer; margin: 0 5px;"
+              > </i>
+            </div>
             <div class="file-info">
-              <span class="file-type">{{ imageUrlNationalID?.type }}</span>
-              <span class="file-size">{{ imageUrlNationalID?.size }}</span>
+              <span class="file-type">{{ attachment?.type }}</span>
+              <span class="file-size">{{ attachment?.size }}</span>
             </div>
           </div>
         </div>

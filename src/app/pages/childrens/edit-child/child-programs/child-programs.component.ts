@@ -58,27 +58,29 @@ export class ChildProgramsComponent implements OnInit {
     );
   }
   openEdit(id: any) {
-    const modalRef = this.modalService.open(EditProgramsComponent, {
-      windowClass: "animated fadeInDown",
-      size: "xl",
-      centered: true,
-    });
     this.apiService.getOneChildProgramsEdit(this.child.id, id).subscribe(
       (res) => {
         console.log(res);
         localStorage.setItem("oneChildProgram", JSON.stringify(res));
         this.cdr.detectChanges();
+
+        const modalRef = this.modalService.open(EditProgramsComponent, {
+          windowClass: "animated fadeInDown",
+          size: "xl",
+          centered: true,
+        });
+
+        modalRef.result.then(
+            (data) => {
+              this.getPrograms();
+            },
+            (reason) => {}
+        );
       },
       (error) => {
         console.log(error);
         this.toastr.error(error.error.message, error.status);
       }
-    );
-    modalRef.result.then(
-      (data) => {
-        this.getPrograms();
-      },
-      (reason) => {}
     );
   }
   changeStatus(id: any) {

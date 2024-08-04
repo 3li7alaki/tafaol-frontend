@@ -16,7 +16,7 @@ export class AddDiagnoseComponent implements OnInit {
   diagnosesForm: FormGroup;
   loading = false;
   diagnosesList : any;
-  selectedFileNationalID: File;
+  selectedFilesNationalID: File[] = [];
   imageUrlNationalID: string;
   children: any;
   selectORWrite = false;
@@ -67,11 +67,10 @@ export class AddDiagnoseComponent implements OnInit {
     );
   };
   onFileSelectedNational(event: any) {
-    // Get the selected file from the event
-    const file = event.target.files[0];
-    this.selectedFileNationalID = file;
+    // Get the selected files from the event
+    const files = event.target.files;
+    this.selectedFilesNationalID = files;
     // Create a FileReader object to read the file contents
-    console.log(file)
     const reader = new FileReader();
 
     // Set the onload event handler of the reader
@@ -81,8 +80,8 @@ export class AddDiagnoseComponent implements OnInit {
       this.cdr.detectChanges();
     };
 
-    // Read the contents of the file as a data URL
-    reader.readAsDataURL(file);
+    // Read the contents of the first file as a data URL
+    reader.readAsDataURL(files[0]);
   }
   addDiagnose() {
     this.loading = true;
@@ -94,8 +93,15 @@ export class AddDiagnoseComponent implements OnInit {
     formData.append("symptoms", this.f.symptoms.value);
     formData.append("diagnose_id", this.f.diagnose_id.value);
     formData.append("date", this.datePipe.transform(this.f.date.value, 'yyyy-MM-dd')!);
-    formData.append("path", this.selectedFileNationalID);
-    
+    let files = [...this.selectedFilesNationalID];
+    if (files.length > 3) {
+      this.toastr.error(this.translate.instant("maxFiles"));
+        this.loading = false;
+      return;
+    }
+    files.forEach((file, index) => {
+      formData.append("attachments[" + index + "]", file);
+    });
     this.apiService.addChildrenDiagnose(formData, this.children.id).subscribe(
       (res) => {
         this.loading = false;

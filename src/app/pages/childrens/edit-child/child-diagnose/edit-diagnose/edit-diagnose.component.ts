@@ -18,8 +18,8 @@ export class EditDiagnoseComponent implements OnInit {
   diagnosesForm: FormGroup;
   loading = false;
   diagnosesList: any;
-  selectedFileNationalID: File;
-  imageUrlNationalID: any;
+  selectedFilesNationalID: File[] = [];
+  imageUrlsNationalID: any;
   children: any;
   diagnose: any;
   modalRef: any;
@@ -36,7 +36,7 @@ export class EditDiagnoseComponent implements OnInit {
   ) {
     this.children = JSON.parse(localStorage.getItem("children")!);
     this.diagnose = JSON.parse(localStorage.getItem("oneChild")!);
-    this.imageUrlNationalID = this.diagnose?.attachment;
+    this.imageUrlsNationalID = this.diagnose?.attachments;
     console.log(this.children);
     this.getDiagnoses();
   }
@@ -90,26 +90,18 @@ export class EditDiagnoseComponent implements OnInit {
         }
       );
   }
-  onFileSelectedNational(event: any) {
-    // Get the selected file from the event
-    const file = event.target.files[0];
-    this.selectedFileNationalID = file;
-    // Create a FileReader object to read the file contents
-    console.log(file);
-    const reader = new FileReader();
+    onFileSelectedNational(event: any) {
+        // Get the selected files from the event
+        const files = event.target.files;
+        this.selectedFilesNationalID = files;
+        // Create a FileReader object to read the file contents
+        const reader = new FileReader();
 
-    // Set the onload event handler of the reader
-    reader.onload = (e: ProgressEvent) => {
-      // Set the data URL of the image
-      this.imageUrlNationalID = (<FileReader>e.target).result as string;
-      this.cdr.detectChanges();
-    };
 
-    // Read the contents of the file as a data URL
-    reader.readAsDataURL(file);
-  }
+        // Read the contents of the first file as a data URL
+        reader.readAsDataURL(files[0]);
+    }
   addDiagnose() {
-    console.log(this.selectedFileNationalID);
     this.loading = true;
     const formData = new FormData();
     formData.append("name", this.f.name.value);
@@ -122,9 +114,16 @@ export class EditDiagnoseComponent implements OnInit {
       "date",
       this.datePipe.transform(this.f.date.value, "yyyy-MM-dd")!
     );
-    if (this.selectedFileNationalID != null) {
-      formData.append("path", this.selectedFileNationalID);
-    }
+      let files = [...this.selectedFilesNationalID];
+      if (files.length > 3) {
+          this.toastr.error(this.translate.instant("maxFiles"));
+          this.loading = false;
+          return;
+      } else if (files.length > 0) {
+          files.forEach((file, index) => {
+              formData.append("attachments[" + index + "]", file);
+          });
+      }
 
     this.apiService
       .editChildrenDiagnose(formData, this.children.id, this.diagnose.id)
@@ -179,4 +178,24 @@ export class EditDiagnoseComponent implements OnInit {
       );
     this.modalRef.hide();
   }
+
+    deleteAttachment(id: any) {
+        this.apiService.deleteAttachment(id).subscribe(
+            (res) => {
+                this.toastr.success(
+                    this.translate.instant("attachmentDeletedSuccessfully")
+                );
+                this.imageUrlsNationalID = this.imageUrlsNationalID.filter(
+                    (item: any) => item.id !== id
+                );
+                this.cdr.detectChanges();
+            },
+            (error) => {
+                this.toastr.error(error);
+                console.log(error);
+                this.cdr.detectChanges();
+            }
+        );
+    }
 }
+

@@ -13,6 +13,9 @@ import { TranslateService } from "@ngx-translate/core";
 import { ToastrService } from "ngx-toastr";
 import { ApiService } from "src/app/services/api.service";
 
+interface form {
+  id: any;
+}
 @Component({
   selector: "app-edit-evaluation",
   templateUrl: "./edit-evaluation.component.html",
@@ -46,7 +49,6 @@ export class EditEvaluationComponent implements OnInit {
     this.getEvalutaions();
     this.initForm();
     this.getQuestions();
-    this.getAdmins();
     this.evalutation.questions.forEach((element: any) => {
       this.addLevel(element.answer);
     });
@@ -54,6 +56,7 @@ export class EditEvaluationComponent implements OnInit {
     if (this.evalutation.done) {
         this.statusForm.disable();
     }
+    this.getAdmins();
   }
   initForm(): void {
     this.statusForm = this.formBuilder.group({
@@ -222,6 +225,25 @@ export class EditEvaluationComponent implements OnInit {
 
     // Read the contents of the file as a data URL
     reader.readAsDataURL(file);
+  }
+
+  onFormSelectionChange(event: any) {
+    const id = event.target.value;
+    console.log(id);
+    if (id) {
+      console.log(this.formList);
+      const selectedForm = this.formList.find((form: form) => form.id == id);
+      console.log(selectedForm);
+      if (selectedForm) {
+        const questions = selectedForm.questions;
+        this.statusForm.setControl("questions", this.formBuilder.array([]));
+        questions.forEach((question: any) => {
+          this.addLevel(question);
+        });
+      } else {
+        console.log("Selected form not found in formList");
+      }
+    }
   }
   goBackToPrevPage(): void {
     this.location.back();

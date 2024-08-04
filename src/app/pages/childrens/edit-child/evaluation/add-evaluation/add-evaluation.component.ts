@@ -209,6 +209,7 @@ export class AddEvaluationComponent implements OnInit {
         questions.forEach((question: any) => {
           this.addQuestion(question);
         });
+        this.questionList = selectedForm.questions;
       } else {
         console.log("Selected form not found in formList");
       }
