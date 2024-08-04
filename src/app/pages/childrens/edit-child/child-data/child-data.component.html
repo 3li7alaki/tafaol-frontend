@@ -707,7 +707,13 @@
       <div class="row mb-6">
         <label class="col-lg-2 col-form-label fw-bold fs-6">{{
           "fatherNationalID" | translate
-        }}</label>
+        }}
+          <i
+                  *ngIf="imageUrlNationalID"
+                  (click)="goToLink(imageUrlNationalID)"
+                  class="fa fa-eye"
+          ></i>
+        </label>
         <div class="col-lg-3">
           <img
             *ngIf="imageUrlNationalID"
@@ -726,7 +732,13 @@
         </div>
         <label class="col-lg-2 col-form-label fw-bold fs-6">{{
           "motherNationalID" | translate
-        }}</label>
+        }}
+          <i
+                  *ngIf="imageUrlMother"
+                  (click)="goToLink(imageUrlMother)"
+                  class="fa fa-eye"
+          ></i>
+        </label>
         <div class="col-lg-3">
           <img
             *ngIf="imageUrlMother"
