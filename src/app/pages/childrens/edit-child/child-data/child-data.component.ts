@@ -93,7 +93,8 @@ export class ChildDataComponent implements OnInit {
       training_needed: [this.children?.training_needed],
       other: [this.children?.other],
     });
-    this.imageUrlNationalID = this.children.national_id;
+    this.imageUrlNationalID = this.children?.father_national_id;
+    this.imageUrlMother = this.children?.mother_national_id;
   }
   get f() {
     return this.childrenForm.controls;
@@ -205,17 +206,13 @@ export class ChildDataComponent implements OnInit {
       this.datePipe.transform(this.f.hearing_check_date.value, "yyyy-MM-dd")!
     );
     formData.append("hearing_check_result", this.f.hearing_check_result.value);
-    formData.append(
-      "mother_national_id",
-      (this.selectedFileMother == null ? null : this.selectedFileMother)!
-    );
 
-    formData.append(
-      "father_national_id",
-      (this.selectedFileNationalID == null
-        ? null
-        : this.selectedFileNationalID)!
-    );
+    if (this.selectedFileMother != null) {
+      formData.append("mother_national_id", this.selectedFileMother);
+    }
+    if (this.selectedFileNationalID != null) {
+      formData.append("father_national_id", this.selectedFileNationalID);
+    }
 
     formData.append("epileptic", this.f.epileptic.value);
     formData.append("breathing_issues", this.f.breathing_issues.value);
