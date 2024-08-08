@@ -49,7 +49,6 @@ export class EditEvaluationComponent implements OnInit {
     console.log(this.evaluation);
     this.selectedFileNationalID = this.evaluation.attachment;
     this.EvaluationSelected = this.evaluation.questions.map((element: forms) => element.id);
-    console.log(this.selectedFileNationalID)
   }
   initForm() {
     this.evaluationForm = this.formBuilder.group({
@@ -102,8 +101,8 @@ export class EditEvaluationComponent implements OnInit {
     // Log the FormData object to the console
     formData.append("name", this.f.name.value);
     formData.append("description", this.f.description.value);
-    if(this.selectedFileNationalID){
-      formData.append("path", this.selectedFileNationalID);
+    if(this.newFileNationalID) {
+      formData.append("path", this.newFileNationalID);
     }
     for (let i = 0; i < this.EvaluationSelected.length; i++) {
       const file = this.EvaluationSelected[i];

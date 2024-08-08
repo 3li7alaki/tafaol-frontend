@@ -278,4 +278,10 @@ export class EditEvaluationComponent implements OnInit {
     return selectedQuestion && selectedQuestion.options === null;
   }
   disableAllQuestionIds() {}
+
+  goToLink(url: any) {
+    if (url.path) {
+      window.open(url.path, "_blank");
+    }
+  }
 }
