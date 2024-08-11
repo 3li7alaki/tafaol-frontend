@@ -29,6 +29,7 @@ export class EditEvaluationComponent implements OnInit {
   adminList: any;
   program: any;
   selectedFileNationalID: File;
+  newFileNationalID: any;
   imageUrlNationalID: string;
   evalutation: any;
   loadingDelete = false;
@@ -57,6 +58,7 @@ export class EditEvaluationComponent implements OnInit {
         this.statusForm.disable();
     }
     this.getAdmins();
+    this.newFileNationalID = false;
   }
   initForm(): void {
     this.statusForm = this.formBuilder.group({
@@ -188,7 +190,7 @@ export class EditEvaluationComponent implements OnInit {
     formData.append("user_id", this.f.user_id.value);
 
     // formData.append("questions", this.f.questions.value);
-    if (this.selectedFileNationalID) {
+    if (this.newFileNationalID) {
       formData.append("path", this.selectedFileNationalID);
     }
     this.apiService
@@ -212,6 +214,7 @@ export class EditEvaluationComponent implements OnInit {
     // Get the selected file from the event
     const file = event.target.files[0];
     this.selectedFileNationalID = file;
+    this.newFileNationalID = true;
     // Create a FileReader object to read the file contents
     console.log(file);
     const reader = new FileReader();

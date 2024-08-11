@@ -56,6 +56,9 @@ export class EditEvaluationComponent implements OnInit {
       description: [this.evaluation.description, [Validators.required]],
       questions: [null],
     });
+
+    console.log(this.newFileNationalID);
+    console.log(this.selectedFileNationalID);
   }
   get f() {
     return this.evaluationForm.controls;
