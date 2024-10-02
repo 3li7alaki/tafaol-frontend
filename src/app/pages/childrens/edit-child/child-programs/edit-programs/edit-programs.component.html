@@ -120,6 +120,47 @@
           ></div>
         </div>
       </div>
+      <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "applyDate" | translate
+          }}</label>
+        <div class="col-lg-3 fv-row">
+          <div class="input-group">
+            <input
+                    style="
+                border-top-right-radius: 7px;
+                border-bottom-right-radius: 7px;
+                border: 1px solid #dbdfe9;
+              "
+                    type="text"
+                    placeholder="{{ 'applyDate' | translate }}"
+                    class="form-control form-control-lg form-control-solid"
+                    bsDatepicker
+                    formControlName="applyDate"
+                    #d5="bsDatepicker"
+                    [bsConfig]="{
+                containerClass: 'theme-blue',
+                dateInputFormat: 'YYYY-MM-DD',
+                isAnimated: true
+              }"
+            />
+
+            <div class="input-group-append">
+              <div
+                      style="
+                  height: 46px;
+                  border-top-right-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                "
+                      class="input-group-text"
+                      (click)="d5.toggle()"
+              >
+                <i class="fa fa-calendar" style="cursor: pointer"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <hr />
       <div class="row">
         <div class="col-md-10">

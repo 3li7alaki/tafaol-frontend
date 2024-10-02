@@ -80,6 +80,7 @@ export class EditProgramsComponent implements OnInit {
       date: [""],
       note: [""],
       schedule: this.formBuilder.array([]),
+      applyDate: [this.program.created_at],
     });
   }
   get f() {
@@ -151,7 +152,8 @@ export class EditProgramsComponent implements OnInit {
       date: this.datePipe.transform(this.f.date.value, 'yyyy-MM-dd'),
       note: this.f.note.value,
       schedule: this.f.schedule.value,
-      active : true
+      active : true,
+      created_at: this.f.applyDate.value,
     };
     console.log(body);
     this.apiService.editChildProgram(body, this.child.id, this.program.id).subscribe(
