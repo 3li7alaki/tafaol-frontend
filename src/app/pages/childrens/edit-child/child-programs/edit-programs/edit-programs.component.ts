@@ -149,11 +149,21 @@ export class EditProgramsComponent implements OnInit {
     const body = {
       program_id: this.f.program_id.value,
       status_id: this.f.status_id.value,
-      date: this.datePipe.transform(this.f.date.value, 'yyyy-MM-dd'),
+      date: this.datePipe.transform(
+          typeof this.f.date.value === 'string'
+              ? this.f.date.value
+              : this.f.date.value?.setDate(this.f.date.value.getDate() + 1),
+          "yyyy-MM-dd"
+      )!,
       note: this.f.note.value,
       schedule: this.f.schedule.value,
       active : true,
-      created_at: this.f.applyDate.value,
+      created_at: this.datePipe.transform(
+        typeof this.f.applyDate.value === 'string'
+            ? this.f.applyDate.value
+            : this.f.applyDate.value?.setDate(this.f.applyDate.value.getDate() + 1),
+        "yyyy-MM-dd"
+      )!,
     };
     console.log(body);
     this.apiService.editChildProgram(body, this.child.id, this.program.id).subscribe(
