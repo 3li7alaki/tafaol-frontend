@@ -120,6 +120,17 @@
               }"
             />
           </div>
+          <div class="d-flex justify-content-end">
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="exportToPdf()"
+                    [disabled]="isLoading"
+            >
+              <i class="fa fa-download me-2"></i>
+              {{ 'EXPORT.PDF' | translate }}
+            </button>
+          </div>
           <button type="submit" class="btn btn-primary">
             <ng-container *ngIf="!isLoading">
               <i class="fa fa-search" aria-hidden="true"></i>
@@ -141,15 +152,42 @@
         <!-- begin::Table head -->
         <thead>
           <tr class="fw-bolder text-muted">
-            <th class="min-w-130px">{{ "AUTH.INPUT.FULLNAME" | translate }}</th>
-            <th class="min-w-140px">{{ "programID" | translate }}</th>
-            <th class="min-w-140px">{{ "cpr" | translate }}</th>
-            <th class="min-w-120px">{{ "Program" | translate }}</th>
-            <th class="min-w-120px">{{ "applyDate" | translate }}</th>
-            <th class="min-w-120px">{{ "ageApplied" | translate }}</th>
-            <th class="min-w-120px">{{ "age" | translate }}</th>
-            <th class="min-w-120px">{{ "otherNumbers" | translate }}</th>
-            <th class="min-w-140px">{{ "status" | translate }}</th>
+            <th
+                    class="min-w-130px hover-primary"
+                    (click)="sort('full_name')"
+            >{{ "AUTH.INPUT.FULLNAME" | translate }}</th>
+            <th
+                    class="min-w-140px hover-primary"
+                    (click)="sort('program_id')"
+            >{{ "programID" | translate }}</th>
+            <th
+                    class="min-w-140px hover-primary"
+                    (click)="sort('cpr')"
+            >{{ "cpr" | translate }}</th>
+            <th
+                    class="min-w-120px hover-primary"
+                    (click)="sort('program')"
+            >{{ "Program" | translate }}</th>
+            <th
+                    class="min-w-120px hover-primary"
+                    (click)="sort('apply_date')"
+            >{{ "applyDate" | translate }}</th>
+            <th
+                    class="min-w-120px hover-primary"
+                    (click)="sort('age_applied')"
+            >{{ "ageApplied" | translate }}</th>
+            <th
+                    class="min-w-120px hover-primary"
+                    (click)="sort('age')"
+            >{{ "age" | translate }}</th>
+            <th
+                    class="min-w-120px hover-primary"
+                    (click)="sort('phone_number')"
+            >{{ "otherNumbers" | translate }}</th>
+            <th
+                    class="min-w-140px"
+                    (click)="sort('status')"
+            >{{ "status" | translate }}</th>
           </tr>
         </thead>
         <!-- end::Table head -->

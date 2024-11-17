@@ -205,6 +205,11 @@ export const locale = {
     ClearAll : "Clear All",
     childFullName : 'Full Name',
     childEditedSuccessfully : 'Child Edited Successfully',
+    EXPORT: {
+      PDF: "Export PDF",
+      NO_DATA: "No data to export",
+      ERROR: "Error exporting PDF"
+    },
     MENU: {
       NEW: "new",
       ACTIONS: "Actions",
@@ -258,6 +263,7 @@ export const locale = {
         PASSWORD: "Password",
         CONFIRM_PASSWORD: "Confirm Password",
         USERNAME: "Username",
+        RELATION: "Relation",
       },
       VALIDATION: {
         INVALID: "{{name}} is not valid",

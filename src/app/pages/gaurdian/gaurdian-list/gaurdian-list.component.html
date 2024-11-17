@@ -75,6 +75,15 @@
             <td>
               <div class="d-flex justify-content-end flex-shrink-0">
                 <a
+                        [routerLink]="['/apps/gaurdian/children/' + gaurdian.id]"
+                        class="btn btn-bg-light btn-active-color-primary btn-sm me-1"
+                        *ngIf="showViewChildren"
+                >
+                  <span class="svg-icon svg-icon-3">
+                    {{ translate.defaultLang == "ar" ? "الأطفال" : "Children" }}
+                  </span>
+                </a>
+                <a
                   [routerLink]="['/apps/gaurdian/edit-gaurdian/' + gaurdian.id]"
                   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                   *ngIf="showEditGuardian"

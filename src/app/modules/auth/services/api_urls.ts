@@ -18,4 +18,5 @@ export class ApiUrls {
   attachmentsUrl = this.baseUrl + "admin/attachments";
   childrenProgramsUrl = this.baseUrl + "admin/childrenPrograms";
   programsReportUrl = this.baseUrl + 'admin/programsReport';
+  forgotPasswordReset = this.baseUrl + 'api/forgot-password-reset';
 }

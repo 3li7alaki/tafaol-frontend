@@ -81,7 +81,9 @@ export class EditProgramsComponent implements OnInit {
       note: [""],
       schedule: this.formBuilder.array([]),
       applyDate: [this.program.created_at],
+      age: [this.program.age],
     });
+    this.f.age.disable();
   }
   get f() {
     return this.programsForm.controls;

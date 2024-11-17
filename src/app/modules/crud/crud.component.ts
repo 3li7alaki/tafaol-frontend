@@ -6,6 +6,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { fromEvent } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 import { SweetAlertOptions } from 'sweetalert2';
+import {Config, Api} from "datatables.net";
 
 @Component({
   selector: 'app-crud',
@@ -14,7 +15,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 })
 export class CrudComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() datatableConfig: DataTables.Settings = {};
+  @Input() datatableConfig: Config = {};
 
   @Input() route: string = '/';
 
@@ -27,7 +28,7 @@ export class CrudComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() editEvent = new EventEmitter<number>();
   @Output() createEvent = new EventEmitter<boolean>();
 
-  dtOptions: DataTables.Settings = {};
+  dtOptions: Config = {};
 
   @ViewChild(DataTableDirective, { static: false })
   private datatableElement: DataTableDirective;
@@ -68,7 +69,7 @@ export class CrudComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.reload) {
       this.reload.subscribe(data => {
         this.modalService.dismissAll();
-        this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => dtInstance.ajax.reload());
+        this.datatableElement.dtInstance.then((dtInstance: Api<any>) => dtInstance.ajax.reload());
       });
     }
   }
@@ -172,7 +173,7 @@ export class CrudComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe(({ action, value }) => {
         if (action === 'filter') {
-          this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => dtInstance.search(value).draw());
+          this.datatableElement.dtInstance.then((dtInstance: Api<any>) => dtInstance.search(value).draw());
         }
       });
   }

@@ -88,6 +88,7 @@ export class ApiService {
   register(value: any): Observable<any> {
     const body = {
       name: value.name,
+      relation: value.relation,
       phone: value.phone,
       email: value.email,
       password: value.password,
@@ -737,6 +738,19 @@ export class ApiService {
     return this.http
       .get<any>(new ApiUrls().attachmentsUrl + "/" + id, {
         headers: this.getHeaders(),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  resetPassword(password: any, password_confirmation: any, token: any): Observable<any> {
+    const body = {
+      password: password,
+      password_confirmation: password_confirmation,
+      token: token,
+    };
+    return this.http
+      .post<any>(new ApiUrls().forgotPasswordReset, body, {
+        headers: this.headerNoToken,
       })
       .pipe(catchError(this.handleError));
   }

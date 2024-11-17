@@ -16,6 +16,7 @@ export class GaurdianListComponent implements OnInit {
   showAddGuardian = false;
   showEditGuardian = false;
   showDeleteGuardian = false;
+  showViewChildren = false;
   user = JSON.parse(localStorage.getItem("user") || "{}");
   constructor(
     private apiService: ApiService,
@@ -30,10 +31,13 @@ export class GaurdianListComponent implements OnInit {
         this.permissionList?.includes("update-guardians");
      this.showDeleteGuardian =
         this.permissionList?.includes("delete-guardians");
+     this.showViewChildren =
+        this.permissionList?.includes("view-children");
     } else {
       this.showAddGuardian = true;
       this.showEditGuardian = true;
       this.showDeleteGuardian = true;
+      this.showViewChildren = true;
     }
   }
   ngOnInit(): void {

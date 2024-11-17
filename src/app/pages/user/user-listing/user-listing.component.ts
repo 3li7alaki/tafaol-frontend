@@ -6,6 +6,7 @@ import { DataTablesResponse, IUserModel, UserService } from 'src/app/_fake/servi
 import { SweetAlertOptions } from 'sweetalert2';
 import moment from 'moment';
 import { IRoleModel, RoleService } from 'src/app/_fake/services/role.service';
+import { Config } from "datatables.net";
 
 @Component({
   selector: 'app-user-listing',
@@ -21,7 +22,7 @@ export class UserListingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   users: DataTablesResponse;
 
-  datatableConfig: DataTables.Settings = {};
+  datatableConfig: Config = {};
 
   // Reload emitter inside datatable
   reloadEvent: EventEmitter<boolean> = new EventEmitter();
@@ -45,14 +46,14 @@ export class UserListingComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.datatableConfig = {
       serverSide: true,
-      ajax: (dataTablesParameters: any, callback) => {
+      ajax: (dataTablesParameters: any, callback: any) => {
         this.apiService.getUsers(dataTablesParameters).subscribe(resp => {
           callback(resp);
         });
       },
       columns: [
         {
-          title: 'Name', data: 'name', render: function (data, type, full) {
+          title: 'Name', data: 'name', render: function (data: any, type: any, full: any) {
             const colorClasses = ['success', 'info', 'warning', 'danger'];
             const randomColorClass = colorClasses[Math.floor(Math.random() * colorClasses.length)];
 
@@ -81,7 +82,7 @@ export class UserListingComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         },
         {
-          title: 'Role', data: 'role', render: function (data, type, row) {
+          title: 'Role', data: 'role', render: function (data: any, type: any, row: any) {
             const roleName = row.roles[0]?.name;
             return roleName || '';
           },
@@ -90,19 +91,19 @@ export class UserListingComponent implements OnInit, AfterViewInit, OnDestroy {
           type: 'string',
         },
         {
-          title: 'Last Login', data: 'last_login_at', render: (data, type, full) => {
+          title: 'Last Login', data: 'last_login_at', render: (data: any, type: any, full: any) => {
             const date = data || full.created_at;
             const dateString = moment(date).fromNow();
             return `<div class="badge badge-light fw-bold">${dateString}</div>`;
           }
         },
         {
-          title: 'Joined Date', data: 'created_at', render: function (data) {
-            return moment(data).format('DD MMM YYYY, hh:mm a');;
+          title: 'Joined Date', data: 'created_at', render: function (data: any) {
+            return moment(data).format('DD MMM YYYY, hh:mm a');
           }
         }
       ],
-      createdRow: function (row, data, dataIndex) {
+      createdRow: function (row: any, data: any, dataIndex: any) {
         $('td:eq(0)', row).addClass('d-flex align-items-center');
       },
     };

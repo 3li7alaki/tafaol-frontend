@@ -232,6 +232,11 @@ export const locale = {
     ClearAll : 'إلغاء الكل',
     childFullName : 'الاسم الرباعي',
     childEditedSuccessfully : 'تم تعديل الطفل بنجاح',
+    EXPORT: {
+      PDF: "تصدير PDF",
+      NO_DATA: "لا توجد بيانات للتصدير",
+      ERROR: "خطأ في تصدير PDF"
+    },
     MENU: {
       NEW: "جديد",
       ACTIONS: "Actions",
@@ -285,6 +290,7 @@ export const locale = {
         PASSWORD: "كلمة المرور",
         CONFIRM_PASSWORD: "تأكيد كلمة المرور",
         USERNAME: "Username",
+        RELATION: "صلة القرابة",
       },
       VALIDATION: {
         INVALID: "{{name}} is not valid",

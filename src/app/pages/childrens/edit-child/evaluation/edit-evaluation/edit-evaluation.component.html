@@ -79,24 +79,18 @@
             "evaluator" | translate
             }}</label>
           <div class="col-lg-3 fv-row">
-            <select
-                    class="form-select form-select-solid form-select-lg"
-                    formControlName="user_id"
+            <ng-select
+                    [(ngModel)]="selectedAdmins"
+                    [items]="adminList"
+                    [multiple]="true"
+                    [closeOnSelect]="false"
+                    [searchable]="true"
+                    formControlName="users"
+                    bindLabel="name"
+                    bindValue="id"
+                    placeholder="{{translate.currentLang == 'ar' ? 'اختر القائمين بالتقييم' : 'Select Evaluators'}}"
             >
-              <option [value]="null">
-                {{
-                translate.defaultLang == "ar"
-                        ? "اختر القائم بالتقييم"
-                        : "Select Evaluator"
-                }}
-              </option>
-              <option
-                      [value]="admin.id"
-                      *ngFor="let admin of adminList"
-              >
-                {{ admin.name }}
-              </option>
-            </select>
+            </ng-select>
           </div>
         </div>
         <div class="row mb-6">

@@ -1,5 +1,5 @@
 import { DatePipe } from "@angular/common";
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 import {
   FormBuilder,
   FormGroup,
@@ -10,6 +10,7 @@ import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { ToastrService } from "ngx-toastr";
 import { ApiService } from "src/app/services/api.service";
+import {PdfExportUtil} from "../../../utill/pdf-export.util";
 
 @Component({
   selector: "app-report",
@@ -17,6 +18,8 @@ import { ApiService } from "src/app/services/api.service";
   styleUrl: "./report.component.scss",
 })
 export class ReportComponent implements OnInit {
+  @ViewChild('reportTable') reportTable: ElementRef;
+
   filterForm: FormGroup;
   isVisiable = true;
   isLoading = false;
@@ -25,7 +28,8 @@ export class ReportComponent implements OnInit {
   history: any;
   filtered: any;
   fromDate: any;
-    toDate: any;
+  toDate: any;
+  lastSort: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -147,6 +151,74 @@ export class ReportComponent implements OnInit {
     } else {
       this.filtered = this.history;
         this.toDate = null;
+    }
+  }
+
+  sort(header: string) {
+    if (!this.filtered || this.filtered.length === 0) {
+        return;
+    }
+    if (this.lastSort === header) {
+        this.filtered = this.filtered.reverse();
+        return;
+    }
+    switch (header) {
+      case 'full_name':
+        this.filtered = this.filtered.sort((a: any, b: any) => a.full_name.localeCompare(b.full_name));
+        break;
+      case 'program_id':
+        this.filtered = this.filtered.sort((a: any, b: any) => a.child_programs.id - b.child_programs.id);
+        break;
+      case 'cpr':
+        this.filtered = this.filtered.sort((a: any, b: any) => a.cpr - b.cpr);
+        break;
+      case 'program':
+        this.filtered = this.filtered.sort((a: any, b: any) => a.program.name.localeCompare(b.program.name));
+        break;
+      case 'apply_date':
+        this.filtered = this.filtered.sort((a: any, b: any) => a.child_programs.created_at.localeCompare(b.child_programs.created_at));
+        break;
+      case 'age_applied':
+        this.filtered = this.filtered.sort((a: any, b: any) => a.age_applied - b.age_applied);
+        break;
+      case 'age':
+        this.filtered = this.filtered.sort((a: any, b: any) => a.age - b.age);
+        break;
+      case 'phone_number':
+        this.filtered = this.filtered.sort((a: any, b: any) => a.guardian?.phone.localeCompare(b.guardian?.phone));
+        break;
+      case 'status':
+        this.filtered = this.filtered.sort((a: any, b: any) => a.status.name_ar.localeCompare(b.status.name_ar));
+        break;
+    }
+    this.lastSort = header;
+  }
+
+  exportToPdf() {
+    if (!this.filtered || this.filtered.length === 0) {
+        this.toastr.error(this.translate.instant('EXPORT.NO_DATA'));
+        return;
+    }
+    try {
+      const tableElement = document.querySelector('table');
+      if (!tableElement) {
+        this.toastr.error(this.translate.instant('EXPORT.NO_DATA'));
+        return;
+      }
+
+      this.isLoading = true;
+      PdfExportUtil.exportToPdf(
+            Array.from(tableElement.querySelectorAll('tr')).map((row) => {
+                return Array.from(row.querySelectorAll('td')).map((cell) => cell.innerText);
+            }),
+            Array.from(tableElement.querySelectorAll('th')).map((cell) => cell.innerText),
+            'report.pdf'
+      );
+      this.isLoading = false;
+    } catch (error) {
+      this.isLoading = false;
+      this.toastr.error(this.translate.instant('EXPORT.ERROR'));
+      console.error('PDF export error:', error);
     }
   }
 }

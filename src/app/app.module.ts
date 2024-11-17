@@ -18,6 +18,7 @@ import { DirectionService } from './services/direction.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ToastrModule } from 'ngx-toastr';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { DataTablesModule } from "angular-datatables";
 
 // #fake-end#
 export function HttpLoaderFactory(http: HttpClient) {
@@ -49,6 +50,7 @@ function appInitializer(authService: AuthService) {
     NgSelectModule,
     ToastrModule.forRoot(),
     ClipboardModule,
+    DataTablesModule,
     // #fake-start#
     environment.isMockEnabled
       ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {

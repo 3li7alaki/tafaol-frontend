@@ -35,23 +35,52 @@
   <div class="fv-row mb-8">
     <label class="form-label fw-bolder text-gray-900 fs-6">{{'AUTH.INPUT.FULLNAME' | translate}}</label>
     <input
-      class="form-control bg-transparent"
-      type="text"
-      name="fullname"
-      formControlName="fullname"
-      placeholder="{{'AUTH.INPUT.FULLNAME' | translate}}"
-      autocomplete="off"
-      [ngClass]="{
+            class="form-control bg-transparent"
+            type="text"
+            name="fullname"
+            formControlName="fullname"
+            placeholder="{{'AUTH.INPUT.FULLNAME' | translate}}"
+            autocomplete="off"
+            [ngClass]="{
         'is-invalid': registrationForm.controls['fullname'].invalid && registrationForm.controls['fullname'].touched,
         'is-valid': registrationForm.controls['fullname'].valid
       }"
     />
     <ng-container
-      [ngTemplateOutlet]="formError"
-      [ngTemplateOutletContext]="{
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
         validation: 'required',
         message: 'الأسم مطلوب',
         control: registrationForm.controls['fullname']
+      }"
+    ></ng-container>
+  </div>
+  <div class="fv-row mb-8">
+    <label class="form-label fw-bolder text-gray-900 fs-6">{{'AUTH.INPUT.RELATION' | translate}}</label>
+    <input
+            class="form-control bg-transparent"
+            type="text"
+            name="relation"
+            formControlName="relation"
+            placeholder="{{'AUTH.INPUT.RELATION' | translate}}"
+            autocomplete="off"
+            [ngClass]="{
+        'is-invalid': registrationForm.controls['relation'].invalid && registrationForm.controls['relation'].touched,
+        'is-valid': registrationForm.controls['relation'].valid
+      }"
+            list="relations"
+    />
+    <datalist id="relations">
+      <option value="الأم">
+      <option value="الأب">
+      <option value="أخرى (حدد)">
+    </datalist>
+    <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+        validation: 'required',
+        message: 'صلة القرابة مطلوبة',
+        control: registrationForm.controls['relation']
       }"
     ></ng-container>
   </div>
@@ -86,7 +115,7 @@
   <!--end::Form group-->
 
   <!--begin::Form group-->
-  <div class="fv-row mb-8">
+  <div class="fv-row mb-8">.
     <label class="form-label fw-bolder text-gray-900 fs-6">{{'AUTH.INPUT.EMAIL' | translate}}</label>
     <input
       class="form-control bg-transparent"
@@ -177,14 +206,13 @@
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
         validation: 'required',
-        message: 'Confirm Password is required',
+        message: 'تأكيد كلمة المرور مطلوب',
         control: registrationForm.controls['cPassword']
       }"
     ></ng-container>
     <ng-container
       *ngIf="
-        registrationForm.controls['cPassword'].errors &&
-        registrationForm.controls['cPassword'].errors.ConfirmPassword
+        registrationForm.controls['cPassword'].errors
       "
     >
       <div class="fv-plugins-message-container">

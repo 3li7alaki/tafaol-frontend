@@ -20,12 +20,15 @@ import { CrudModule } from "src/app/modules/crud/crud.module";
 import { AddGaurdianComponent } from "./add-gaurdian/add-gaurdian.component";
 import { EditGaurdianComponent } from "./edit-gaurdian/edit-gaurdian.component";
 import { GaurdianResolver } from "./gaurdian.resolver";
+import { ChildrenComponent } from "./children/children.component";
+import {ModalModule} from "ngx-bootstrap/modal";
 
 @NgModule({
   declarations: [
     GaurdianListComponent,
     AddGaurdianComponent,
     EditGaurdianComponent,
+    ChildrenComponent
   ],
   imports: [
     CommonModule,
@@ -40,6 +43,13 @@ import { GaurdianResolver } from "./gaurdian.resolver";
       {
         path: "add-gaurdian",
         component: AddGaurdianComponent,
+      },
+      {
+        path: "children/:id",
+        component: ChildrenComponent,
+        resolve: {
+          gaurdian: GaurdianResolver,
+        },
       },
       {
         path: "edit-gaurdian/:id",
@@ -59,6 +69,7 @@ import { GaurdianResolver } from "./gaurdian.resolver";
     TranslateModule,
     WidgetsModule,
     ModalsModule,
+    ModalModule.forRoot(),
     InlineSVGModule,
     ToastrModule,
   ],

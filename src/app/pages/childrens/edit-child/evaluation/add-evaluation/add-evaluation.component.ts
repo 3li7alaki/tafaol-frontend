@@ -22,6 +22,7 @@ export class AddEvaluationComponent implements OnInit {
   formList: any;
   questionList: any;
   adminList: any;
+  selectedAdmins: [] = [];
   program: any;
   selectedFileNationalID: File;
   imageUrlNationalID: string;
@@ -46,7 +47,7 @@ export class AddEvaluationComponent implements OnInit {
   initForm() {
     this.statusForm = this.formBuilder.group({
       form_id: [null, [Validators.required]],
-      user_id: [null],
+      users: [null],
       date_1: [""],
       date_2: [""],
       date_3: [""],
@@ -157,8 +158,10 @@ export class AddEvaluationComponent implements OnInit {
     );
     formData.append("done", this.f.done.value == true ? "1" : "0");
     formData.append("pass", this.f.pass.value == true ? "1" : "0");
-    formData.append("user_id", this.f.user_id.value);
-    // formData.append("questions", this.f.questions.value);
+    for (let i = 0; i < this.selectedAdmins.length; i++) {
+      const user = this.selectedAdmins[i];
+      formData.append(`users[${i}]`, user);
+    }
     if (this.selectedFileNationalID) {
       formData.append("path", this.selectedFileNationalID);
     }

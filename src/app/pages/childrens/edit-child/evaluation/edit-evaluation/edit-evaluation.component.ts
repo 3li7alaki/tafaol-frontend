@@ -27,6 +27,7 @@ export class EditEvaluationComponent implements OnInit {
   formList: any;
   questionList: any;
   adminList: any;
+  selectedAdmins: [] = [];
   program: any;
   selectedFileNationalID: File;
   newFileNationalID: any;
@@ -59,11 +60,12 @@ export class EditEvaluationComponent implements OnInit {
     }
     this.getAdmins();
     this.newFileNationalID = false;
+    this.selectedAdmins = this.evalutation.users.map((element: any) => element.id);
   }
   initForm(): void {
     this.statusForm = this.formBuilder.group({
       form_id: [this.evalutation.form.id, [Validators.required]],
-      user_id: [this.evalutation.user.id],
+      users: [null],
       date_1: [this.evalutation.date_1],
       date_2: [this.evalutation.date_2],
       date_3: [this.evalutation.date_3],
@@ -187,8 +189,11 @@ export class EditEvaluationComponent implements OnInit {
     );
     formData.append("done", this.f.done.value == true ? "1" : "0");
     formData.append("pass", this.f.pass.value == true ? "1" : "0");
-    formData.append("user_id", this.f.user_id.value);
 
+    for (let i = 0; i < this.selectedAdmins.length; i++) {
+      const user = this.selectedAdmins[i];
+      formData.append(`users[${i}]`, user);
+    }
     // formData.append("questions", this.f.questions.value);
     if (this.newFileNationalID) {
       formData.append("path", this.selectedFileNationalID);

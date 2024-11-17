@@ -17,8 +17,4 @@ export class GaurdianResolver implements Resolve<boolean> {
   }
   constructor(
     private apiService: ApiService) { }
-  
-  
-  
-  
 }

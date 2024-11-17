@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { DataTablesResponse, IPermissionModel, PermissionService } from 'src/app/_fake/services/permission.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import moment from 'moment';
+import {Config} from "datatables.net";
 
 @Component({
   selector: 'app-permission-listing',
@@ -19,7 +20,7 @@ export class PermissionListingComponent implements OnInit, AfterViewInit, OnDest
 
   permissions: DataTablesResponse;
 
-  datatableConfig: DataTables.Settings = {};
+  datatableConfig: Config = {};
 
   // Reload emitter inside datatable
   reloadEvent: EventEmitter<boolean> = new EventEmitter();
@@ -41,7 +42,7 @@ export class PermissionListingComponent implements OnInit, AfterViewInit, OnDest
   ngOnInit(): void {
     this.datatableConfig = {
       serverSide: true,
-      ajax: (dataTablesParameters: any, callback) => {
+      ajax: (dataTablesParameters: any, callback: any) => {
         this.apiService.getPermissions(dataTablesParameters).subscribe(resp => {
           console.log(resp);
           callback(resp);
@@ -53,7 +54,7 @@ export class PermissionListingComponent implements OnInit, AfterViewInit, OnDest
           render: (data: any, type: any, full: IPermissionModel) => `<a href="javascript:;" data-action="view" data-id="${full.id}" class="text-gray-800 text-hover-primary mb-1">${data}</a>`
         },
         {
-          title: 'Assigned To', data: null, render: function (data, type, row) {
+          title: 'Assigned To', data: null, render: function (data: any, type: any, row: any) {
             if (Array.isArray(data.roles)) {
               return data.roles.map(function (role: any) {
                 const color = ['info', 'success', 'warning', 'danger', 'primary'][Math.floor(Math.random() * 5)];
@@ -68,7 +69,7 @@ export class PermissionListingComponent implements OnInit, AfterViewInit, OnDest
           type: 'string',
         },
         {
-          title: 'Created Date', data: 'created_at', render: function (data) {
+          title: 'Created Date', data: 'created_at', render: function (data: any) {
             return moment(data).format('DD MMM YYYY, hh:mm a');;
           }
         }

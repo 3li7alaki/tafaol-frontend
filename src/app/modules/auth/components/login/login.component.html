@@ -71,7 +71,7 @@ end::Login options-->
   <ng-container *ngIf="hasError">
     <div class="mb-lg-15 alert alert-danger">
       <div class="alert-text font-weight-bold">
-        The login details are incorrect
+        تفاصيل الدخول غير صحيحة. يرجى المحاولة مرة أخرى.
       </div>
     </div>
   </ng-container>
@@ -87,22 +87,22 @@ end::Login options-->
       }" />
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'required',
-        message: 'Email is required',
+        message: 'البريد الإلكتروني مطلوب',
         control: loginForm.controls['email']
       }"></ng-container>
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'email',
-        message: 'Email is invalid',
+        message: 'البريد الإلكتروني غير صحيح',
         control: loginForm.controls['email']
       }"></ng-container>
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'minLength',
-        message: 'Email should have at least 3 symbols',
+        message: 'البريد الإلكتروني يجب أن يحتوي على 3 أحرف على الأقل',
         control: loginForm.controls['email']
       }"></ng-container>
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'maxLength',
-        message: 'Email should have maximum 360 symbols',
+        message: 'البريد الإلكتروني يجب أن يحتوي على 360 حرفًا كحد أقصى',
         control: loginForm.controls['email']
       }"></ng-container>
   </div>
@@ -120,17 +120,17 @@ end::Login options-->
       }" />
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'required',
-        message: 'Password is required',
+        message: 'كلمة المرور مطلوبة',
         control: loginForm.controls['password']
       }"></ng-container>
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'minlength',
-        message: 'Password should have at least 3 symbols',
+        message: 'كلمة المرور يجب أن تحتوي على 6 أحرف على الأقل',
         control: loginForm.controls['password']
       }"></ng-container>
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'maxLength',
-        message: 'Password should have maximum 100 symbols',
+        message: 'كلمة المرور يجب أن تحتوي على 100 حرفًا كحد أقصى',
         control: loginForm.controls['password']
       }"></ng-container>
 
@@ -142,9 +142,9 @@ end::Login options-->
     <div></div>
 
     <!--begin::Link-->
-    <!-- <a routerLink="/auth/forgot-password" class="link-primary">
-      Forgot Password ?
-    </a> -->
+    <a routerLink="/auth/forgot-password" class="link-primary">
+        نسيت كلمة المرور؟
+    </a>
     <!--end::Link-->
   </div>
   <!--end::Wrapper-->

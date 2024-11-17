@@ -52,6 +52,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     this.registrationForm = this.fb.group(
       {
         fullname: ["", Validators.compose([Validators.required])],
+        relation: ["", Validators.compose([Validators.required])],
         phone: ["", Validators.compose([Validators.required])],
         email: [
           "",
@@ -79,12 +80,12 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     this.isLoading = true
     const body = {
       name: this.f.fullname.value,
+      relation: this.f.relation.value,
       phone: '973'+this.f.phone.value,
       email: this.f.email.value,
       password: this.f.password.value,
       password_confirmation: this.f.cPassword.value,
     };
-    console.log(body);
     this.apiService.register(body).subscribe(
       (res) => {
         this.isLoading = false
