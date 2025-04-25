@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { ToastrService } from "ngx-toastr";
 import { ApiService } from "src/app/services/api.service";
-import {PdfExportUtil} from "../../../utill/pdf-export.util";
+import {PdfExportUtil} from "../../../util/pdf-export.util";
 
 @Component({
   selector: "app-report",

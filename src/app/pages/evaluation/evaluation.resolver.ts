@@ -1,24 +1,20 @@
 import { Injectable } from '@angular/core';
 import {
-  Router, Resolve,
+  Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EvaluationResolver implements Resolve<boolean> {
+export class EvaluationResolver implements Resolve<any> {
+  constructor(private apiService: ApiService) {}
+  
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     const id = route.paramMap.get('id');
-    return this.apiService.getOneEvalutaion(id);
+    return this.apiService.getOneEvaluation(id);
   }
-  constructor(
-    private apiService: ApiService) { }
-  
-  
-  
-  
 }

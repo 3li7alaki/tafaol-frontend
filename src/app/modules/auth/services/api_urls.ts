@@ -2,8 +2,10 @@ import { environment } from "src/environments/environment";
 
 export class ApiUrls {
   baseUrl = environment.apiUrl;
+  me = this.baseUrl + "api/me";
   login = this.baseUrl + "api/login";
   roles = this.baseUrl + "admin/roles";
+  users = this.baseUrl + "admin/users";
   permissions = this.baseUrl + "admin/permissions";
   nationalityUrl = this.baseUrl + "admin/nationalities";
   adminUrl = this.baseUrl + "admin/admins";

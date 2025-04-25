@@ -1,4 +1,4 @@
-import { DatePipe } from "@angular/common";
+
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -15,10 +15,10 @@ import { ApiService } from "src/app/services/api.service";
 export class AddAttachmentsComponent implements OnInit {
   attachmentForm: FormGroup;
   loading = false;
-  selectedFileNationalID: File;
-  imageUrlNationalID: string;
-  child: any;
-  type: string;
+  selectedFile: File;
+  imageUrl: string;
+  child: { id: string };
+  type: 'plans' | 'children';
   constructor(
     public activeModal: NgbActiveModal,
     private apiService: ApiService,
@@ -26,8 +26,7 @@ export class AddAttachmentsComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,
     public translate: TranslateService,
-    private router: Router,
-    private datePipe: DatePipe,
+    private router: Router
   ) {
     this.child = JSON.parse(localStorage.getItem("children")!);
     if (window.location.href.includes("plans")) {
@@ -51,35 +50,30 @@ export class AddAttachmentsComponent implements OnInit {
   get f() {
     return this.attachmentForm.controls;
   }
-  onFileSelectedNational(event: any) {
+  onFileSelected(event: any) {
     // Get the selected file from the event
     const file = event.target.files[0];
-    this.selectedFileNationalID = file;
+    this.selectedFile = file;
     // Create a FileReader object to read the file contents
-    console.log(file)
     const reader = new FileReader();
 
     // Set the onload event handler of the reader
     reader.onload = (e: ProgressEvent) => {
       // Set the data URL of the image
-      this.imageUrlNationalID = (<FileReader>e.target).result as string;
+      this.imageUrl = (<FileReader>e.target).result as string;
       this.cdr.detectChanges();
     };
 
     // Read the contents of the file as a data URL
     reader.readAsDataURL(file);
   }
-  removeAttachment(i: number) {
-    const control = this.attachmentForm.controls.attachments as FormArray;
-    control.removeAt(i);
-  }
-  addGaurd() {
+
+  saveAttachment() {
     this.loading = true;
-    // console.log("Result: ", this.attachmentForm.value);
     const formData = new FormData();
     formData.append("name", this.f.name.value);
     formData.append("description", this.f.description.value);
-    formData.append("path", this.selectedFileNationalID);
+    formData.append("path", this.selectedFile);
     formData.append("attachable_id", this.child.id);
     if (this.type === "plans") {
       formData.append("attachable_type", "child_plan");
@@ -90,7 +84,6 @@ export class AddAttachmentsComponent implements OnInit {
     this.apiService.addAttachment(formData).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
         this.toastr.success(this.translate.instant("attachmentAddedSuccessfully"));
         this.activeModal.close();
         this.cdr.detectChanges();
@@ -98,7 +91,6 @@ export class AddAttachmentsComponent implements OnInit {
       (error) => {
         this.toastr.error(error.error);
         this.loading = false;
-        console.log(error.message);
         this.cdr.detectChanges();
       }
     );

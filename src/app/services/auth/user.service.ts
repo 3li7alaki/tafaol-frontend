@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ApiUrls } from 'src/app/modules/auth/services/api_urls';
+import { ApiService } from '../api.service';
 import { IRoleModel } from './role.service';
 
 export interface DataTablesResponse {
@@ -30,33 +32,55 @@ export interface IUserModel {
     providedIn: 'root'
 })
 export class UserService {
+    private apiUrl: string;
 
-    private apiUrl = 'https://preview.keenthemes.com/starterkit/metronic/laravel/api/v1/users';
-    // private apiUrl = 'http://127.0.0.1:8000/api/v1/users';
-
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        private apiService: ApiService
+    ) {
+        // Use adminUrl as a base since there's no specific users endpoint
+        this.apiUrl = new ApiUrls().users;
+    }
 
     getUsers(dataTablesParameters: any): Observable<DataTablesResponse> {
         const url = `${this.apiUrl}-list`;
-        return this.http.post<DataTablesResponse>(url, dataTablesParameters);
+        return this.http.post<DataTablesResponse>(
+            url, 
+            dataTablesParameters,
+            { headers: this.apiService.getHeaders() }
+        );
     }
 
     getUser(id: number): Observable<IUserModel> {
         const url = `${this.apiUrl}/${id}`;
-        return this.http.get<IUserModel>(url);
+        return this.http.get<IUserModel>(
+            url,
+            { headers: this.apiService.getHeaders() }
+        );
     }
 
     createUser(user: IUserModel): Observable<IUserModel> {
-        return this.http.post<IUserModel>(this.apiUrl, user);
+        return this.http.post<IUserModel>(
+            this.apiUrl, 
+            user,
+            { headers: this.apiService.getHeaders() }
+        );
     }
 
     updateUser(id: number, user: IUserModel): Observable<IUserModel> {
         const url = `${this.apiUrl}/${id}`;
-        return this.http.put<IUserModel>(url, user);
+        return this.http.put<IUserModel>(
+            url, 
+            user,
+            { headers: this.apiService.getHeaders() }
+        );
     }
 
     deleteUser(id: number): Observable<void> {
         const url = `${this.apiUrl}/${id}`;
-        return this.http.delete<void>(url);
+        return this.http.delete<void>(
+            url,
+            { headers: this.apiService.getHeaders() }
+        );
     }
 }

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { ToastrService } from "ngx-toastr";
-import { RoleService } from "src/app/_fake/services/role.service";
+import { RoleService } from "src/app/services/auth/role.service";
 interface Permission {
   id: number;
   title: string;

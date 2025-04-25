@@ -21,7 +21,7 @@ export class EvaluationListComponent implements OnInit{
   };
 
   getEvaluation() {
-    this.apiService.getEvalutaions().subscribe(
+    this.apiService.getEvaluations().subscribe(
       (res) => {
         console.log(res);
         this.evaluationList = res;

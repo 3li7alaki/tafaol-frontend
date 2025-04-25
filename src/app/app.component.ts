@@ -8,15 +8,12 @@ import { TranslationService } from "./modules/i18n";
 import { TranslateService } from "@ngx-translate/core";
 // language list
 import { locale as enLang } from "./modules/i18n/vocabs/en";
-import { locale as chLang } from "./modules/i18n/vocabs/ch";
-import { locale as esLang } from "./modules/i18n/vocabs/es";
-import { locale as jpLang } from "./modules/i18n/vocabs/jp";
-import { locale as deLang } from "./modules/i18n/vocabs/de";
-import { locale as frLang } from "./modules/i18n/vocabs/fr";
 import { locale as arLang } from "./modules/i18n/vocabs/ar";
 import { ThemeModeService } from "./_metronic/partials/layout/theme-mode-switcher/theme-mode.service";
 import { DOCUMENT } from "@angular/common";
 import { DirectionService } from "./services/direction.service";
+import { TokenValidationService } from "./services/auth/token-validation.service";
+import { Router } from "@angular/router";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -32,8 +29,11 @@ export class AppComponent implements OnInit {
   constructor(
     private translationService: TranslationService,
     private modeService: ThemeModeService,
+    @Inject(DOCUMENT) private document: Document,
     private dirService: DirectionService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private tokenValidationService: TokenValidationService,
+    private router: Router
   ) {
     this.translate.onLangChange.subscribe(() => {
       const lang = this.translate.currentLang;
@@ -61,11 +61,6 @@ export class AppComponent implements OnInit {
     // register translations
     this.translationService.loadTranslations(
       enLang,
-      chLang,
-      esLang,
-      jpLang,
-      deLang,
-      frLang,
       arLang
     );
   }
@@ -98,5 +93,26 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.modeService.init();
     // localStorage.setItem('language', 'ar')
+    
+    // Validate token on app initialization
+    this.validateUserToken();
+  }
+  
+  /**
+   * Validates the user's authentication token when the app starts
+   * Redirects to login page if token is invalid or missing
+   */
+  private validateUserToken(): void {
+    // Skip validation if we're already on the auth pages
+    if (window.location.href.includes('/auth/')) {
+      return;
+    }
+    
+    this.tokenValidationService.validateToken().subscribe(isValid => {
+      if (!isValid) {
+        // Token is invalid, redirect to login page
+        this.router.navigate(['/auth/login']);
+      }
+    });
   }
 }

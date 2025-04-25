@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IUserModel, UserService } from 'src/app/_fake/services/user-service';
+import { IUserModel, UserService } from 'src/app/services/auth/user.service';
 
 @Component({
   selector: 'app-user-details',

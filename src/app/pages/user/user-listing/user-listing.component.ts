@@ -2,10 +2,10 @@ import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, OnDestroy, O
 import { NgForm } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Observable } from 'rxjs';
-import { DataTablesResponse, IUserModel, UserService } from 'src/app/_fake/services/user-service';
+import { DataTablesResponse, IUserModel, UserService } from 'src/app/services/auth/user.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import moment from 'moment';
-import { IRoleModel, RoleService } from 'src/app/_fake/services/role.service';
+import { IRoleModel, RoleService } from 'src/app/services/auth/role.service';
 import { Config } from "datatables.net";
 
 @Component({

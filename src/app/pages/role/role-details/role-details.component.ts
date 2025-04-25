@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { IRoleModel, RoleService } from 'src/app/_fake/services/role.service';
+import { IRoleModel, RoleService } from 'src/app/services/auth/role.service';
 import moment from 'moment';
 import {Config} from "datatables.net";
 

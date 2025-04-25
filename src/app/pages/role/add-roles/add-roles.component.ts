@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { ToastrService } from "ngx-toastr";
-import { RoleService } from "src/app/_fake/services/role.service";
+import { RoleService } from "src/app/services/auth/role.service";
 
 @Component({
   selector: "app-add-roles",

@@ -62,13 +62,13 @@ export class AddEvaluationComponent implements OnInit {
     return this.statusForm.controls;
   }
   getEvalutaions() {
-    this.apiService.getEvalutaions().subscribe(
-      (res) => {
+    this.apiService.getEvaluations().subscribe(
+      (res: any) => {
         console.log(res);
         this.formList = res;
         this.cdr.detectChanges();
       },
-      (error) => {
+      (error: any) => {
         console.log(error);
         this.toastr.error(error.error.message, error.status);
       }

@@ -32,11 +32,8 @@ export class SidebarMenuComponent implements OnInit {
       this.showPrograms = this.permissionList?.includes("view-programs");
       this.showEvaluation = this.permissionList?.includes("view-evaluations");
       this.showForms = this.permissionList?.includes("view-forms");
-      this.showDiagnose = this.permissionList?.includes(
-        "view-children-diagnoses"
-      );
-      this.showNationalites =
-        this.permissionList?.includes("view-nationalities");
+      this.showDiagnose = this.permissionList?.includes("view-children-diagnoses");
+      this.showNationalites = this.permissionList?.includes("view-nationalities");
     } else {
       this.showRoles = true;
       this.showAdmin = true;

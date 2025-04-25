@@ -1,7 +1,7 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { ClipboardModule } from 'ngx-clipboard';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -13,9 +13,9 @@ import { AuthService } from './modules/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // #fake-start#
-import { FakeAPIService } from './_fake/fake-api.service';
 import { DirectionService } from './services/direction.service';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { DataTablesModule } from "angular-datatables";
@@ -51,14 +51,6 @@ function appInitializer(authService: AuthService) {
     ToastrModule.forRoot(),
     ClipboardModule,
     DataTablesModule,
-    // #fake-start#
-    environment.isMockEnabled
-      ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
-        passThruUnknownUrl: true,
-        dataEncapsulation: false,
-      })
-      : [],
-    // #fake-end#
     AppRoutingModule,
     InlineSVGModule.forRoot(),
     NgbModule,
@@ -72,7 +64,13 @@ function appInitializer(authService: AuthService) {
       multi: true,
       deps: [AuthService],
     },
-    DirectionService
+    DirectionService,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent],
 })

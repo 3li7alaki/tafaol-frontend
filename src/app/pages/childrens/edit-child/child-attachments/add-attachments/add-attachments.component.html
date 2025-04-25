@@ -1,4 +1,4 @@
-<form novalidate="" [formGroup]="attachmentForm" (ngSubmit)="addGaurd()" class="form">
+<form novalidate="" [formGroup]="attachmentForm" (ngSubmit)="saveAttachment()" class="form">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">
         {{ "addNewAttachment" | translate }}
@@ -18,11 +18,18 @@
         <div class="col-lg-8 fv-row">
           <!-- input text field -->
             <input
+                [class.is-invalid]="f['name'].touched && f['name'].invalid"
                 type="text"
                 class="form-control form-control-lg form-control-solid"
                 placeholder="{{ 'name' | translate }}"
                 formControlName="name"
             />
+            <div
+                *ngIf="f['name'].invalid && f['name'].touched"
+                style="color: red"
+            >
+                {{ "NameIsRequired" | translate }}
+            </div>
         </div>
       </div>
       <div class="row mb-6">
@@ -32,11 +39,18 @@
         <div class="col-lg-8 fv-row">
           <!-- input text field -->
             <input
+                [class.is-invalid]="f['description'].touched && f['description'].invalid"
                 type="text"
                 class="form-control form-control-lg form-control-solid"
                 placeholder="{{ 'description' | translate }}"
                 formControlName="description"
             />
+            <div
+                *ngIf="f['description'].invalid && f['description'].touched"
+                style="color: red"
+            >
+                {{ "DescriptionIsRequired" | translate }}
+            </div>
         </div>
       </div>
       <div class="row mb-6">
@@ -48,23 +62,19 @@
             <input
               type="file"
               id="file"
-              (change)="onFileSelectedNational($event)"
+              (change)="onFileSelected($event)"
             />
             <label for="file" class="custom-file-upload">
               {{ "selectFiles" | translate }}
             </label>
           </div>
 
-          <div class="file-details-container" *ngIf="selectedFileNationalID">
+          <div class="file-details-container" *ngIf="selectedFile">
             <div class="file-details">
-              <div class="file-name">{{ selectedFileNationalID?.name }}</div>
+              <div class="file-name">{{ selectedFile.name }}</div>
               <div class="file-info">
-                <span class="file-type">{{
-                  selectedFileNationalID?.type
-                }}</span>
-                <span class="file-size">{{
-                  selectedFileNationalID?.size
-                }}</span>
+                <span class="file-type">{{ selectedFile.type }}</span>
+                <span class="file-size">{{ selectedFile.size }}</span>
               </div>
             </div>
           </div>

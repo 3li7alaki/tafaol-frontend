@@ -29,7 +29,7 @@ export class ApiService {
     return headerWithToken;
   }
 
-  private handleError(error: HttpErrorResponse) {
+  handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error("An error occurred:", error.error.message);
@@ -582,25 +582,25 @@ export class ApiService {
       })
       .pipe(catchError(this.handleError));
   }
-  getEvalutaions(): Observable<any> {
+  getEvaluations(): Observable<any> {
     const url = `${new ApiUrls().evaluationsUrl}`;
     return this.http.get<any>(url, { headers: this.getHeaders() });
   }
-  addEvalutaions(value: any): Observable<any> {
+  addEvaluation(value: any): Observable<any> {
     return this.http
       .post<any>(new ApiUrls().evaluationsUrl, value, {
         headers: this.getHeaders(),
       })
       .pipe(catchError(this.handleError));
   }
-  getOneEvalutaion(id: any): Observable<any> {
+  getOneEvaluation(id: any): Observable<any> {
     return this.http
       .get<any>(new ApiUrls().evaluationsUrl + "/" + id, {
         headers: this.getHeaders(),
       })
       .pipe(catchError(this.handleError));
   }
-  editEvalutaions(value: any, id: any): Observable<any> {
+  editEvaluation(value: any, id: any): Observable<any> {
     return this.http
       .post<any>(
         new ApiUrls().evaluationsUrl + "/" + id + "?_method=PUT",

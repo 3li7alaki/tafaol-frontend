@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserModel } from '../../models/user.model';
 import { environment } from '../../../../../environments/environment';
-import { AuthModel } from '../../models/auth.model';
 
 const API_USERS_URL = `${environment.apiUrl}`;
 
@@ -37,7 +36,7 @@ export class AuthHTTPService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<UserModel>(`${API_USERS_URL}/me`, {
+    return this.http.get<UserModel>(`${API_USERS_URL}api/me`, {
       headers: httpHeaders,
     });
   }

@@ -56,20 +56,18 @@ export class AddEvaluationComponent implements OnInit {
       formData.append(`questions[${i}]`, questions);
     }
 
-    this.apiService.addEvalutaions(formData).subscribe(
+    this.apiService.addEvaluation(formData).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
         this.toastr.success(
           this.translate.instant("evaluationAddedSuccessfully")
         );
         this.router.navigate(["/apps/evaluation"]);
         this.cdr.detectChanges();
       },
-      (error) => {
+      (error: any) => {
         this.toastr.error(error.error);
         this.loading = false;
-        console.log(error);
         this.cdr.detectChanges();
       }
     );

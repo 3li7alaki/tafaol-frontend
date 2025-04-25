@@ -1,8 +1,8 @@
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Observable } from 'rxjs';
-import { DataTablesResponse, IPermissionModel, PermissionService } from 'src/app/_fake/services/permission.service';
+import { DataTablesResponse, IPermissionModel, PermissionService } from 'src/app/services/auth/permission.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import moment from 'moment';
 import {Config} from "datatables.net";
@@ -12,7 +12,7 @@ import {Config} from "datatables.net";
   templateUrl: './permission-listing.component.html',
   styleUrls: ['./permission-listing.component.scss']
 })
-export class PermissionListingComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PermissionListingComponent implements OnInit {
 
   isCollapsed1 = false;
 
@@ -36,15 +36,13 @@ export class PermissionListingComponent implements OnInit, AfterViewInit, OnDest
 
   constructor(private apiService: PermissionService, private cdr: ChangeDetectorRef) { }
 
-  ngAfterViewInit(): void {
-  }
+
 
   ngOnInit(): void {
     this.datatableConfig = {
       serverSide: true,
       ajax: (dataTablesParameters: any, callback: any) => {
         this.apiService.getPermissions(dataTablesParameters).subscribe(resp => {
-          console.log(resp);
           callback(resp);
         });
       },
@@ -191,6 +189,5 @@ export class PermissionListingComponent implements OnInit, AfterViewInit, OnDest
     this.noticeSwal.fire();
   }
 
-  ngOnDestroy(): void {
-  }
+
 }

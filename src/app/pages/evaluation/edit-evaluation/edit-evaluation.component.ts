@@ -5,13 +5,12 @@ import { TranslateService } from "@ngx-translate/core";
 import { ToastrService } from "ngx-toastr";
 import { ApiService } from "src/app/services/api.service";
 
-interface forms {
+interface Question {
   id: number;
   title: string;
   title_ar: string;
   name: string;
   group: string;
-  // other properties
 }
 
 @Component({
@@ -20,18 +19,18 @@ interface forms {
   styleUrl: "./edit-evaluation.component.scss",
 })
 export class EditEvaluationComponent implements OnInit {
-  id: any;
+  id: string;
   evaluation: any;
   evaluationForm: FormGroup;
   loading = false;
-  selectedFileNationalID: any;
-  newFileNationalID: File;
-  imageUrlNationalID: string;
-  questionsList: forms[] = [];
-  EvaluationSelected: [] = [];
+  selectedAttachmentFile: any;
+  newAttachmentFile: File;
+  imageUrlAttachment: string;
+  questionsList: Question[] = [];
+  selectedQuestions: number[] = [];
   loadingDelete = false;
   constructor(
-    private rout: ActivatedRoute,
+    private route: ActivatedRoute,
     private apiService: ApiService,
     private formBuilder: FormBuilder,
     private cdr: ChangeDetectorRef,
@@ -39,16 +38,15 @@ export class EditEvaluationComponent implements OnInit {
     public translate: TranslateService,
     private router: Router
   ) {
-    this.id = this.rout.snapshot.params["id"];
-    this.evaluation = this.rout.snapshot.data.evaluation;
+    this.id = this.route.snapshot.params["id"];
+    this.evaluation = this.route.snapshot.data.evaluation;
   }
 
   ngOnInit(): void {
     this.initForm();
     this.getQuestions();
-    console.log(this.evaluation);
-    this.selectedFileNationalID = this.evaluation.attachment;
-    this.EvaluationSelected = this.evaluation.questions.map((element: forms) => element.id);
+    this.selectedAttachmentFile = this.evaluation.attachment;
+    this.selectedQuestions = this.evaluation.questions.map((element: Question) => element.id);
   }
   initForm() {
     this.evaluationForm = this.formBuilder.group({
@@ -56,18 +54,15 @@ export class EditEvaluationComponent implements OnInit {
       description: [this.evaluation.description, [Validators.required]],
       questions: [null],
     });
-
-    console.log(this.newFileNationalID);
-    console.log(this.selectedFileNationalID);
   }
   get f() {
     return this.evaluationForm.controls;
   }
-  onFileSelectedNational(event: any) {
+  onAttachmentFileSelected(event: any) {
     // Get the selected file from the event
     const file = event.target.files[0];
-    this.selectedFileNationalID = file;
-    this.newFileNationalID = file;
+    this.selectedAttachmentFile = file;
+    this.newAttachmentFile = file;
     // Create a FileReader object to read the file contents
     console.log(file);
     const reader = new FileReader();
@@ -75,7 +70,7 @@ export class EditEvaluationComponent implements OnInit {
     // Set the onload event handler of the reader
     reader.onload = (e: ProgressEvent) => {
       // Set the data URL of the image
-      this.imageUrlNationalID = (<FileReader>e.target).result as string;
+      this.imageUrlAttachment = (<FileReader>e.target).result as string;
       this.cdr.detectChanges();
     };
 
@@ -85,37 +80,33 @@ export class EditEvaluationComponent implements OnInit {
   getQuestions() {
     this.apiService.getQuestions().subscribe(
       (res) => {
-        console.log(res);
         this.questionsList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
         this.toastr.error(error.error.message, error.status);
       }
     );
   }
-  addDiagnose() {
+  saveEvaluation() {
     this.loading = true;
 
     const formData = new FormData();
-    console.log(this.selectedFileNationalID)
-    console.log(this.imageUrlNationalID)
-    // Log the FormData object to the console
     formData.append("name", this.f.name.value);
     formData.append("description", this.f.description.value);
-    if(this.newFileNationalID) {
-      formData.append("path", this.newFileNationalID);
+    
+    if(this.newAttachmentFile) {
+      formData.append("path", this.newAttachmentFile);
     }
-    for (let i = 0; i < this.EvaluationSelected.length; i++) {
-      const file = this.EvaluationSelected[i];
-      formData.append(`questions[${i}]`, file);
+    
+    for (let i = 0; i < this.selectedQuestions.length; i++) {
+      const questionId = this.selectedQuestions[i];
+      formData.append(`questions[${i}]`, questionId.toString());
     }
 
-    this.apiService.editEvalutaions(formData, this.id).subscribe(
+    this.apiService.editEvaluation(formData, this.id).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
         this.toastr.success(
           this.translate.instant("evaluationEditedSuccessfully")
         );
@@ -125,13 +116,12 @@ export class EditEvaluationComponent implements OnInit {
       (error) => {
         this.toastr.error(error.error);
         this.loading = false;
-        console.log(error);
         this.cdr.detectChanges();
       }
     );
-  };
-  deleteDiagnoses(id: any) {
-    this.loadingDelete = true
+  }
+  deleteEvaluation(id: string) {
+    this.loadingDelete = true;
     this.apiService.deleteEvaluation(id).subscribe(
       (res) => {
         this.toastr.success(
@@ -144,8 +134,6 @@ export class EditEvaluationComponent implements OnInit {
       (error) => {
         this.loadingDelete = false;
         this.toastr.error(error);
-        this.loading = false;
-        console.log(error);
         this.cdr.detectChanges();
       }
     );

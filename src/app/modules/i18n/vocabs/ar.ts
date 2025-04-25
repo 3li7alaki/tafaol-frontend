@@ -5,6 +5,11 @@ export const locale = {
     TRANSLATOR: {
       SELECT: "اختر اللغة",
     },
+    THEME: {
+      LIGHT: "فاتح",
+      DARK: "داكن",
+      SYSTEM: "النظام",
+    },
     children: "الأطفال",
     RoleName: "اسم الصلاحية",
     NameIsRequired: "الاسم مطلوب",
@@ -245,6 +250,10 @@ export const locale = {
       FEATURES: "Features",
       APPS: "Apps",
       DASHBOARD: "لوحة التحكم",
+      ADMIN_MANAGEMENT: "إدارة المدراء",
+      SYSTEM_CONFIG: "إعدادات النظام",
+      CHILD_MANAGEMENT: "إدارة الأطفال",
+      REPORTS: "التقارير",
       ROLES: "الصلاحيات",
       NATIONALITY: "الجنسية",
       ADMINS: "المدراء",
