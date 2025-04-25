@@ -41,19 +41,19 @@ export class AddStatusComponent implements OnInit {
       name: this.f.name.value,
       name_ar: this.f.name_ar.value,
     };
-    console.log(body);
+
     this.apiService.addStatus(body).subscribe(
       (res) => {
         this.loading = false
-        console.log(res);
+
         this.toastr.success(this.translate.instant('statusAddedSuccessfully'));
         this.router.navigate(['/apps/status'])
         this.cdr.detectChanges()
       },
       (error) => {
-        this.toastr.error(error)
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error)
         this.loading = false
-        console.log(error);
+
         this.cdr.detectChanges()
       }
     );

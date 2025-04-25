@@ -64,26 +64,26 @@ export class AddEvaluationComponent implements OnInit {
   getEvalutaions() {
     this.apiService.getEvaluations().subscribe(
       (res: any) => {
-        console.log(res);
+
         this.formList = res;
         this.cdr.detectChanges();
       },
       (error: any) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
   getQuestions() {
     this.apiService.getQuestions().subscribe(
       (res) => {
-        console.log(res);
+
         this.questionList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
@@ -91,16 +91,16 @@ export class AddEvaluationComponent implements OnInit {
   getAdmins() {
     this.apiService.getAdmins().subscribe(
       (res) => {
-        console.log(res);
+
         this.adminList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
-      });
-  }
 
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
+      }
+    );
+  }
 
   items(): FormArray {
     return this.statusForm.get("questions") as FormArray;
@@ -168,15 +168,14 @@ export class AddEvaluationComponent implements OnInit {
     this.apiService.addChildProgramEvaluation(formData, this.program).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
+
         this.toastr.success(this.translate.instant("evaluatedSuccessfully"));
         this.activeModal.close();
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.message);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error.message);
         this.cdr.detectChanges();
       }
     );
@@ -186,7 +185,7 @@ export class AddEvaluationComponent implements OnInit {
     const file = event.target.files[0];
     this.selectedFileNationalID = file;
     // Create a FileReader object to read the file contents
-    console.log(file);
+
     const reader = new FileReader();
 
     // Set the onload event handler of the reader
@@ -201,11 +200,11 @@ export class AddEvaluationComponent implements OnInit {
   }
   onFormSelectionChange(event: any) {
     const id = event.target.value;
-    console.log(id);
+
     if (id) {
-      console.log(this.formList);
+      
       const selectedForm = this.formList.find((form: form) => form.id == id);
-      console.log(selectedForm);
+
       if (selectedForm) {
         const questions = selectedForm.questions;
         this.statusForm.setControl("questions", this.formBuilder.array([]));
@@ -214,7 +213,7 @@ export class AddEvaluationComponent implements OnInit {
         });
         this.questionList = selectedForm.questions;
       } else {
-        console.log("Selected form not found in formList");
+        
       }
     }
   }

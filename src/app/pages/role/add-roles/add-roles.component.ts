@@ -42,8 +42,8 @@ export class AddRolesComponent implements OnInit {
       this.EvaluationRoles = this.permissionsList.Evaluation;
       this.programsRoles = this.permissionsList.Programs;
       this.childrenRoles = this.permissionsList.Children;
-      console.log(this.adminPermission);
-      console.log(res);
+      
+
     });
     this.initForm();
   }
@@ -75,20 +75,20 @@ export class AddRolesComponent implements OnInit {
       name: this.f.name.value,
       permissions: this.selectedPermissions,
     };
-    console.log(body);
+
     this.apiService.addRole(body).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
-        console.log(this.selectedPermissions);
+
+        
         this.toastr.success("تم إضافة الصلاحية بنجاح");
         this.router.navigate(["/apps/roles"]);
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
       }
     );

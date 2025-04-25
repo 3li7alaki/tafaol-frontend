@@ -19,7 +19,6 @@ import { WidgetsModule, ModalsModule } from "src/app/_metronic/partials";
 import { SharedModule } from "src/app/_metronic/shared/shared.module";
 import { CrudModule } from "src/app/modules/crud/crud.module";
 import { AddChildComponent } from "./add-child/add-child.component";
-import { TooltipModule } from "ngx-bootstrap/tooltip";
 import { BsDatepickerModule, BsLocaleService } from "ngx-bootstrap/datepicker";
 import { ChildrensResolver } from "./childrens.resolver";
 import { EditChildComponent } from "./edit-child/edit-child.component";
@@ -47,7 +46,6 @@ import { ChildAttachmentsComponent } from "./edit-child/child-attachments/child-
 import { AddAttachmentsComponent } from "./edit-child/child-attachments/add-attachments/add-attachments.component";
 import { EditAttachmentsComponent } from "./edit-child/child-attachments/edit-attachments/edit-attachments.component";
 import { ChildPlansComponent } from "./edit-child/child-plans/child-plans.component";
-// ...
 
 defineLocale('ar', arLocale);
 @NgModule({

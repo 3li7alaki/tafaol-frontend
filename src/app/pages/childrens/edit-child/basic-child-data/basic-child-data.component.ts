@@ -40,24 +40,20 @@ export class BasicChildDataComponent implements OnInit {
     this.children = JSON.parse(localStorage.getItem("children")!);
     this.apiService.getOneChildData(this.children.id).subscribe(
       (res) => {
-        console.log(res);
         localStorage.setItem('extraDetailsChild',JSON.stringify(res))
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
     this.apiService.getGaurdians().subscribe(
         (res) => {
-          console.log(res);
           this.guardianList = res;
           this.cdr.detectChanges();
         },
         (error) => {
-          console.log(error);
-          this.toastr.error(error);
+          this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         }
     );
   }
@@ -65,13 +61,13 @@ export class BasicChildDataComponent implements OnInit {
     this.initForm();
     this.apiService.getNationalites().subscribe(
       (res) => {
-        console.log(res);
+        
         this.nationalityList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error);
+        
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
@@ -154,15 +150,12 @@ export class BasicChildDataComponent implements OnInit {
   }
 
   getFileDetails(e: any) {
-    console.log(e.target.files);
     for (var i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
     }
-    console.log(this.myFiles);
   }
 
   editChild() {
-    console.log(this.selectedFile);
     const formData = new FormData();
     for (let i = 0; i < this.myFiles.length; i++) {
       const file = this.myFiles[i];
@@ -209,18 +202,18 @@ export class BasicChildDataComponent implements OnInit {
     formData.append("apartment", this.f.apartment.value);
 
     this.loading = true;
-    console.log(formData);
+    
     this.apiService.editChildren(formData, this.children.id).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
+        
         this.toastr.success(this.translate.instant("childEditedSuccessfully"));
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+        
         this.cdr.detectChanges();
       }
     );

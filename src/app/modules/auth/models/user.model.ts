@@ -1,66 +1,32 @@
 import { AuthModel } from './auth.model';
-import { AddressModel } from './address.model';
-import { SocialNetworksModel } from './social-networks.model';
 
 export class UserModel extends AuthModel {
-  id: number;
-  username: string;
-  password: string;
-  fullname: string;
+  id: string;
+  name: string;
   email: string;
-  pic: string;
-  roles: number[] = [];
-  occupation: string;
-  companyName: string;
-  phone: string;
-  address?: AddressModel;
-  socialNetworks?: SocialNetworksModel;
-  // personal information
-  firstname: string;
-  lastname: string;
-  website: string;
-  // account information
-  language: string;
-  timeZone: string;
-  communication: {
-    email: boolean;
-    sms: boolean;
-    phone: boolean;
-  };
-  // email settings
-  emailSettings?: {
-    emailNotification: boolean;
-    sendCopyToPersonalEmail: boolean;
-    activityRelatesEmail: {
-      youHaveNewNotifications: boolean;
-      youAreSentADirectMessage: boolean;
-      someoneAddsYouAsAsAConnection: boolean;
-      uponNewOrder: boolean;
-      newMembershipApproval: boolean;
-      memberRegistration: boolean;
-    };
-    updatesFromKeenthemes: {
-      newsAboutKeenthemesProductsAndFeatureUpdates: boolean;
-      tipsOnGettingMoreOutOfKeen: boolean;
-      thingsYouMissedSindeYouLastLoggedIntoKeen: boolean;
-      newsAboutMetronicOnPartnerProductsAndOtherServices: boolean;
-      tipsOnMetronicBusinessProducts: boolean;
-    };
-  };
+  password: string;
+  phone_number: string;
+  email_verified_at: string;
+  is_active: string;
+  timezone: string;
+  role: string;
+  token: string;
+  photo:string;
+  auth: any
 
   setUser(_user: unknown) {
     const user = _user as UserModel;
     this.id = user.id;
-    this.username = user.username || '';
-    this.password = user.password || '';
-    this.fullname = user.fullname || '';
-    this.email = user.email || '';
-    this.pic = user.pic || './assets/media/avatars/blank.png';
-    this.roles = user.roles || [];
-    this.occupation = user.occupation || '';
-    this.companyName = user.companyName || '';
-    this.phone = user.phone || '';
-    this.address = user.address;
-    this.socialNetworks = user.socialNetworks;
+    this.name = user.name;
+    this.email = user.email;
+    this.password = user.password;
+    this.phone_number = user.phone_number;
+    this.email_verified_at = user.email_verified_at;
+    this.is_active = user.is_active;
+    this.timezone = user.timezone;
+    this.role = user.role;
+    this.token = user.token;
+    this.photo = user.photo;
+    this.auth = user.auth;
   }
 }

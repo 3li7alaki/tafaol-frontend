@@ -20,9 +20,7 @@ export class AddBasicChildDataComponent implements OnInit {
   imageUrl: string;
   selectedFileNationalID: File;
   imageUrlNationalID: string;
-
-  myFiles: any[] = [];
-  sMsg: string = "";
+  
   constructor(
     private apiService: ApiService,
     private formBuilder: FormBuilder,
@@ -36,24 +34,20 @@ export class AddBasicChildDataComponent implements OnInit {
     this.initForm();
     this.apiService.getNationalites().subscribe(
       (res) => {
-        console.log(res);
         this.nationalityList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
     this.apiService.getGaurdians().subscribe(
         (res) => {
-            console.log(res);
             this.guardianList = res;
             this.cdr.detectChanges();
         },
         (error) => {
-            console.log(error);
-            this.toastr.error(error);
+            this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         }
         );
   }
@@ -155,20 +149,17 @@ export class AddBasicChildDataComponent implements OnInit {
     formData.append("apartment", this.f.apartment.value);
 
     this.loading = true;
-    console.log(formData);
     this.apiService.addChildren(formData).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
         this.toastr.success(this.translate.instant("childAddedSuccessfully"));
         this.router.navigate(["/apps/childrens/edit-child/"+res["id"]+"/diagnoses"]);
         this.cdr.detectChanges();
         localStorage.setItem('child', JSON.stringify(res))
       },
       (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
         this.cdr.detectChanges();
       }
     );

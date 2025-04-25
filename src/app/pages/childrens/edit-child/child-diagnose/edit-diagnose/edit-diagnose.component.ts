@@ -37,12 +37,10 @@ export class EditDiagnoseComponent implements OnInit {
     this.children = JSON.parse(localStorage.getItem("children")!);
     this.diagnose = JSON.parse(localStorage.getItem("oneChild")!);
     this.imageUrlsNationalID = this.diagnose?.attachments;
-    console.log(this.children);
     this.getDiagnoses();
   }
 
   ngOnInit(): void {
-    console.log(this.id);
     this.getDiagnose();
     this.initForm();
   }
@@ -64,29 +62,26 @@ export class EditDiagnoseComponent implements OnInit {
   getDiagnoses() {
     this.apiService.getDiagnoses().subscribe(
       (res) => {
-        console.log(res);
         this.diagnosesList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
   getDiagnose() {
-    console.log(this.children.id);
     this.apiService
       .getOneChildDiagnoseEdit(this.children.id, this.diagnose.id)
       .subscribe(
         (res) => {
-          console.log(res);
+
           this.diagnose = res;
           this.cdr.detectChanges();
         },
         (error) => {
-          console.log(error);
-          this.toastr.error(error.error, error.status);
+
+          this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         }
       );
   }
@@ -130,7 +125,7 @@ export class EditDiagnoseComponent implements OnInit {
       .subscribe(
         (res) => {
           this.loading = false;
-          console.log(res);
+
           this.toastr.success(
             this.translate.instant("diagnoseEditSuccessfully")
           );
@@ -139,9 +134,9 @@ export class EditDiagnoseComponent implements OnInit {
           this.cdr.detectChanges();
         },
         (error) => {
-          this.toastr.error(error.message);
+          this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
           this.loading = false;
-          console.log(error);
+
           this.cdr.detectChanges();
         }
       );
@@ -161,7 +156,7 @@ export class EditDiagnoseComponent implements OnInit {
       .subscribe(
         (res) => {
           this.loading = false;
-          console.log(res);
+
           this.toastr.success(
             this.translate.instant("diagnoseDeleteSuccessfully")
           );
@@ -170,9 +165,9 @@ export class EditDiagnoseComponent implements OnInit {
           this.cdr.detectChanges();
         },
         (error) => {
-          this.toastr.error(error.message);
+          this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
           this.loading = false;
-          console.log(error);
+
           this.cdr.detectChanges();
         }
       );
@@ -191,8 +186,7 @@ export class EditDiagnoseComponent implements OnInit {
                 this.cdr.detectChanges();
             },
             (error) => {
-                this.toastr.error(error);
-                console.log(error);
+                this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
                 this.cdr.detectChanges();
             }
         );

@@ -57,13 +57,13 @@ export class ChangeStatusComponent implements OnInit {
   getChangeStatus() {
     this.apiService.getChildStatus(this.child.id, this.program.id).subscribe(
       (res) => {
-        console.log(res);
+
         this.statusList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
@@ -85,7 +85,7 @@ export class ChangeStatusComponent implements OnInit {
     
     this.apiService.getOneChildStatusEdit(id,programID).subscribe(
       (res) => {
-        console.log(res);
+
         localStorage.setItem("oneChildStatus", JSON.stringify(res));
         const modalRef = this.modalService.open(EditStatusComponent, {
           windowClass: "animated fadeInDown",
@@ -101,8 +101,8 @@ export class ChangeStatusComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
    
@@ -117,8 +117,8 @@ export class ChangeStatusComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error);
-        console.log(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
+
         this.cdr.detectChanges();
       }
     );

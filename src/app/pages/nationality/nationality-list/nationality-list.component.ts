@@ -32,13 +32,13 @@ export class NationalityListComponent implements OnInit {
   ngOnInit(): void {
     this.apiService.getNationalites().subscribe(
       (res) => {
-        console.log(res);
+
         this.nationalityList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }

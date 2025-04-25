@@ -38,14 +38,13 @@ export class ChildPlansComponent implements OnInit {
   getAttachment(id: any) {
     this.apiService.getPlans(id).subscribe(
         (res) => {
-          console.log(res);
+
           this.attachmentList = res;
-          console.log(this.attachmentList);
           this.cdr.detectChanges();
         },
         (error) => {
-          console.log(error);
-          this.toastr.error(error.error.message, error.status);
+
+          this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         }
     );
   }
@@ -67,7 +66,7 @@ export class ChildPlansComponent implements OnInit {
   openEdit(id: any) {
       this.apiService.showAttachment(id).subscribe(
           (res) => {
-              console.log(res);
+
               localStorage.setItem("oneAttachment", JSON.stringify(res));
               this.cdr.detectChanges();
 
@@ -84,7 +83,6 @@ export class ChildPlansComponent implements OnInit {
               );
           },
           (error) => {
-              console.log(error.message);
               this.cdr.detectChanges();
           }
       );
@@ -104,8 +102,8 @@ export class ChildPlansComponent implements OnInit {
           this.modalRef?.hide();
         },
         (error) => {
-          this.toastr.error(error);
-          console.log(error);
+          this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
+
           this.cdr.detectChanges();
           this.modalRef?.hide();
         }

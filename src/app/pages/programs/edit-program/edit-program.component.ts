@@ -74,18 +74,18 @@ export class EditProgramComponent implements OnInit {
     this.initForm();
     this.apiService.getDiagnoses().subscribe(
       (res) => {
-        console.log(res);
+
         this.diagnosesList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
   initForm() {
-    console.log(this.program);
+    
     this.programForm = this.formBuilder.group({
       name: [this.program.name, [Validators.required]],
       description: [this.program.description, [Validators.required]],
@@ -111,7 +111,7 @@ export class EditProgramComponent implements OnInit {
     return this.programForm.controls;
   }
   addProgram() {
-    console.log(this.f.all_diagnoses.value);
+    
     const formData = new FormData();
 
     formData.append("name", this.f.name.value);
@@ -153,11 +153,11 @@ export class EditProgramComponent implements OnInit {
     formData.append("min_age", this.f.min_age.value);
 
     this.loading = true;
-    console.log(formData);
+
     this.apiService.editProgram(formData, this.id).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
+
         this.toastr.success(
           this.translate.instant("programsEditedSuccessfully")
         );
@@ -165,9 +165,9 @@ export class EditProgramComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
       }
     );
@@ -185,9 +185,9 @@ export class EditProgramComponent implements OnInit {
       },
       (error) => {
         this.loadingDelete = false;
-        this.toastr.error(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
       }
     );

@@ -17,8 +17,4 @@ export class AdminResolver implements Resolve<boolean> {
   }
   constructor(
     private apiService: ApiService) { }
-  
-  
-  
-  
 }

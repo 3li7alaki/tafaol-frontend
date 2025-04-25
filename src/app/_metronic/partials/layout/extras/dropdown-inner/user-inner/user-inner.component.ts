@@ -26,7 +26,6 @@ export class UserInnerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.user$);
     this.setLanguage(this.translationService.getSelectedLanguage());
   }
 

@@ -38,6 +38,7 @@
             <th class="min-w-130px">{{ "AUTH.INPUT.FULLNAME" | translate }}</th>
             <th class="min-w-120px">{{ "phone" | translate }}</th>
             <th class="min-w-120px">{{ "AUTH.INPUT.EMAIL" | translate }}</th>
+            <th class="min-w-120px">{{ "guardianRelation" | translate }}</th>
             <th class="min-w-100px text-end">{{ "Actions" | translate }}</th>
           </tr>
         </thead>
@@ -54,9 +55,6 @@
                   >
                     {{ gaurdian.name }}
                   </a>
-                  <!-- <span class="text-muted fw-bold text-muted d-block fs-7">
-                    {{ gaurdian.email }}
-                  </span> -->
                 </div>
               </div>
             </td>
@@ -69,6 +67,11 @@
             <td>
               <a class="text-dark fw-bolder text-hover-primary d-block fs-6">
                 {{ gaurdian.email }}
+              </a>
+            </td>
+            <td>
+              <a class="text-dark fw-bolder text-hover-primary d-block fs-6">
+                {{ gaurdian.relation }}
               </a>
             </td>
 

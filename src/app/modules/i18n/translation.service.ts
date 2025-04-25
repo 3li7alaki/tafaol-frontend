@@ -21,9 +21,6 @@ export class TranslationService {
   constructor(private translate: TranslateService) {
     // add new langIds to the list
     this.translate.addLangs(['ar']);
-
-    // this language will be used as a fallback when a translation isn't found in the current language
-    this.translate.setDefaultLang('ar');
   }
 
   loadTranslations(...args: Locale[]): void {
@@ -47,7 +44,6 @@ export class TranslationService {
       this.translate.use(lang);
       localStorage.setItem(LOCALIZATION_LOCAL_STORAGE_KEY, lang);
     }
-    console.log(lang)
   }
 
   /**

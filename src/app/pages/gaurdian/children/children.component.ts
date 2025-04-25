@@ -56,8 +56,8 @@ export class ChildrenComponent implements OnInit {
           this.modalRef?.hide();
         },
         (error) => {
-          this.toastr.error(error);
-          console.log(error);
+          this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
+
           this.modalRef?.hide();
           this.cdr.detectChanges();
         }

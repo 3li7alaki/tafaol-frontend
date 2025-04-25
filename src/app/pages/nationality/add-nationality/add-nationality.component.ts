@@ -41,19 +41,18 @@ export class AddNationalityComponent implements OnInit {
       name: this.f.name.value,
       name_ar: this.f.name_ar.value,
     };
-    console.log(body);
+
     this.apiService.addNationality(body).subscribe(
       (res) => {
         this.loading = false
-        console.log(res);
+
         this.toastr.success(this.translate.instant('nationalityAddedSuccessfully'));
         this.router.navigate(['/apps/nationality'])
         this.cdr.detectChanges()
       },
       (error) => {
-        this.toastr.error(error)
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error)
         this.loading = false
-        console.log(error);
         this.cdr.detectChanges()
       }
     );

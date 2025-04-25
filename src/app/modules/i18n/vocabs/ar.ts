@@ -5,6 +5,50 @@ export const locale = {
     TRANSLATOR: {
       SELECT: "اختر اللغة",
     },
+    AUTH: {
+      WELCOME_TAFAOL: "مرحباً بكم في تفاؤل",
+      CENTER_DESCRIPTION: "مركز تفاؤل للتربية الخاصة هو مركز خيري غير ربحي\nالتابع لمؤسسة مركز الخدمات التربوية الخاصة للأطفال",
+      LOGIN: {
+        TITLE: "قم بتسجيل الدخول",
+        INVALID_CREDENTIALS: "تفاصيل الدخول غير صحيحة. يرجى المحاولة مرة أخرى.",
+        FORGOT_PASSWORD: "نسيت كلمة المرور؟",
+        PLEASE_WAIT: "الرجاء الإنتظار...",
+        BUTTON: "تسجيل الدخول"
+      },
+      FORGOT_PASSWORD: {
+        TITLE: "نسيت كلمة المرور؟",
+        INSTRUCTION: "ادخل بريدك الالكتروني لاستعادة كلمة المرور",
+        EMAIL_NOT_FOUND: "عذراً، لم يتم العثور على حساب بهذا البريد الإلكتروني",
+        RESET_LINK_SENT: "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني",
+        SUBMIT: "إرسال",
+        CANCEL: "الغاء"
+      },
+      RESET_PASSWORD: {
+        TITLE: "اعادة تعيين كلمة المرور",
+        NEW_PASSWORD: "كلمة المرور الجديدة",
+        SUBMIT: "إرسال"
+      },
+      INPUT: {
+        EMAIL: "البريد الإلكتروني",
+        PASSWORD: "كلمة المرور",
+        CONFIRM_PASSWORD: "تأكيد كلمة المرور",
+        FULLNAME: "الاسم الكامل",
+        RELATION: "صلة القرابة"
+      },
+      VALIDATION: {
+        EMAIL_REQUIRED: "البريد الإلكتروني مطلوب",
+        EMAIL_INVALID: "البريد الإلكتروني غير صحيح",
+        EMAIL_MIN_LENGTH: "البريد الإلكتروني يجب أن يحتوي على 3 أحرف على الأقل",
+        EMAIL_MAX_LENGTH: "البريد الإلكتروني يجب أن يحتوي على 320 حرفًا كحد أقصى",
+        PASSWORD_REQUIRED: "كلمة المرور مطلوبة",
+        PASSWORD_MIN_LENGTH: "كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل",
+        PASSWORD_MAX_LENGTH: "كلمة المرور يجب أن تحتوي على 100 حرفًا كحد أقصى",
+        PASSWORDS_MISMATCH: "تأكيد كلمة المرور غير متطابق"
+      },
+      GENERAL: {
+        SIGNUP_BUTTON: "إنشاء حساب"
+      }
+    },
     THEME: {
       LIGHT: "فاتح",
       DARK: "داكن",
@@ -31,6 +75,7 @@ export const locale = {
     Back: "رجوع",
     editRole: "تعديل الصلاحية",
     Delete: "حذف",
+    deleteConfirmation: "هل أنت متأكد من الحذف ؟",
     deleteDiagnose: "حذف التشخيص",
     deleteDiagnoseMessage: "هل أنت متأكد من حذف التشخيص ؟",
     diagnoseDeleteSuccessfully: "تم حذف التشخيص بنجاح",
@@ -107,6 +152,7 @@ export const locale = {
     questionDeletedSuccessfully: "تم حذف السؤال بنجاح",
     questionsList: "قائمة الأسئلة",
     addQuestion: "إضافة سؤال",
+    selectQuestions: "اختر أسئلة",
     name: "الأسم",
     options: "خيارات",
     option: "الخيّار",
@@ -244,11 +290,6 @@ export const locale = {
     },
     MENU: {
       NEW: "جديد",
-      ACTIONS: "Actions",
-      CREATE_POST: "Create New Post",
-      PAGES: "Pages",
-      FEATURES: "Features",
-      APPS: "Apps",
       DASHBOARD: "لوحة التحكم",
       ADMIN_MANAGEMENT: "إدارة المدراء",
       SYSTEM_CONFIG: "إعدادات النظام",
@@ -266,94 +307,6 @@ export const locale = {
       STATUS: "الحالات",
       PROGRAMS: "البرامج",
       PROGRAMSREPORT: "تقرير البرامج",
-    },
-    AUTH: {
-      GENERAL: {
-        OR: "Or",
-        SUBMIT_BUTTON: "Submit",
-        NO_ACCOUNT: "Don't have an account?",
-        SIGNUP_BUTTON: "أنشئ حسابك",
-        FORGOT_BUTTON: "Forgot Password",
-        BACK_BUTTON: "Back",
-        PRIVACY: "Privacy",
-        LEGAL: "Legal",
-        CONTACT: "Contact",
-      },
-      LOGIN: {
-        TITLE: "Login Account",
-        BUTTON: "Sign In",
-      },
-      FORGOT: {
-        TITLE: "Forgotten Password?",
-        DESC: "Enter your email to reset your password",
-        SUCCESS: "Your account has been successfully reset.",
-      },
-      REGISTER: {
-        TITLE: "Sign Up",
-        DESC: "Enter your details to create your account",
-        SUCCESS: "Your account has been successfuly registered.",
-      },
-      INPUT: {
-        EMAIL: "البريد الإلكتروني",
-        FULLNAME: "الاسم كامل",
-        PASSWORD: "كلمة المرور",
-        CONFIRM_PASSWORD: "تأكيد كلمة المرور",
-        USERNAME: "Username",
-        RELATION: "صلة القرابة",
-      },
-      VALIDATION: {
-        INVALID: "{{name}} is not valid",
-        REQUIRED: "{{name}} is required",
-        MIN_LENGTH: "{{name}} minimum length is {{min}}",
-        AGREEMENT_REQUIRED: "Accepting terms & conditions are required",
-        NOT_FOUND: "The requested {{name}} is not found",
-        INVALID_LOGIN: "The login detail is incorrect",
-        REQUIRED_FIELD: "Required field",
-        MIN_LENGTH_FIELD: "Minimum field length:",
-        MAX_LENGTH_FIELD: "Maximum field length:",
-        INVALID_FIELD: "Field is not valid",
-      },
-    },
-    ECOMMERCE: {
-      COMMON: {
-        SELECTED_RECORDS_COUNT: "Selected records count: ",
-        ALL: "All",
-        SUSPENDED: "Suspended",
-        ACTIVE: "Active",
-        FILTER: "Filter",
-        BY_STATUS: "by Status",
-        BY_TYPE: "by Type",
-        BUSINESS: "Business",
-        INDIVIDUAL: "Individual",
-        SEARCH: "Search",
-        IN_ALL_FIELDS: "in all fields",
-      },
-      ECOMMERCE: "eCommerce",
-      CUSTOMERS: {
-        CUSTOMERS: "Customers",
-        CUSTOMERS_LIST: "Customers list",
-        NEW_CUSTOMER: "New Customer",
-        DELETE_CUSTOMER_SIMPLE: {
-          TITLE: "Customer Delete",
-          DESCRIPTION: "Are you sure to permanently delete this customer?",
-          WAIT_DESCRIPTION: "Customer is deleting...",
-          MESSAGE: "Customer has been deleted",
-        },
-        DELETE_CUSTOMER_MULTY: {
-          TITLE: "Customers Delete",
-          DESCRIPTION: "Are you sure to permanently delete selected customers?",
-          WAIT_DESCRIPTION: "Customers are deleting...",
-          MESSAGE: "Selected customers have been deleted",
-        },
-        UPDATE_STATUS: {
-          TITLE: "Status has been updated for selected customers",
-          MESSAGE: "Selected customers status have successfully been updated",
-        },
-        EDIT: {
-          UPDATE_MESSAGE: "Customer has been updated",
-          ADD_MESSAGE: "Customer has been created",
-        },
-      },
     },
   },
 };

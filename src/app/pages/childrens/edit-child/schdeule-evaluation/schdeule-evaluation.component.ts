@@ -104,19 +104,19 @@ export class SchdeuleEvaluationComponent implements OnInit {
       notify: this.f.notify.value,
       schedule: this.f.schedule.value,
     };
-    console.log(body);
+
     this.apiService.addChildProgramShcedule(formData, this.programID).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
+
         this.toastr.success(this.translate.instant("shcedulingDone"));
         this.activeModal.close();
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.message);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error.message);
+        
         this.cdr.detectChanges();
       }
     );

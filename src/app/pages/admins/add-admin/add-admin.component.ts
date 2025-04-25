@@ -29,7 +29,6 @@ export class AddAdminComponent implements OnInit {
     this.initForm();
     this.rolesService.getRoles().subscribe((res) => {
       this.role$ = res;
-      console.log(res);
       this.cdr.detectChanges()
     });
   }
@@ -57,19 +56,17 @@ export class AddAdminComponent implements OnInit {
       password_confirmation: this.f.password_confirmation.value,
       role_id: this.f.role_id.value,
     };
-    console.log(body);
+
     this.apiService.addAdmin(body).subscribe(
       (res) => {
         this.loading = false
-        console.log(res);
         this.toastr.success(this.translate.instant('adminAddedSuccessfully'));
         this.router.navigate(['/apps/admin'])
         this.cdr.detectChanges()
       },
       (error) => {
-        this.toastr.error(error.error)
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error)
         this.loading = false
-        console.log(error);
         this.cdr.detectChanges()
       }
     );

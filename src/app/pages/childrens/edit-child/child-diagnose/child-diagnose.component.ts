@@ -30,13 +30,13 @@ export class ChildDiagnoseComponent implements OnInit {
   getDiagnoses() {
     this.apiService.getOneChildDiagnose(this.children.id).subscribe(
       (res) => {
-        console.log(res);
+
         this.diagnosesList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
@@ -58,7 +58,7 @@ export class ChildDiagnoseComponent implements OnInit {
   openEdit(id: any) {
     this.apiService.getOneChildDiagnoseEdit(this.children.id, id.diagnose.id).subscribe(
       (res) => {
-        console.log(res);
+
         localStorage.setItem("oneChild", JSON.stringify(res));
         this.cdr.detectChanges();
         const modalRef = this.modalService.open(EditDiagnoseComponent, {
@@ -76,8 +76,8 @@ export class ChildDiagnoseComponent implements OnInit {
         );
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error)
       }
     );
   }

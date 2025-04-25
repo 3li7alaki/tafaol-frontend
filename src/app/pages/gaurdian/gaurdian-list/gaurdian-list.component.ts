@@ -47,13 +47,13 @@ export class GaurdianListComponent implements OnInit {
   getGaurdians(){
     this.apiService.getGaurdians().subscribe(
       (res) => {
-        console.log(res);
+
         this.gaurdianList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   };
@@ -65,8 +65,8 @@ export class GaurdianListComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error);
-        console.log(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
+
         this.cdr.detectChanges();
       }
     );

@@ -101,26 +101,26 @@ export class AddProgramsComponent implements OnInit {
   getStatus() {
     this.apiService.getStatus().subscribe(
       (res) => {
-        console.log(res);
+
         this.statusList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
   getPrograms() {
     this.apiService.getPrograms().subscribe(
       (res) => {
-        console.log(res);
+
         this.programsList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
@@ -147,19 +147,18 @@ export class AddProgramsComponent implements OnInit {
       schedule: this.f.schedule.value,
       active : true
     };
-    console.log(body);
+
     this.apiService.addChildProgram(body, this.child.id).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
+
         this.toastr.success(this.translate.instant("programAddedSuccessfully"));
         this.activeModal.close();
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error.message);
         this.cdr.detectChanges();
       }
     );

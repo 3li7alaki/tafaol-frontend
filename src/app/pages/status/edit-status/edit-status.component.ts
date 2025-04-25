@@ -47,11 +47,11 @@ export class EditStatusComponent implements OnInit {
       name: this.f.name.value,
       name_ar: this.f.name_ar.value,
     };
-    console.log(body);
+
     this.apiService.editStatus(body, this.status.id).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
+
         this.toastr.success(
           this.translate.instant("statusEditedSuccessfully")
         );
@@ -59,9 +59,9 @@ export class EditStatusComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
       }
     );
@@ -79,9 +79,9 @@ export class EditStatusComponent implements OnInit {
       },
       (error) => {
         this.loadingDelete = false;
-        this.toastr.error(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
       }
     );

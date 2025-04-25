@@ -39,11 +39,11 @@ export class AddDiagnosesComponent implements OnInit {
       name: this.f.name.value,
       description: this.f.description.value,
     };
-    console.log(body);
+
     this.apiService.addDiagnoses(body).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
+
         this.toastr.success(
           this.translate.instant("diagnoseAddedSuccessfully")
         );
@@ -51,9 +51,9 @@ export class AddDiagnosesComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
       }
     );

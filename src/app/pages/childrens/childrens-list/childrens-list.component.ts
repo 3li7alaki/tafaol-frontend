@@ -50,14 +50,12 @@ export class ChildrensListComponent implements OnInit {
   getChildrens() {
     this.apiService.getChildrens().subscribe(
       (res) => {
-        console.log(res);
         this.childrensList = res;
         this.filteredList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
@@ -72,8 +70,7 @@ export class ChildrensListComponent implements OnInit {
         this.modalRef?.hide();
       },
       (error) => {
-        this.toastr.error(error);
-        console.log(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.modalRef?.hide();
         this.cdr.detectChanges();
       }

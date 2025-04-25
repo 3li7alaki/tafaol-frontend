@@ -23,13 +23,13 @@ export class EvaluationListComponent implements OnInit{
   getEvaluation() {
     this.apiService.getEvaluations().subscribe(
       (res) => {
-        console.log(res);
+
         this.evaluationList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }

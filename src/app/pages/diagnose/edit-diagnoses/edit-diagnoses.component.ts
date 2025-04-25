@@ -51,11 +51,11 @@ export class EditDiagnosesComponent implements OnInit {
       name: this.f.name.value,
       description: this.f.description.value,
     };
-    console.log(body);
+
     this.apiService.editDiagnoses(body, this.id).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
+
         this.toastr.success(
           this.translate.instant("diagnoseEditSuccessfully")
         );
@@ -63,9 +63,9 @@ export class EditDiagnosesComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
       }
     );
@@ -83,9 +83,9 @@ export class EditDiagnosesComponent implements OnInit {
       },
       (error) => {
         this.loadingDelete = false;
-        this.toastr.error(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
       }
     );

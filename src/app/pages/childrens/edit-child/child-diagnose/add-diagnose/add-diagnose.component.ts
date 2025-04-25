@@ -56,13 +56,13 @@ export class AddDiagnoseComponent implements OnInit {
   getDiagnoses() {
     this.apiService.getDiagnoses().subscribe(
       (res) => {
-        console.log(res);
+
         this.diagnosesList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   };
@@ -105,7 +105,7 @@ export class AddDiagnoseComponent implements OnInit {
     this.apiService.addChildrenDiagnose(formData, this.children.id).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
+
         this.toastr.success(
           this.translate.instant("diagnoseAddedSuccessfully")
         );
@@ -113,9 +113,9 @@ export class AddDiagnoseComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
       }
     );

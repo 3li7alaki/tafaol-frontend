@@ -42,13 +42,13 @@ export class QuestionsListComponent implements OnInit {
   getQuestions(){
     this.apiService.getQuestions().subscribe(
       (res) => {
-        console.log(res);
+
         this.questionsList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   };
@@ -60,8 +60,8 @@ export class QuestionsListComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error);
-        console.log(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
+
         this.cdr.detectChanges();
       }
     );

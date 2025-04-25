@@ -89,7 +89,7 @@ export class AddAttachmentsComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
         this.cdr.detectChanges();
       }

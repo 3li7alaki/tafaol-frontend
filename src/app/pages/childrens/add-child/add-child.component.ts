@@ -35,13 +35,11 @@ export class AddChildComponent implements OnInit {
     this.initForm();
     this.apiService.getNationalites().subscribe(
       (res) => {
-        console.log(res);
         this.nationalityList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
@@ -105,11 +103,9 @@ export class AddChildComponent implements OnInit {
   }
 
   getFileDetails(e: any) {
-    //console.log (e.target.files);
     for (var i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
     }
-    console.log(this.myFiles);
   }
 
   addChild() {
@@ -145,15 +141,13 @@ export class AddChildComponent implements OnInit {
     this.apiService.addChildren(formData).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
         this.toastr.success(this.translate.instant("childAddedSuccessfully"));
         this.router.navigate(["/apps/childrens"]);
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
         this.cdr.detectChanges();
       }
     );

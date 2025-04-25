@@ -16,7 +16,7 @@
       novalidate=""
       class="form"
       [formGroup]="evaluationForm"
-      (ngSubmit)="addDiagnose()"
+      (ngSubmit)="addEvaluation()"
     >
       <div class="card-body border-top p-9">
         <div class="row mb-6">
@@ -61,27 +61,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="row mb-6">
-            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
-              "MENU.QUESTIONS" | translate
-            }}</label>
-            <div class="col-lg-8 fv-row">
-              <select
-                class="form-select form-select-solid form-select-lg"
-                name="role_id"
-                formControlName="questions"
-              >
-                <option [value]="null">
-                  {{ "selectNationality" | translate }}
-                </option>
-                <option [value]="questions.id" *ngFor="let questions of questionsList">
-                  {{
-                     questions?.title
-                  }}
-                </option>
-              </select>
-            </div>
-          </div> -->
           <div class="row mb-6">
             <label class="col-lg-2 col-form-label required fw-bold fs-6"
               >{{'MENU.QUESTIONS' | translate}}</label
@@ -96,7 +75,7 @@
                 formControlName="questions"
                 bindLabel="title"
                 bindValue="id"
-                placeholder="{{translate.currentLang == 'ar' ? 'اختر أسئلة' : 'Select Questions'}}"
+                placeholder="{{ 'selectQuestions' | translate }}"
               >
               </ng-select>
             </div>
@@ -110,22 +89,22 @@
               <input
                 type="file"
                 id="file"
-                (change)="onFileSelectedNational($event)"
+                (change)="onFileSelected($event)"
               />
               <label for="file" class="custom-file-upload">
                 {{ "selectFiles" | translate }}
               </label>
             </div>
 
-            <div class="file-details-container" *ngIf="selectedFileNationalID">
+            <div class="file-details-container" *ngIf="selectedFile">
               <div class="file-details">
-                <div class="file-name">{{ selectedFileNationalID.name }}</div>
+                <div class="file-name">{{ selectedFile.name }}</div>
                 <div class="file-info">
                   <span class="file-type">{{
-                    selectedFileNationalID.type
+                    selectedFile.type
                   }}</span>
                   <span class="file-size">{{
-                    selectedFileNationalID.size
+                    selectedFile.size
                   }}</span>
                 </div>
               </div>

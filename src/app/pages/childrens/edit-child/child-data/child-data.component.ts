@@ -39,13 +39,13 @@ export class ChildDataComponent implements OnInit {
     
     this.apiService.getNationalites().subscribe(
       (res) => {
-        console.log(res);
+
         this.nationalityList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
     this.initForm()
@@ -229,15 +229,15 @@ export class ChildDataComponent implements OnInit {
     this.apiService.editChildrenData(formData, this.id, put).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
+
         this.toastr.success(this.translate.instant("childEditedSuccessfully"));
         this.router.navigate(["/apps/childrens"]);
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
       }
     );

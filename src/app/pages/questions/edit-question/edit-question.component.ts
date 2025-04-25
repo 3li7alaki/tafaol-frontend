@@ -30,7 +30,7 @@ export class EditQuestionComponent implements OnInit {
   }
   ngOnInit(): void {
     this.initForm()
-    console.log(this.question)
+    
     this.question.options.forEach((element: any) => {
       this.addLevel(element)
     });
@@ -75,19 +75,19 @@ export class EditQuestionComponent implements OnInit {
     formData.append('type', this.f.type.value);
 
     this.loading = true;
-    console.log(formData);
+
     this.apiService.editQuestions(formData, this.id).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
+
         this.toastr.success(this.translate.instant("questionEditedSuccessfully"));
         this.router.navigate(["/apps/questions"]);
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
       }
     );

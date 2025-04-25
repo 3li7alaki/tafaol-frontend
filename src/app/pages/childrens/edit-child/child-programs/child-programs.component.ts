@@ -33,13 +33,13 @@ export class ChildProgramsComponent implements OnInit {
   getPrograms() {
     this.apiService.getOneChildProgram(this.child.id).subscribe(
       (res) => {
-        console.log(res);
+
         this.programList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
@@ -60,7 +60,7 @@ export class ChildProgramsComponent implements OnInit {
   openEdit(id: any) {
     this.apiService.getOneChildProgramsEdit(this.child.id, id).subscribe(
       (res) => {
-        console.log(res);
+
         localStorage.setItem("oneChildProgram", JSON.stringify(res));
         this.cdr.detectChanges();
 
@@ -78,22 +78,22 @@ export class ChildProgramsComponent implements OnInit {
         );
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
   changeStatus(id: any) {
     this.apiService.getOneChildProgramsEdit(this.child.id, id).subscribe(
       (res) => {
-        console.log(res);
+
         localStorage.setItem("oneChildProgram", JSON.stringify(res));
         this.cdr.detectChanges();
         this.router.navigateByUrl("/apps/childrens/change-status");
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
@@ -107,8 +107,8 @@ export class ChildProgramsComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error);
-        console.log(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
+
         this.cdr.detectChanges();
       }
     );

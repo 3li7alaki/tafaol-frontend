@@ -49,13 +49,13 @@ export class AddStatusComponent implements OnInit {
   getStatus() {
     this.apiService.getStatus().subscribe(
       (res) => {
-        console.log(res);
+
         this.statusList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   };
@@ -68,19 +68,18 @@ export class AddStatusComponent implements OnInit {
       date: this.datePipe.transform(this.f.date.value, 'yyyy-MM-dd'),
       note: this.f.note.value,
     };
-    console.log(body);
+
     this.apiService.addChildStatus(body, this.program.id).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
+
         this.toastr.success(this.translate.instant("statusAddedSuccessfully"));
         this.activeModal.close();
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error.message);
         this.cdr.detectChanges();
       }
     );

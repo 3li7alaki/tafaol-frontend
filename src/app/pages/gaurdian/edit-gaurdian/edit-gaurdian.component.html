@@ -15,7 +15,7 @@
       <form
         novalidate=""
         class="form"
-        [formGroup]="gaurdianFrom"
+        [formGroup]="gaurdianForm"
         (ngSubmit)="addGaurd()"
       >
         <div class="card-body border-top p-9">
@@ -79,6 +79,26 @@
               </div>
             </div>
           </div>
+          <div class="row mb-6">
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+              "AUTH.INPUT.RELATION" | translate
+            }}</label>
+            <div class="col-lg-8 fv-row">
+              <input
+                type="text"
+                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                placeholder="{{ 'AUTH.INPUT.RELATION' | translate }}"
+                formControlName="relation"
+                list="relations"
+              />
+              <datalist id="relations">
+                <option value="الأم">
+                <option value="الأب">
+                <option value="أخرى (حدد)">
+              </datalist>
+            </div>
+          </div>
+          
   
           <div class="row mb-6">
             <label class="col-lg-2 col-form-label required fw-bold fs-6">{{

@@ -14,11 +14,6 @@ import { TranslateService } from "@ngx-translate/core";
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  // KeenThemes mock, change it to:
-  defaultAuth: any = {
-    email: "admin@tafaol.com",
-    password: "Tafaol@admin56",
-  };
   loginForm: FormGroup;
   hasError: boolean;
   returnUrl: string;
@@ -27,7 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   user: UserModel;
   loading = false;
   // private fields
-  private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+  private unsubscribe: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -65,7 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.email,
           Validators.minLength(3),
-          Validators.maxLength(320), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
+          Validators.maxLength(320),
         ]),
       ],
       password: [
@@ -85,7 +80,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.apiService.doLogin(this.f.email.value, this.f.password.value).then(
       (res) => {
         this.setUserInStorage(res);
-        console.log(res);
+
         this.router.navigate([this.returnUrl]);
         this.translate.setDefaultLang("ar");
         localStorage.setItem("language", "ar");
@@ -106,28 +101,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       (err) => {
         this.loading = false;
         this.hasError = true;
-        console.log(err);
-        // this.toastr.error(err);
         this.cdr.detectChanges();
       }
     );
   }
 
-  // submit() {
-  //   this.hasError = false;
-  //   const loginSubscr = this.authService
-  //     .login(this.f.email.value, this.f.password.value)
-  //     .pipe(first())
-  //     .subscribe((user: UserModel | undefined) => {
-  //       if (user) {
-  //         this.router.navigate([this.returnUrl]);
-  //       } else {
-  //         this.hasError = true;
-  //         console.log(this.hasError)
-  //       }
-  //     });
-  //   this.unsubscribe.push(loginSubscr);
-  // }
   setUserInStorage(res: any) {
     if (res) {
       localStorage.setItem("user", JSON.stringify(res));

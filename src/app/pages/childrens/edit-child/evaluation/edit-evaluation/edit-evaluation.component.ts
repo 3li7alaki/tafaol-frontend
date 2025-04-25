@@ -83,26 +83,26 @@ export class EditEvaluationComponent implements OnInit {
   getEvalutaions() {
     this.apiService.getEvaluations().subscribe(
       (res: any) => {
-        console.log(res);
+
         this.formList = res;
         this.cdr.detectChanges();
       },
       (error: any) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
   getQuestions() {
     this.apiService.getQuestions().subscribe(
       (res) => {
-        console.log(res);
+
         this.questionList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
@@ -110,13 +110,13 @@ export class EditEvaluationComponent implements OnInit {
   getAdmins() {
     this.apiService.getAdmins().subscribe(
         (res) => {
-          console.log(res);
+
           this.adminList = res;
           this.cdr.detectChanges();
         },
         (error) => {
-          console.log(error);
-          this.toastr.error(error.error.message, error.status);
+
+          this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         });
   }
 
@@ -203,14 +203,13 @@ export class EditEvaluationComponent implements OnInit {
       .subscribe(
         (res) => {
           this.loading = false;
-          console.log(res);
+
           this.toastr.success(this.translate.instant("evaluatedSuccessfully"));
           this.cdr.detectChanges();
         },
         (error) => {
-          this.toastr.error(error.error);
+          this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
           this.loading = false;
-          console.log(error.message);
           this.cdr.detectChanges();
         }
       );
@@ -221,7 +220,7 @@ export class EditEvaluationComponent implements OnInit {
     this.selectedFileNationalID = file;
     this.newFileNationalID = true;
     // Create a FileReader object to read the file contents
-    console.log(file);
+
     const reader = new FileReader();
 
     // Set the onload event handler of the reader
@@ -237,11 +236,11 @@ export class EditEvaluationComponent implements OnInit {
 
   onFormSelectionChange(event: any) {
     const id = event.target.value;
-    console.log(id);
+
     if (id) {
-      console.log(this.formList);
+      
       const selectedForm = this.formList.find((form: form) => form.id == id);
-      console.log(selectedForm);
+
       if (selectedForm) {
         const questions = selectedForm.questions;
         this.statusForm.setControl("questions", this.formBuilder.array([]));
@@ -249,7 +248,7 @@ export class EditEvaluationComponent implements OnInit {
           this.addLevel(question);
         });
       } else {
-        console.log("Selected form not found in formList");
+        
       }
     }
   }
@@ -269,9 +268,9 @@ export class EditEvaluationComponent implements OnInit {
       },
       (error) => {
         this.loadingDelete = false;
-        this.toastr.error(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
       }
     );

@@ -64,7 +64,7 @@ export class EditEvaluationComponent implements OnInit {
     this.selectedAttachmentFile = file;
     this.newAttachmentFile = file;
     // Create a FileReader object to read the file contents
-    console.log(file);
+
     const reader = new FileReader();
 
     // Set the onload event handler of the reader
@@ -84,7 +84,7 @@ export class EditEvaluationComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.error.message, error.status);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
@@ -114,7 +114,7 @@ export class EditEvaluationComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
         this.cdr.detectChanges();
       }
@@ -133,7 +133,7 @@ export class EditEvaluationComponent implements OnInit {
       },
       (error) => {
         this.loadingDelete = false;
-        this.toastr.error(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.cdr.detectChanges();
       }
     );

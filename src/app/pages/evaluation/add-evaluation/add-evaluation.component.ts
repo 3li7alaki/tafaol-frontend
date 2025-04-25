@@ -13,8 +13,8 @@ import { ApiService } from "src/app/services/api.service";
 export class AddEvaluationComponent implements OnInit {
   evaluationForm: FormGroup;
   loading = false;
-  selectedFileNationalID: File;
-  imageUrlNationalID: string;
+  selectedFile: File;
+  imageUrl: string;
   questionsList: any[];
   EvaluationSelected : [] = [];
   constructor(
@@ -40,7 +40,7 @@ export class AddEvaluationComponent implements OnInit {
   get f() {
     return this.evaluationForm.controls;
   }
-  addDiagnose() {
+  addEvaluation() {
     this.loading = true;
    
     const formData = new FormData();
@@ -48,8 +48,8 @@ export class AddEvaluationComponent implements OnInit {
     // Log the FormData object to the console
     formData.append("name", this.f.name.value);
     formData.append("description", this.f.description.value);
-    if(this.selectedFileNationalID){
-      formData.append("path", this.selectedFileNationalID);
+    if(this.selectedFile){
+      formData.append("path", this.selectedFile);
     }
     for (let i = 0; i < this.EvaluationSelected.length; i++) {
       const questions = this.EvaluationSelected[i];
@@ -66,24 +66,24 @@ export class AddEvaluationComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error: any) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
         this.cdr.detectChanges();
       }
     );
   };
-  onFileSelectedNational(event: any) {
+  onFileSelected(event: any) {
     // Get the selected file from the event
     const file = event.target.files[0];
-    this.selectedFileNationalID = file;
+    this.selectedFile = file;
     // Create a FileReader object to read the file contents
-    console.log(file)
+
     const reader = new FileReader();
 
     // Set the onload event handler of the reader
     reader.onload = (e: ProgressEvent) => {
       // Set the data URL of the image
-      this.imageUrlNationalID = (<FileReader>e.target).result as string;
+      this.imageUrl = (<FileReader>e.target).result as string;
       this.cdr.detectChanges();
     };
 
@@ -93,13 +93,13 @@ export class AddEvaluationComponent implements OnInit {
   getQuestions(){
     this.apiService.getQuestions().subscribe(
       (res) => {
-        console.log(res);
+
         this.questionsList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   };

@@ -13,7 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class EditGaurdianComponent implements OnInit {
   id : any;
   gaurdian : any;
-  gaurdianFrom: FormGroup;
+  gaurdianForm: FormGroup;
   loading = false;
   eye = false;
   constructor(
@@ -32,16 +32,17 @@ export class EditGaurdianComponent implements OnInit {
     this.initForm();
   };
   initForm() {
-    this.gaurdianFrom = this.formBuilder.group({
+    this.gaurdianForm = this.formBuilder.group({
       name: [this.gaurdian.name, [Validators.required]],
       email: [this.gaurdian.email, [Validators.required, Validators.email]],
       phone: [this.gaurdian.phone, [Validators.required]],
+      relation: [this.gaurdian.relation, [Validators.required]],
       password: ["", [Validators.required, Validators.minLength(8)]],
       password_confirmation: ["", [Validators.required, Validators.minLength(8)]],
     });
   }
   get f() {
-    return this.gaurdianFrom.controls;
+    return this.gaurdianForm.controls;
   };
   togglePassword() {
     this.eye = !this.eye;
@@ -52,22 +53,22 @@ export class EditGaurdianComponent implements OnInit {
       name: this.f.name.value,
       email: this.f.email.value,
       phone: this.f.phone.value,
+      relation: this.f.relation.value,
       password: this.f.password.value,
       password_confirmation: this.f.password_confirmation.value,
     };
-    console.log(body);
+
     this.apiService.editGaurdian(body, this.id).subscribe(
       (res) => {
         this.loading = false
-        console.log(res);
+
         this.toastr.success(this.translate.instant('gaurdianAddedSuccessfully'));
         this.router.navigate(['/apps/gaurdian'])
         this.cdr.detectChanges()
       },
       (error) => {
-        this.toastr.error(error.message)
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error)
         this.loading = false
-        console.log(error.message);
         this.cdr.detectChanges()
       }
     );

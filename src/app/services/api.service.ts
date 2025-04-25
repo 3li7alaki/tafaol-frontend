@@ -40,13 +40,13 @@ export class ApiService {
         `Backend returned code ${error.status}, ` +
           `body was: ${error.error.error}`
       );
-      console.log(error);
+
     }
     if (error.error.message === "Unauthenticated.") {
       localStorage.clear();
       window.location.href = "/#/auth/login";
     }
-    console.log(error.error.message);
+    
     return throwError(error.error);
   }
 
@@ -68,10 +68,10 @@ export class ApiService {
         .then(
           (res: any) => {
             resolve(res);
-            console.log(res);
+
           },
           (err) => {
-            console.log(err);
+
             reject(err.error);
           }
         );
@@ -205,6 +205,7 @@ export class ApiService {
       name: value.name,
       email: value.email,
       phone: value.phone,
+      relation: value.relation,
       password: value.password,
       password_confirmation: value.password_confirmation,
     };
@@ -226,6 +227,7 @@ export class ApiService {
       name: value.name,
       email: value.email,
       phone: value.phone,
+      relation: value.relation,
       password: value.password,
       password_confirmation: value.password_confirmation,
     };

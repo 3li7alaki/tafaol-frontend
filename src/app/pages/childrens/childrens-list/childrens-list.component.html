@@ -80,9 +80,6 @@
                   >
                     {{ children.full_name }}
                   </a>
-                  <!-- <span class="text-muted fw-bold text-muted d-block fs-7">
-                      {{ children.email }}
-                    </span> -->
                 </div>
               </div>
             </td>
@@ -147,7 +144,7 @@
 </div>
 <ng-template #template>
   <div class="modal-body text-center">
-    <p>هل أنت متأكد من الحذف ؟</p>
+    <p>{{ "deleteConfirmation" | translate }}</p>
     <button type="button" class="btn btn-danger" style="margin: 5px;" (click)="deleteChildrens(deleteID)" >{{'yes' | translate}}</button>
     <button type="button" class="btn btn-primary" (click)="decline()" >{{'no' | translate}}</button>
   </div>

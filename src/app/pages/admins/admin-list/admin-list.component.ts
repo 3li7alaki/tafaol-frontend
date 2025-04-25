@@ -26,14 +26,12 @@ export class AdminListComponent implements OnInit {
   getAdmins(){
     this.apiService.getAdmins().subscribe(
       (res) => {
-        console.log(res);
         this.adminList = res;
         this.cdr.detectChanges();
         
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.message, error.status);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
@@ -46,8 +44,7 @@ export class AdminListComponent implements OnInit {
         this.modalRef?.hide();
       },
       (error) => {
-        this.toastr.error(error);
-        console.log(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.cdr.detectChanges();
         this.modalRef?.hide();
       }

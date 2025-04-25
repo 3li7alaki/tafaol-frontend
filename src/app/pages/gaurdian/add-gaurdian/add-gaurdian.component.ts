@@ -31,6 +31,7 @@ export class AddGaurdianComponent implements OnInit {
       name: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       phone: ['973', [Validators.required]],
+      relation: ["", [Validators.required]],
       password: ["", [Validators.required, Validators.minLength(8)]],
       password_confirmation: ["", [Validators.required, Validators.minLength(8)]],
     });
@@ -48,22 +49,22 @@ export class AddGaurdianComponent implements OnInit {
       name: this.f.name.value,
       email: this.f.email.value,
       phone: this.f.phone.value,
+      relation: this.f.relation.value,
       password: this.f.password.value,
       password_confirmation: this.f.password_confirmation.value,
     };
-    console.log(body);
+
     this.apiService.addGaurdian(body).subscribe(
       (res) => {
         this.loading = false
-        console.log(res);
+
         this.toastr.success(this.translate.instant('gaurdianAddedSuccessfully'));
         this.router.navigate(['/apps/gaurdian'])
         this.cdr.detectChanges()
       },
       (error) => {
-        this.toastr.error(error.error)
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error)
         this.loading = false
-        console.log(error.message);
         this.cdr.detectChanges()
       }
     );

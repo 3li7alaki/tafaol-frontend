@@ -1,29 +1,13 @@
 <!--begin::Menu wrapper-->
-<div
-  id="kt_app_sidebar_menu_scroll"
-  class="scroll-y my-5 mx-3"
-  data-kt-scroll="true"
-  data-kt-scroll-activate="true"
-  data-kt-scroll-height="auto"
-  data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer"
-  data-kt-scroll-wrappers="#kt_app_sidebar_menu"
-  data-kt-scroll-offset="5px"
-  data-kt-scroll-save-state="true"
->
+<div id="kt_app_sidebar_menu_scroll" class="scroll-y my-5 mx-3" data-kt-scroll="true" data-kt-scroll-activate="true"
+  data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer"
+  data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
   <!--begin::Menu-->
-  <div
-    class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6"
-    id="#kt_app_sidebar_menu"
-    data-kt-menu="true"
-    data-kt-menu-expand="false"
-  >
+  <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu"
+    data-kt-menu="true" data-kt-menu-expand="false">
     <!-- Dashboard -->
     <div class="menu-item">
-      <a
-        class="menu-link without-sub"
-        routerLink="/dashboard"
-        routerLinkActive="active"
-      >
+      <a class="menu-link without-sub" routerLink="/dashboard" routerLinkActive="active">
         <span class="menu-icon">
           <app-keenicon name="element-11" class="fs-2"></app-keenicon>
         </span>
@@ -31,58 +15,9 @@
       </a>
     </div>
 
-    <!-- Admin Management -->
-    <div
-      class="menu-item menu-accordion"
-      routerLinkActive="here show"
-      data-kt-menu-trigger="click"
-      *ngIf="showRoles || showAdmin"
-    >
-      <span class="menu-link">
-        <span class="menu-icon">
-          <app-keenicon name="security-user" class="fs-2"></app-keenicon>
-        </span>
-        <span class="menu-title" translate="MENU.ADMIN_MANAGEMENT"></span>
-        <span class="menu-arrow"></span>
-      </span>
-      <div
-        class="menu-sub menu-sub-accordion"
-        routerLinkActive="menu-active-bg"
-      >
-        <div *ngIf="showRoles" class="menu-item">
-          <a
-            class="menu-link without-sub"
-            routerLink="/apps/roles"
-            routerLinkActive="active"
-          >
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title" translate="MENU.ROLES"></span>
-          </a>
-        </div>
-        <div *ngIf="showAdmin" class="menu-item">
-          <a
-            class="menu-link without-sub"
-            routerLink="apps/admin"
-            routerLinkActive="active"
-          >
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title" translate="MENU.ADMINS"></span>
-          </a>
-        </div>
-      </div>
-    </div>
-
     <!-- Child Management -->
-    <div
-      class="menu-item menu-accordion"
-      routerLinkActive="here show"
-      data-kt-menu-trigger="click"
-      *ngIf="showGaurdian || showChildrens"
-    >
+    <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click"
+      *ngIf="showGaurdian || showChildrens">
       <span class="menu-link">
         <span class="menu-icon">
           <app-keenicon name="profile-user" class="fs-2"></app-keenicon>
@@ -90,16 +25,9 @@
         <span class="menu-title" translate="MENU.CHILD_MANAGEMENT"></span>
         <span class="menu-arrow"></span>
       </span>
-      <div
-        class="menu-sub menu-sub-accordion"
-        routerLinkActive="menu-active-bg"
-      >
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
         <div *ngIf="showChildrens" class="menu-item">
-          <a
-            class="menu-link without-sub"
-            routerLink="apps/childrens"
-            routerLinkActive="active"
-          >
+          <a class="menu-link without-sub" routerLink="apps/childrens" routerLinkActive="active">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
@@ -107,11 +35,7 @@
           </a>
         </div>
         <div *ngIf="showGaurdian" class="menu-item">
-          <a
-            class="menu-link without-sub"
-            routerLink="apps/gaurdian"
-            routerLinkActive="active"
-          >
+          <a class="menu-link without-sub" routerLink="apps/gaurdian" routerLinkActive="active">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
@@ -121,82 +45,31 @@
       </div>
     </div>
 
-    <!-- System Configuration -->
-    <div
-      class="menu-item menu-accordion"
-      routerLinkActive="here show"
-      data-kt-menu-trigger="click"
-      *ngIf="showNationalites || showDiagnose || showStatus || showPrograms"
-    >
+    <!-- Reports -->
+    <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click"
+      *ngIf="showPrograms">
       <span class="menu-link">
         <span class="menu-icon">
-          <app-keenicon name="setting-2" class="fs-2"></app-keenicon>
+          <app-keenicon name="document" class="fs-2"></app-keenicon>
         </span>
-        <span class="menu-title" translate="MENU.SYSTEM_CONFIG"></span>
+        <span class="menu-title" translate="MENU.REPORTS"></span>
         <span class="menu-arrow"></span>
       </span>
-      <div
-        class="menu-sub menu-sub-accordion"
-        routerLinkActive="menu-active-bg"
-      >
-        <div *ngIf="showNationalites" class="menu-item">
-          <a
-            class="menu-link without-sub"
-            routerLink="apps/nationality"
-            routerLinkActive="active"
-          >
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLink="apps/program-report" routerLinkActive="active">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title" translate="MENU.NATIONALITY"></span>
-          </a>
-        </div>
-        <div *ngIf="showDiagnose" class="menu-item">
-          <a
-            class="menu-link without-sub"
-            routerLink="apps/diagnose"
-            routerLinkActive="active"
-          >
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title" translate="MENU.DIAGNOSE"></span>
-          </a>
-        </div>
-        <div *ngIf="showStatus" class="menu-item">
-          <a
-            class="menu-link without-sub"
-            routerLink="apps/status"
-            routerLinkActive="active"
-          >
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title" translate="MENU.STATUS"></span>
-          </a>
-        </div>
-        <div *ngIf="showPrograms" class="menu-item">
-          <a
-            class="menu-link without-sub"
-            routerLink="apps/programs"
-            routerLinkActive="active"
-          >
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title" translate="MENU.PROGRAMS"></span>
+            <span class="menu-title" translate="MENU.PROGRAMSREPORT"></span>
           </a>
         </div>
       </div>
     </div>
 
     <!-- Evaluation -->
-    <div
-      class="menu-item menu-accordion"
-      routerLinkActive="here show"
-      data-kt-menu-trigger="click"
-      *ngIf="showEvaluation"
-    >
+    <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click"
+      *ngIf="showEvaluation">
       <span class="menu-link">
         <span class="menu-icon">
           <app-keenicon name="star" class="fs-2"></app-keenicon>
@@ -204,16 +77,9 @@
         <span class="menu-title" translate="MENU.EVALUATION"></span>
         <span class="menu-arrow"></span>
       </span>
-      <div
-        class="menu-sub menu-sub-accordion"
-        routerLinkActive="menu-active-bg"
-      >
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
         <div *ngIf="showQuestions" class="menu-item">
-          <a
-            class="menu-link without-sub"
-            routerLink="apps/questions"
-            routerLinkActive="active"
-          >
+          <a class="menu-link without-sub" routerLink="apps/questions" routerLinkActive="active">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
@@ -221,11 +87,7 @@
           </a>
         </div>
         <div *ngIf="showForms" class="menu-item">
-          <a
-            class="menu-link without-sub"
-            routerLink="apps/evaluation"
-            routerLinkActive="active"
-          >
+          <a class="menu-link without-sub" routerLink="apps/evaluation" routerLinkActive="active">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
@@ -235,34 +97,77 @@
       </div>
     </div>
 
-    <!-- Reports -->
-    <div
-      class="menu-item menu-accordion"
-      routerLinkActive="here show"
-      data-kt-menu-trigger="click"
-      *ngIf="showPrograms"
-    >
+    <!-- Admin Management -->
+    <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click"
+      *ngIf="showRoles || showAdmin">
       <span class="menu-link">
         <span class="menu-icon">
-          <app-keenicon name="document" class="fs-2"></app-keenicon>
+          <app-keenicon name="security-user" class="fs-2"></app-keenicon>
         </span>
-        <span class="menu-title" translate="MENU.REPORTS"></span>
+        <span class="menu-title" translate="MENU.ADMIN_MANAGEMENT"></span>
         <span class="menu-arrow"></span>
       </span>
-      <div
-        class="menu-sub menu-sub-accordion"
-        routerLinkActive="menu-active-bg"
-      >
-        <div class="menu-item">
-          <a
-            class="menu-link without-sub"
-            routerLink="apps/program-report"
-            routerLinkActive="active"
-          >
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div *ngIf="showRoles" class="menu-item">
+          <a class="menu-link without-sub" routerLink="/apps/roles" routerLinkActive="active">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title" translate="MENU.PROGRAMSREPORT"></span>
+            <span class="menu-title" translate="MENU.ROLES"></span>
+          </a>
+        </div>
+        <div *ngIf="showAdmin" class="menu-item">
+          <a class="menu-link without-sub" routerLink="apps/admin" routerLinkActive="active">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" translate="MENU.ADMINS"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- System Configuration -->
+    <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click"
+      *ngIf="showNationalites || showDiagnose || showStatus || showPrograms">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="setting-2" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" translate="MENU.SYSTEM_CONFIG"></span>
+        <span class="menu-arrow"></span>
+      </span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div *ngIf="showNationalites" class="menu-item">
+          <a class="menu-link without-sub" routerLink="apps/nationality" routerLinkActive="active">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" translate="MENU.NATIONALITY"></span>
+          </a>
+        </div>
+        <div *ngIf="showDiagnose" class="menu-item">
+          <a class="menu-link without-sub" routerLink="apps/diagnose" routerLinkActive="active">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" translate="MENU.DIAGNOSE"></span>
+          </a>
+        </div>
+        <div *ngIf="showStatus" class="menu-item">
+          <a class="menu-link without-sub" routerLink="apps/status" routerLinkActive="active">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" translate="MENU.STATUS"></span>
+          </a>
+        </div>
+        <div *ngIf="showPrograms" class="menu-item">
+          <a class="menu-link without-sub" routerLink="apps/programs" routerLinkActive="active">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" translate="MENU.PROGRAMS"></span>
           </a>
         </div>
       </div>

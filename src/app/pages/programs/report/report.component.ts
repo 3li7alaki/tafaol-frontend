@@ -54,26 +54,26 @@ export class ReportComponent implements OnInit {
   getPrograms() {
     this.apiService.getPrograms().subscribe(
       (res) => {
-        console.log(res);
+
         this.programList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
   getStatus() {
     this.apiService.getStatus().subscribe(
       (res) => {
-        console.log(res);
+
         this.statusList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }
@@ -94,7 +94,7 @@ export class ReportComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.message);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.isLoading = false;
       }
     );

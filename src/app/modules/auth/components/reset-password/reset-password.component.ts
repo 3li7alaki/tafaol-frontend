@@ -73,7 +73,7 @@ export class ResetPasswordComponent implements OnInit {
             this.router.navigate(['/auth/login']);
         },
         (error) => {
-            this.toastr.error(error.error);
+            this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         }
     );
   }

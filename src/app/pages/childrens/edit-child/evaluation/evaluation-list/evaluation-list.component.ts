@@ -38,13 +38,13 @@ export class EvaluationListComponent implements OnInit {
   getChangeStatus() {
     this.apiService.getChildProgramEvaluation(this.program).subscribe(
       (res) => {
-        console.log(res);
+
         localStorage.setItem("evaluationProgram", JSON.stringify(res));
         this.statusList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
+
       }
     );
   }

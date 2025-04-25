@@ -4,74 +4,16 @@
   <!--begin::Heading-->
   <div class="text-center mb-11">
     <h1 class="text-gray-900 fw-bolder mb-3">
-      قم بتسجيل الدخول
+      {{ 'AUTH.LOGIN.TITLE' | translate }}
     </h1>
-    <!--begin::Subtitle-->
-    <!-- <div class="text-gray-500 fw-semibold fs-6">
-      Your Social Campaigns
-    </div> -->
-    <!--end::Subtitle--->
-    <!-- <div class="text-gray-500 fw-bold fs-4">
-      {{'newHere' | translate}}
-      <a
-        routerLink="/auth/registration"
-        id="kt_login_signup"
-        class="link-primary fw-bolder"
-        >{{ "AUTH.GENERAL.SIGNUP_BUTTON" | translate }}</a
-      >
-    </div> -->
   </div>
   <!--end::Heading-->
-
-  <!--begin::Login options
-  <div class="row g-3 mb-9">
-    <div class="col-md-6">
-      <a href="#"
-        class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-        <img alt="Logo" src="./assets/media/svg/brand-logos/google-icon.svg" class="h-15px me-3" />
-        Sign in with Google
-      </a>
-    </div>
- 
-
-
-    <div class="col-md-6">
-
-      <a href="#"
-        class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-        <img alt="Logo" src="./assets/media/svg/brand-logos/apple-black.svg" class="theme-light-show h-15px me-3" />
-        <img alt="Logo" src="./assets/media/svg/brand-logos/apple-black-dark.svg" class="theme-dark-show h-15px me-3" />
-        Sign in with Apple
-      </a>
-
-    </div>
-
-  </div>
-end::Login options-->
-
-  <!--begin::Separator-->
-  <!-- <div class="separator separator-content my-14">
-    <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
-  </div> -->
-  <!--end::Separator-->
-
-  <!-- begin::Alert info-->
-  <!-- <ng-container class="col-md-12" *ngIf="!hasError">
-    <div class="mb-10 bg-light-primary p-8 rounded">
-      <div class="text-info">
-      أهلا بكم في تفاؤل
-      يرجى إدخال بياناتك لتسجيل الدخول
-      </div>
-    </div>
-  </ng-container> -->
-  <!-- end::Alert info-->
-
 
   <!-- begin::Alert error-->
   <ng-container *ngIf="hasError">
     <div class="mb-lg-15 alert alert-danger">
       <div class="alert-text font-weight-bold">
-        تفاصيل الدخول غير صحيحة. يرجى المحاولة مرة أخرى.
+        {{ 'AUTH.LOGIN.INVALID_CREDENTIALS' | translate }}
       </div>
     </div>
   </ng-container>
@@ -79,7 +21,7 @@ end::Login options-->
 
   <!--begin::Form group-->
   <div class="fv-row mb-8">
-    <label class="form-label fs-6 fw-bolder text-gray-900">البريد الإلكتروني</label>
+    <label class="form-label fs-6 fw-bolder text-gray-900">{{ 'AUTH.INPUT.EMAIL' | translate }}</label>
     <input class="form-control bg-transparent" type="email" name="email" formControlName="email" autocomplete="off"
       [ngClass]="{
         'is-invalid': loginForm.controls['email'].invalid,
@@ -87,22 +29,22 @@ end::Login options-->
       }" />
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'required',
-        message: 'البريد الإلكتروني مطلوب',
+        message: 'AUTH.VALIDATION.EMAIL_REQUIRED' | translate,
         control: loginForm.controls['email']
       }"></ng-container>
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'email',
-        message: 'البريد الإلكتروني غير صحيح',
+        message: 'AUTH.VALIDATION.EMAIL_INVALID' | translate,
         control: loginForm.controls['email']
       }"></ng-container>
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'minLength',
-        message: 'البريد الإلكتروني يجب أن يحتوي على 3 أحرف على الأقل',
+        message: 'AUTH.VALIDATION.EMAIL_MIN_LENGTH' | translate,
         control: loginForm.controls['email']
       }"></ng-container>
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'maxLength',
-        message: 'البريد الإلكتروني يجب أن يحتوي على 360 حرفًا كحد أقصى',
+        message: 'AUTH.VALIDATION.EMAIL_MAX_LENGTH' | translate,
         control: loginForm.controls['email']
       }"></ng-container>
   </div>
@@ -111,7 +53,7 @@ end::Login options-->
   <!--begin::Form group-->
   <div class="fv-row mb-3">
 
-    <label class="form-label fw-bolder text-gray-900 fs-6 mb-0">كلمة المرور</label>
+    <label class="form-label fw-bolder text-gray-900 fs-6 mb-0">{{ 'AUTH.INPUT.PASSWORD' | translate }}</label>
 
     <input class="form-control bg-transparent" type="password" name="password" autocomplete="off"
       formControlName="password" [ngClass]="{
@@ -120,17 +62,17 @@ end::Login options-->
       }" />
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'required',
-        message: 'كلمة المرور مطلوبة',
+        message: 'AUTH.VALIDATION.PASSWORD_REQUIRED' | translate,
         control: loginForm.controls['password']
       }"></ng-container>
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'minlength',
-        message: 'كلمة المرور يجب أن تحتوي على 6 أحرف على الأقل',
+        message: 'AUTH.VALIDATION.PASSWORD_MIN_LENGTH' | translate,
         control: loginForm.controls['password']
       }"></ng-container>
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'maxLength',
-        message: 'كلمة المرور يجب أن تحتوي على 100 حرفًا كحد أقصى',
+        message: 'AUTH.VALIDATION.PASSWORD_MAX_LENGTH' | translate,
         control: loginForm.controls['password']
       }"></ng-container>
 
@@ -143,7 +85,7 @@ end::Login options-->
 
     <!--begin::Link-->
     <a routerLink="/auth/forgot-password" class="link-primary">
-        نسيت كلمة المرور؟
+        {{ 'AUTH.LOGIN.FORGOT_PASSWORD' | translate }}
     </a>
     <!--end::Link-->
   </div>
@@ -154,12 +96,12 @@ end::Login options-->
     <button type="submit" id="kt_sign_in_submit" class="btn btn-primary" [disabled]="loginForm.invalid">
       <ng-container *ngIf="loading">
         <span class="indicator-progress" [style.display]="'block'">
-          الرجاء الإنتظار...
+          {{ 'AUTH.LOGIN.PLEASE_WAIT' | translate }}
           <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
         </span>
       </ng-container>
       <ng-container *ngIf="loading  === false">
-        <span class="indicator-label">تسجيل الدخول</span>
+        <span class="indicator-label">{{ 'AUTH.LOGIN.BUTTON' | translate }}</span>
       </ng-container>
     </button>
   </div>

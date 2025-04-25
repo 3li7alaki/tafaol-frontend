@@ -66,19 +66,19 @@ export class AddQuestionComponent implements OnInit {
     formData.append('type', this.f.type.value);
 
     this.loading = true;
-    console.log(formData);
+
     this.apiService.addQuestion(formData).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
+
         this.toastr.success(this.translate.instant("questionAddedSuccessfully"));
         this.router.navigate(["/apps/questions"]);
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
       }
     );

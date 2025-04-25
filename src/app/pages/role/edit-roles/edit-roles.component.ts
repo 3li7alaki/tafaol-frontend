@@ -59,8 +59,8 @@ export class EditRolesComponent implements OnInit {
       this.EvaluationRoles = this.permissionsList.Evaluation;
       this.programsRoles = this.permissionsList.Programs;
       this.childrenRoles = this.permissionsList.Children;
-      console.log(this.adminPermission);
-      console.log(res);
+      
+
       this.cdr.detectChanges();
     });
   }
@@ -113,21 +113,20 @@ export class EditRolesComponent implements OnInit {
       name: this.f.name.value,
       permissions: this.selectedPermissions,
     };
-    console.log(body);
+
 
     this.apiService.editRole(body, this.id).subscribe(
       (res) => {
         this.loading = false;
-        console.log(res);
-        console.log(this.selectedPermissions);
+
+        
         this.toastr.success("تم تعديل الصلاحية بنجاح");
         this.router.navigate(["/apps/roles"]);
         this.cdr.detectChanges();
       },
       (error) => {
-        this.toastr.error(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
         this.cdr.detectChanges();
       }
     );
@@ -144,9 +143,9 @@ export class EditRolesComponent implements OnInit {
       },
       (error) => {
         this.loadingDelete = false;
-        this.toastr.error(error);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
         this.loading = false;
-        console.log(error);
+
         this.cdr.detectChanges();
         this.modalRef?.hide();
       }

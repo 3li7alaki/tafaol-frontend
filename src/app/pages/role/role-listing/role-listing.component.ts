@@ -73,7 +73,7 @@ export class RoleListingComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.apiService.getRoles().subscribe((res) => {
       this.role$ = res;
-      console.log(res);
+
       this.cdr.detectChanges()
     });
   }

@@ -23,13 +23,13 @@ export class ProgramListComponent implements OnInit {
   getPrograms() {
     this.apiService.getPrograms().subscribe(
       (res) => {
-        console.log(res);
+
         this.programList = res;
         this.cdr.detectChanges();
       },
       (error) => {
-        console.log(error);
-        this.toastr.error(error.error.message, error.status);
+
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
       }
     );
   }

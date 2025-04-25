@@ -35,10 +35,8 @@ export class EditAdminComponent implements OnInit {
     this.initForm();
     this.rolesService.getRoles().subscribe((res) => {
       this.role$ = res;
-      console.log(res);
       this.cdr.detectChanges();
     });
-    console.log(this.admin)
   };
   initForm() {
     this.adminFrom = this.formBuilder.group({
@@ -63,18 +61,15 @@ export class EditAdminComponent implements OnInit {
       password_confirmation: this.f.password_confirmation.value,
       role_id: this.f.role_id.value,
     };
-    console.log(body);
     this.apiService.editAdmin(body, this.id).subscribe(
       (res) => {
         this.loading = false
-        console.log(res);
         this.toastr.success(this.translate.instant('adminEditedSuccessfully'));
         this.router.navigate(['/apps/admin'])
         this.cdr.detectChanges()
       },
       (error) => {
-        this.toastr.error(error.message)
-        console.log(error.message);
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error)
         this.loading = false
         this.cdr.detectChanges()
       }

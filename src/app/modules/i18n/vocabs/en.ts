@@ -28,6 +28,7 @@ export const locale = {
     Back: "Back",
     editRole: "Edit Role",
     Delete: "Delete",
+    deleteConfirmation: "Are you sure you want to delete?",
     TotalPermissions: "Total Permissions :",
     addNewRole: "Add New Role",
     addNewNationality: "Add New Nationality",
@@ -95,6 +96,7 @@ export const locale = {
     questionDeletedSuccessfully: "Question Deleted Successfully",
     questionsList: "Questions List",
     addQuestion: "Add Question",
+    selectQuestions: "Select Questions",
     name: "Name",
     options: "Options",
     option: "Option",
@@ -241,6 +243,8 @@ export const locale = {
       PROGRAMSREPORT: "Programs Report",
     },
     AUTH: {
+      WELCOME_TAFAOL: "Welcome to Tafaol",
+      CENTER_DESCRIPTION: "Tafaol Center for Special Education is a non-profit charitable center\nAffiliated with the Special Educational Services Center for Children",
       GENERAL: {
         OR: "Or",
         SUBMIT_BUTTON: "Submit",
@@ -253,13 +257,24 @@ export const locale = {
         CONTACT: "Contact",
       },
       LOGIN: {
-        TITLE: "Login Account",
+        TITLE: "Sign In",
         BUTTON: "Sign In",
+        INVALID_CREDENTIALS: "Login details are incorrect. Please try again.",
+        FORGOT_PASSWORD: "Forgot password?",
+        PLEASE_WAIT: "Please wait...",
       },
-      FORGOT: {
-        TITLE: "Forgotten Password?",
-        DESC: "Enter your email to reset your password",
-        SUCCESS: "Your account has been successfully reset.",
+      FORGOT_PASSWORD: {
+        TITLE: "Forgot Password?",
+        INSTRUCTION: "Enter your email to recover your password",
+        EMAIL_NOT_FOUND: "Sorry, no account was found with this email",
+        RESET_LINK_SENT: "Password reset link has been sent to your email",
+        SUBMIT: "Submit",
+        CANCEL: "Cancel"
+      },
+      RESET_PASSWORD: {
+        TITLE: "Reset Password",
+        NEW_PASSWORD: "New Password",
+        SUBMIT: "Submit"
       },
       REGISTER: {
         TITLE: "Sign Up",
@@ -285,47 +300,14 @@ export const locale = {
         MIN_LENGTH_FIELD: "Minimum field length:",
         MAX_LENGTH_FIELD: "Maximum field length:",
         INVALID_FIELD: "Field is not valid",
-      },
-    },
-    ECOMMERCE: {
-      COMMON: {
-        SELECTED_RECORDS_COUNT: "Selected records count: ",
-        ALL: "All",
-        SUSPENDED: "Suspended",
-        ACTIVE: "Active",
-        FILTER: "Filter",
-        BY_STATUS: "by Status",
-        BY_TYPE: "by Type",
-        BUSINESS: "Business",
-        INDIVIDUAL: "Individual",
-        SEARCH: "Search",
-        IN_ALL_FIELDS: "in all fields",
-      },
-      ECOMMERCE: "eCommerce",
-      CUSTOMERS: {
-        CUSTOMERS: "Customers",
-        CUSTOMERS_LIST: "Customers list",
-        NEW_CUSTOMER: "New Customer",
-        DELETE_CUSTOMER_SIMPLE: {
-          TITLE: "Customer Delete",
-          DESCRIPTION: "Are you sure to permanently delete this customer?",
-          WAIT_DESCRIPTION: "Customer is deleting...",
-          MESSAGE: "Customer has been deleted",
-        },
-        DELETE_CUSTOMER_MULTY: {
-          TITLE: "Customers Delete",
-          DESCRIPTION: "Are you sure to permanently delete selected customers?",
-          WAIT_DESCRIPTION: "Customers are deleting...",
-          MESSAGE: "Selected customers have been deleted",
-        },
-        UPDATE_STATUS: {
-          TITLE: "Status has been updated for selected customers",
-          MESSAGE: "Selected customers status have successfully been updated",
-        },
-        EDIT: {
-          UPDATE_MESSAGE: "Customer has been updated",
-          ADD_MESSAGE: "Customer has been created",
-        },
+        EMAIL_REQUIRED: "Email is required",
+        EMAIL_INVALID: "Email is invalid",
+        EMAIL_MIN_LENGTH: "Email must be at least 3 characters",
+        EMAIL_MAX_LENGTH: "Email must not exceed 320 characters",
+        PASSWORD_REQUIRED: "Password is required",
+        PASSWORD_MIN_LENGTH: "Password must be at least 8 characters",
+        PASSWORD_MAX_LENGTH: "Password must not exceed 100 characters",
+        PASSWORDS_MISMATCH: "Password confirmation does not match"
       },
     },
   },
