@@ -17,8 +17,4 @@ export class ChildrensResolver implements Resolve<boolean> {
   }
   constructor(
     private apiService: ApiService) { }
-  
-  
-  
-  
 }

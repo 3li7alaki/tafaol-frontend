@@ -285,6 +285,7 @@ export const locale = {
     childEditedSuccessfully : 'تم تعديل الطفل بنجاح',
     EXPORT: {
       PDF: "تصدير PDF",
+      EXCEL: "تصدير EXCEL",
       NO_DATA: "لا توجد بيانات للتصدير",
       ERROR: "خطأ في تصدير PDF"
     },

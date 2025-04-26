@@ -131,30 +131,15 @@ export class AddEvaluationComponent implements OnInit {
 
     formData.append(
       "date_1",
-      this.datePipe.transform(
-          typeof this.f.date_1.value === 'string'
-              ? this.f.date_1.value
-              : this.f.date_1.value?.setDate(this.f.date_1.value.getDate() + 1),
-            "yyyy-MM-dd"
-      )!
+      this.datePipe.transform(this.f.date_1.value, "yyyy-MM-dd")!
     );
     formData.append(
       "date_2",
-      this.datePipe.transform(
-            typeof this.f.date_2.value === 'string'
-                ? this.f.date_2.value
-                : this.f.date_2.value?.setDate(this.f.date_2.value.getDate() + 1),
-                "yyyy-MM-dd"
-        )!
+      this.datePipe.transform(this.f.date_2.value, "yyyy-MM-dd")!
     );
     formData.append(
         "date_3",
-        this.datePipe.transform(
-                typeof this.f.date_3.value === 'string'
-                    ? this.f.date_3.value
-                    : this.f.date_3.value?.setDate(this.f.date_3.value.getDate() + 1),
-                    "yyyy-MM-dd"
-            )!
+        this.datePipe.transform(this.f.date_3.value, "yyyy-MM-dd")!
     );
     formData.append("done", this.f.done.value == true ? "1" : "0");
     formData.append("pass", this.f.pass.value == true ? "1" : "0");

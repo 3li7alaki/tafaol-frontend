@@ -10,13 +10,14 @@
     <div class="card-title m-0">
       <h3 class="fw-bolder m-0">{{ "editEvaluation" | translate }}</h3>
     </div>
-    <button
+    <div class="d-flex justify-content-end">
+      <button
       type="button"
       class="btn btn-danger btn-active-danger"
       data-role-id="developer"
       data-bs-toggle="modal"
       data-bs-target="#kt_modal_update_role"
-      (click)="deleteDiagnoses(program)"
+      (click)="deleteEvaluation(program)"
       style="height: 48px; margin-top: 11px"
     >
       {{ "Delete" | translate }}
@@ -30,6 +31,17 @@
         class="spinner-border spinner-border-sm align-middle ms-2"
       ></span>
     </button>
+    <button
+      type="button"
+      class="btn btn-info me-2"
+      (click)="exportToPdf()"
+      [disabled]="loading"
+      style="height: 48px; margin-top: 11px"
+    >
+      <i class="fa fa-print me-1"></i>
+      {{ "EXPORT.PDF" | translate }}
+    </button>
+    </div>
   </div>
   <div id="kt_account_profile_details" class="collapse show card">
     <form

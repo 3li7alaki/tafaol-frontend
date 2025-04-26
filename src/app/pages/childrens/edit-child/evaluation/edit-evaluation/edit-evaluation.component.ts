@@ -1,4 +1,5 @@
 import { DatePipe, Location } from "@angular/common";
+import { EvaluationPdfExportUtil } from "../../../../../util/evaluation-pdf-export.util";
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import {
   FormGroup,
@@ -162,30 +163,15 @@ export class EditEvaluationComponent implements OnInit {
     formData.append("note", this.f.note.value);
     formData.append(
         "date_1",
-        this.datePipe.transform(
-            typeof this.f.date_1.value === 'string'
-                ? this.f.date_1.value
-                : this.f.date_1.value?.setDate(this.f.date_1.value.getDate() + 1),
-            "yyyy-MM-dd"
-        )!
+        this.datePipe.transform(this.f.date_1.value, "yyyy-MM-dd")!
     );
     formData.append(
         "date_2",
-        this.datePipe.transform(
-            typeof this.f.date_2.value === 'string'
-                ? this.f.date_2.value
-                : this.f.date_2.value?.setDate(this.f.date_2.value.getDate() + 1),
-            "yyyy-MM-dd"
-        )!
+        this.datePipe.transform(this.f.date_2.value, "yyyy-MM-dd")!
     );
     formData.append(
         "date_3",
-        this.datePipe.transform(
-            typeof this.f.date_3.value === 'string'
-                ? this.f.date_3.value
-                : this.f.date_3.value?.setDate(this.f.date_3.value.getDate() + 1),
-            "yyyy-MM-dd"
-        )!
+        this.datePipe.transform(this.f.date_3.value, "yyyy-MM-dd")!
     );
     formData.append("done", this.f.done.value == true ? "1" : "0");
     formData.append("pass", this.f.pass.value == true ? "1" : "0");
@@ -255,7 +241,7 @@ export class EditEvaluationComponent implements OnInit {
   goBackToPrevPage(): void {
     this.location.back();
   }
-  deleteDiagnoses(id: any) {
+  deleteEvaluation(id: any) {
     this.loadingDelete = true;
     this.apiService.deleteChildProgramEvaluation(id).subscribe(
       (res) => {
@@ -287,8 +273,56 @@ export class EditEvaluationComponent implements OnInit {
   disableAllQuestionIds() {}
 
   goToLink(url: any) {
-    if (url.path) {
-      window.open(url.path, "_blank");
+    window.open(url, "_blank");
+  }
+
+  exportToPdf() {
+    try {
+      this.loading = true;
+      
+      // Make sure questions are loaded
+      if (!this.questionList || this.questionList.length === 0) {
+        this.toastr.error(this.translate.instant('EXPORT.ERROR'));
+        this.loading = false;
+        return;
+      }
+      
+      // Prepare evaluation data for PDF
+      const evaluationData = {
+        formName: this.evalutation.form?.name || '',
+        date1: this.datePipe.transform(this.evalutation.date_1, 'yyyy-MM-dd'),
+        date2: this.datePipe.transform(this.evalutation.date_2, 'yyyy-MM-dd'),
+        date3: this.datePipe.transform(this.evalutation.date_3, 'yyyy-MM-dd'),
+        evaluators: this.evalutation.users?.map((user: any) => user.name) || [],
+        note: this.evalutation.note || '',
+        done: this.evalutation.done,
+        pass: this.evalutation.pass,
+        questions: this.evalutation.questions.map((q: any) => {
+          return {
+            title: q.title,
+            answer: q.answer.answer,
+            note: q.answer.note
+          };
+        })
+      };
+      
+      // Generate child name for the filename
+      const childData = JSON.parse(localStorage.getItem('children') || '{}');
+      const childName = childData?.full_name || 'child';
+      const fileName = `تقييم ${childName}.pdf`;
+      
+      // Generate and download the PDF
+      EvaluationPdfExportUtil.exportEvaluationToPdf(evaluationData, fileName)
+        .then(() => {
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.loading = false;
+          this.toastr.error(this.translate.instant('EXPORT.ERROR'));
+        });
+    } catch (error) {
+      this.loading = false;
+      this.toastr.error(this.translate.instant('EXPORT.ERROR'));
     }
   }
 }

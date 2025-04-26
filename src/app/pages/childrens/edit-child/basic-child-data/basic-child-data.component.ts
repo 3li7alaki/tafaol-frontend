@@ -77,7 +77,7 @@ export class BasicChildDataComponent implements OnInit {
       full_name: [this.children.full_name, [Validators.required]],
       birth_date: [
         this.children.birth_date,
-        [Validators.required, Validators.email],
+        [Validators.required],
       ],
       birth_place: [this.children.birth_place, [Validators.required]],
       gender: [this.children.gender, [Validators.required]],

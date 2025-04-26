@@ -214,6 +214,7 @@ export const locale = {
     childEditedSuccessfully : 'Child Edited Successfully',
     EXPORT: {
       PDF: "Export PDF",
+      EXCEL: "Export Excel",
       NO_DATA: "No data to export",
       ERROR: "Error exporting PDF"
     },

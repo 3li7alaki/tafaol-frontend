@@ -1,16 +1,17 @@
-import { DatePipe } from "@angular/common";
 import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
+import { BsLocaleService } from "ngx-bootstrap/datepicker";
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { arLocale } from 'ngx-bootstrap/locale';
 import {
   FormBuilder,
   FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { ToastrService } from "ngx-toastr";
 import { ApiService } from "src/app/services/api.service";
 import {PdfExportUtil} from "../../../util/pdf-export.util";
+import {ExcelExportUtil} from "../../../util/excel-export.util";
 
 @Component({
   selector: "app-report",
@@ -18,6 +19,20 @@ import {PdfExportUtil} from "../../../util/pdf-export.util";
   styleUrl: "./report.component.scss",
 })
 export class ReportComponent implements OnInit {
+  // Define Arabic locale for the component
+  constructor(
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private apiService: ApiService,
+    public translate: TranslateService,
+    private localeService: BsLocaleService
+  ) {
+    // Define and use Arabic locale for this component
+    defineLocale('ar', arLocale);
+    this.localeService.use('ar');
+  }
   @ViewChild('reportTable') reportTable: ElementRef;
 
   filterForm: FormGroup;
@@ -31,14 +46,7 @@ export class ReportComponent implements OnInit {
   toDate: any;
   lastSort: string;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private toastr: ToastrService,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-    private apiService: ApiService,
-    public translate: TranslateService
-  ) {}
+
   ngOnInit(): void {
     this.getPrograms();
     this.getStatus();
@@ -77,7 +85,7 @@ export class ReportComponent implements OnInit {
       }
     );
   }
-  getPoints() {
+  getReport() {
     this.isLoading = true;
     const body = {
       status_id: this.f.status_id.value == "" ? null : this.f.status_id.value,
@@ -91,6 +99,7 @@ export class ReportComponent implements OnInit {
         this.filtered = data;
         this.fromDate = null;
         this.toDate = null;
+        this.lastSort = '';
         this.cdr.detectChanges();
       },
       (error) => {
@@ -219,6 +228,39 @@ export class ReportComponent implements OnInit {
       this.isLoading = false;
       this.toastr.error(this.translate.instant('EXPORT.ERROR'));
       console.error('PDF export error:', error);
+    }
+  }
+
+  exportToExcel() {
+    if (!this.filtered || this.filtered.length === 0) {
+        this.toastr.error(this.translate.instant('EXPORT.NO_DATA'));
+        return;
+    }
+    try {
+      const tableElement = document.querySelector('table');
+      if (!tableElement) {
+        this.toastr.error(this.translate.instant('EXPORT.NO_DATA'));
+        return;
+      }
+
+      this.isLoading = true;
+      const success = ExcelExportUtil.exportToExcel(
+            Array.from(tableElement.querySelectorAll('tr')).map((row) => {
+                return Array.from(row.querySelectorAll('td')).map((cell) => cell.innerText);
+            }),
+            Array.from(tableElement.querySelectorAll('th')).map((cell) => cell.innerText),
+            'report.xlsx',
+            'report'
+      );
+      
+      if (!success) {
+        this.toastr.error(this.translate.instant('EXPORT.ERROR'));
+      }
+      this.isLoading = false;
+    } catch (error) {
+      this.isLoading = false;
+      this.toastr.error(this.translate.instant('EXPORT.ERROR'));
+      console.error('Excel export error:', error);
     }
   }
 }

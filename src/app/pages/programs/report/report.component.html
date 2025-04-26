@@ -25,7 +25,7 @@
 
   <!-- begin::Body -->
   <div class="card-body py-3">
-    <form [formGroup]="filterForm" (ngSubmit)="getPoints()" *ngIf="isVisiable">
+    <form [formGroup]="filterForm" (ngSubmit)="getReport()" *ngIf="isVisiable">
       <div class="row">
         <div class="col-auto">
           <select
@@ -34,8 +34,8 @@
             style="background-color: white"
           >
             <option value="">{{ "MENU.PROGRAMS" | translate }}</option>
-            <option *ngFor="let teacher of programList" [value]="teacher.id">
-              {{ teacher.name }}
+            <option *ngFor="let program of programList" [value]="program.id">
+              {{ program.name }}
             </option>
           </select>
         </div>
@@ -53,92 +53,109 @@
             </option>
           </select>
         </div>
-        <div class="d-flex justify-content-between py-6 px-9">
-          <div
-                  class="card-toolbar col-md-3"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  data-bs-trigger="hover"
-                  *ngIf="isVisiable"
-          >
-            <input
-                    type="text"
-                    class="form-control form-control-solid"
-                    placeholder="{{ 'searchByNameCPRID' | translate }}"
-                    (input)="search($event)"
-            />
-          </div>
-          <div
-                  class="card-toolbar col-md-3"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  data-bs-trigger="hover"
-                  *ngIf="isVisiable"
-          >
+        <div class="d-flex justify-content-between py-4 px-6">
+          <!-- Left side: inputs -->
+          <div class="d-flex gap-3">
+            <!-- Search input -->
+            <div
+                    class="card-toolbar col-md-3"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    data-bs-trigger="hover"
+                    *ngIf="isVisiable"
+                    style="width: 300px;"
+            >
               <input
-                      style="
-                border-top-right-radius: 7px;
-                border-bottom-right-radius: 7px;
-                border: 1px solid #dbdfe9;
-              "
                       type="text"
-                      placeholder="{{ 'fromDate' | translate }}"
-                      class="form-control form-control-lg form-control-solid col-md-3"
+                      class="form-control form-control-solid"
+                      placeholder="{{ 'searchByNameCPRID' | translate }}"
+                      (input)="search($event)"
+              />
+            </div>
+            
+            <!-- From date picker -->
+            <div
+                    class="card-toolbar"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    data-bs-trigger="hover"
+                    *ngIf="isVisiable"
+                    style="width: 150px;"
+            >
+                <input
+                        style="border: 1px solid #dbdfe9;"
+                        type="text"
+                        placeholder="{{ 'fromDate' | translate }}"
+                        class="form-control form-control-solid"
+                        bsDatepicker
+                        (bsValueChange)="dateFrom($event)"
+                        #d5="bsDatepicker"
+                        [bsConfig]="{
+                  containerClass: 'theme-blue',
+                  dateInputFormat: 'YYYY-MM-DD',
+                  isAnimated: true
+                }"
+                />
+            </div>
+            
+            <!-- To date picker -->
+            <div
+                    class="card-toolbar"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    data-bs-trigger="hover"
+                    *ngIf="isVisiable"
+                    style="width: 150px;"
+            >
+              <input
+                      style="border: 1px solid #dbdfe9;"
+                      type="text"
+                      placeholder="{{ 'toDate' | translate }}"
+                      class="form-control form-control-solid"
                       bsDatepicker
-                      (bsValueChange)="dateFrom($event)"
+                      (bsValueChange)="dateTo($event)"
                       #d5="bsDatepicker"
                       [bsConfig]="{
-                containerClass: 'theme-blue',
-                dateInputFormat: 'YYYY-MM-DD',
-                isAnimated: true
-              }"
+                  containerClass: 'theme-blue',
+                  dateInputFormat: 'YYYY-MM-DD',
+                  isAnimated: true
+                }"
               />
+            </div>
           </div>
-          <div
-                  class="card-toolbar col-md-3"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  data-bs-trigger="hover"
-                  *ngIf="isVisiable"
-          >
-            <input
-                    style="
-                border-top-right-radius: 7px;
-                border-bottom-right-radius: 7px;
-                border: 1px solid #dbdfe9;
-              "
-                    type="text"
-                    placeholder="{{ 'toDate' | translate }}"
-                    class="form-control form-control-lg form-control-solid col-md-3"
-                    bsDatepicker
-                    (bsValueChange)="dateTo($event)"
-                    #d5="bsDatepicker"
-                    [bsConfig]="{
-                containerClass: 'theme-blue',
-                dateInputFormat: 'YYYY-MM-DD',
-                isAnimated: true
-              }"
-            />
-          </div>
-          <div class="d-flex justify-content-end">
+          
+          <!-- Right side: buttons -->
+          <div class="d-flex gap-2">
+            <!-- Export buttons -->
             <button
                     type="button"
-                    class="btn btn-primary"
+                    class="btn btn-sm btn-primary"
                     (click)="exportToPdf()"
                     [disabled]="isLoading"
             >
-              <i class="fa fa-download me-2"></i>
+              <i class="fa fa-file-pdf me-1"></i>
               {{ 'EXPORT.PDF' | translate }}
             </button>
+            <button
+                    type="button"
+                    class="btn btn-sm btn-success"
+                    (click)="exportToExcel()"
+                    [disabled]="isLoading"
+            >
+              <i class="fa fa-file-excel me-1"></i>
+              {{ 'EXPORT.EXCEL' | translate }}
+            </button>
+            
+            <!-- Search button -->
+            <button type="submit" class="btn btn-sm btn-primary">
+              <ng-container *ngIf="!isLoading">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </ng-container>
+              <ng-container *ngIf="isLoading"
+                ><i class="fa fa-spinner fa-sharp fa-beat" aria-hidden="true"></i
+              ></ng-container>
+            </button>
           </div>
-          <button type="submit" class="btn btn-primary">
-            <ng-container *ngIf="!isLoading">
-              <i class="fa fa-search" aria-hidden="true"></i>
-            </ng-container>
-            <ng-container *ngIf="isLoading"
-              ><i class="fa fa-spinner fa-sharp fa-beat" aria-hidden="true"></i
-            ></ng-container>
-          </button>
         </div>
       </div>
     </form>
