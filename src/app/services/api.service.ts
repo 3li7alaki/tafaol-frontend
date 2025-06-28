@@ -190,12 +190,12 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
   getGaurdians(): Observable<any> {
-    const url = `${new ApiUrls().garduainUrl}`;
+    const url = `${new ApiUrls().guardianUrl}`;
     return this.http.get<any>(url, { headers: this.getHeaders() });
   }
   deleteGaurdian(id: any): Observable<any> {
     return this.http
-      .delete<any>(new ApiUrls().garduainUrl + "/" + id, {
+      .delete<any>(new ApiUrls().guardianUrl + "/" + id, {
         headers: this.getHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -210,14 +210,14 @@ export class ApiService {
       password_confirmation: value.password_confirmation,
     };
     return this.http
-      .post<any>(new ApiUrls().garduainUrl, body, {
+      .post<any>(new ApiUrls().guardianUrl, body, {
         headers: this.getHeaders(),
       })
       .pipe(catchError(this.handleError));
   }
   getOneGaurdian(id: any): Observable<any> {
     return this.http
-      .get<any>(new ApiUrls().garduainUrl + "/" + id, {
+      .get<any>(new ApiUrls().guardianUrl + "/" + id, {
         headers: this.getHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -232,7 +232,7 @@ export class ApiService {
       password_confirmation: value.password_confirmation,
     };
     return this.http
-      .put<any>(new ApiUrls().garduainUrl + "/" + id, body, {
+      .put<any>(new ApiUrls().guardianUrl + "/" + id, body, {
         headers: this.getHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -753,6 +753,38 @@ export class ApiService {
     return this.http
       .post<any>(new ApiUrls().forgotPasswordReset, body, {
         headers: this.headerNoToken,
+      })
+      .pipe(catchError(this.handleError));
+  }
+  getCategories(): Observable<any> {
+    const url = `${new ApiUrls().categoriesUrl}`;
+    return this.http.get<any>(url, { headers: this.getHeaders() });
+  }
+  addCategory(value: any): Observable<any> {
+    return this.http
+      .post<any>(new ApiUrls().categoriesUrl, value, {
+        headers: this.getHeaders(),
+      })
+      .pipe(catchError(this.handleError));
+  }
+  getOneCategory(id: any): Observable<any> {
+    return this.http
+      .get<any>(new ApiUrls().categoriesUrl + "/" + id, {
+        headers: this.getHeaders(),
+      })
+      .pipe(catchError(this.handleError));
+  }
+  editCategory(value: any, id: any): Observable<any> {
+    return this.http
+      .post<any>(new ApiUrls().categoriesUrl + "/" + id + "?_method=PUT", value, {
+        headers: this.getHeaders(),
+      })
+      .pipe(catchError(this.handleError));
+  }
+  deleteCategory(id: any): Observable<any> {
+    return this.http
+      .delete<any>(new ApiUrls().categoriesUrl + "/" + id, {
+        headers: this.getHeaders(),
       })
       .pipe(catchError(this.handleError));
   }

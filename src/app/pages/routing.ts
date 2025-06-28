@@ -48,6 +48,11 @@ const Routing: Routes = [
       import("./questions/questions.module").then((m) => m.QuestionsModule),
   },
   {
+    path: "apps/categories",
+    loadChildren: () =>
+      import("./categories/categories.module").then((m) => m.CategoriesModule),
+  },
+  {
     path: "apps/evaluation",
     loadChildren: () =>
       import("./evaluation/evaluation.module").then((m) => m.EvaluationModule),

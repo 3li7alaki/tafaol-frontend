@@ -280,6 +280,21 @@
       </div>
       <div class="row mb-6">
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
+          "governorate" | translate
+        }}</label>
+        <div class="col-lg-3 fv-row">
+          <select
+            [class.is-invalid]="f['governorate'].touched && f['governorate'].invalid"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+            formControlName="governorate"
+          >
+            <option value="">{{ 'selectGovernorate' | translate }}</option>
+            <option *ngFor="let gov of governorateList" [value]="gov">
+              {{ gov }}
+            </option>
+          </select>
+        </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
           "area" | translate
         }}</label>
         <div class="col-lg-3 fv-row">
@@ -291,6 +306,8 @@
             formControlName="area"
           />
         </div>
+      </div>
+      <div class="row mb-6">
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
           "block" | translate
         }}</label>
@@ -303,8 +320,6 @@
             formControlName="block"
           />
         </div>
-      </div>
-      <div class="row mb-6">
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
           "street" | translate
         }}</label>
@@ -317,6 +332,8 @@
             formControlName="street"
           />
         </div>
+      </div>
+      <div class="row mb-6">
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
           "building" | translate
         }}</label>
@@ -329,8 +346,6 @@
             formControlName="building"
           />
         </div>
-      </div>
-      <div class="row mb-6">
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{
           "apartment" | translate
           }}</label>

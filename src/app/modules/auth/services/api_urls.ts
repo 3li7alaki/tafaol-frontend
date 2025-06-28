@@ -9,10 +9,11 @@ export class ApiUrls {
   permissions = this.baseUrl + "admin/permissions";
   nationalityUrl = this.baseUrl + "admin/nationalities";
   adminUrl = this.baseUrl + "admin/admins";
-  garduainUrl = this.baseUrl + "admin/guardians";
+  guardianUrl = this.baseUrl + "admin/guardians";
   childrenUrl = this.baseUrl + "admin/children";
   registerUrl = this.baseUrl + "api/register";
   questionsUrl = this.baseUrl + "admin/questions";
+  categoriesUrl = this.baseUrl + "admin/categories";
   diagnosesUrl = this.baseUrl + "admin/diagnoses";
   evaluationsUrl = this.baseUrl + "admin/forms";
   statusUrl = this.baseUrl + "admin/statuses";

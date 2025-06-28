@@ -12,6 +12,7 @@ import { ApiService } from "src/app/services/api.service";
 })
 export class AddQuestionComponent implements OnInit {
   questionForm: FormGroup;
+  categories: any[] = [];
   loading = false;
   constructor(
     private apiService: ApiService,
@@ -23,16 +24,30 @@ export class AddQuestionComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.initForm();
+    this.getCategories();
   };
 
   initForm() {
     this.questionForm = this.formBuilder.group({
       name: ["", [Validators.required]],
+      category_id: [null, [Validators.required]],
       type: [null, [Validators.required]],
       options: this.formBuilder.array(
         [this.newItem(), this.newItem()]
       ),
     });
+  }
+  getCategories() {
+    this.apiService.getCategories().subscribe(
+      (res) => {
+        this.categories = res;
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
+        this.cdr.detectChanges();
+      }
+    );
   }
   get f() {
     return this.questionForm.controls;
@@ -56,12 +71,13 @@ export class AddQuestionComponent implements OnInit {
   };
   addQuestion() {
     const formData = new FormData();
-   if (this.f.type.value == 'options') {
-     for (let i = 0; i < this.items().length; i++) {
-       const option = this.f.options.value[i].options;
-       formData.append(`options[${i}]`, option);
-     }
-   } 
+    if (this.f.type.value == 'options') {
+      for (let i = 0; i < this.items().length; i++) {
+        const option = this.f.options.value[i].options;
+        formData.append(`options[${i}]`, option);
+      }
+    }
+    formData.append('category_id', this.f.category_id.value);
     formData.append('title', this.f.name.value);
     formData.append('type', this.f.type.value);
 

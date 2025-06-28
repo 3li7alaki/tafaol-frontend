@@ -11,6 +11,10 @@ interface Question {
   title_ar: string;
   name: string;
   group: string;
+  category?: {
+    id: number;
+    name: string;
+  };
 }
 
 @Component({

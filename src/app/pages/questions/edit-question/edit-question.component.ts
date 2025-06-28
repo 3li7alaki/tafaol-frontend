@@ -12,6 +12,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class EditQuestionComponent implements OnInit {
   id: any;
+  categories: any[] = [];
   question: any;
   questionForm: FormGroup;
   loading = false;
@@ -30,7 +31,7 @@ export class EditQuestionComponent implements OnInit {
   }
   ngOnInit(): void {
     this.initForm()
-    
+    this.getCategories()
     this.question.options.forEach((element: any) => {
       this.addLevel(element)
     });
@@ -38,11 +39,24 @@ export class EditQuestionComponent implements OnInit {
   initForm() {
     this.questionForm = this.formBuilder.group({
       name: [this.question.title, [Validators.required]],
+      category_id: [this.question.category_id, [Validators.required]],
       type: [this.question.type, [Validators.required]],
       options: this.formBuilder.array(
         []
       ),
     });
+  }
+  getCategories() {
+    this.apiService.getCategories().subscribe(
+      (res) => {
+        this.categories = res;
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
+        this.cdr.detectChanges();
+      }
+    );
   }
   get f() {
     return this.questionForm.controls;
@@ -65,12 +79,13 @@ export class EditQuestionComponent implements OnInit {
   };
   editQuestion() {
     const formData = new FormData();
-   if (this.f.type.value == 'options') {
-     for (let i = 0; i < this.items().length; i++) {
-       const option = this.f.options.value[i].options;
-       formData.append(`options[${i}]`, option);
-     }
-   } 
+    if (this.f.type.value == 'options') {
+      for (let i = 0; i < this.items().length; i++) {
+        const option = this.f.options.value[i].options;
+        formData.append(`options[${i}]`, option);
+      }
+    }
+    formData.append('category_id', this.f.category_id.value);
     formData.append('title', this.f.name.value);
     formData.append('type', this.f.type.value);
 

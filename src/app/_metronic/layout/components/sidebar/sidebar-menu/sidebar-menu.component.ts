@@ -15,6 +15,7 @@ export class SidebarMenuComponent implements OnInit {
   showGaurdian = false;
   showChildrens = false;
   showQuestions = false;
+  showCategories = false;
   showEvaluation = false;
   showForms = false;
   showStatus = false;
@@ -28,6 +29,7 @@ export class SidebarMenuComponent implements OnInit {
       this.showGaurdian = this.permissionList?.includes("view-guardians");
       this.showChildrens = this.permissionList?.includes("view-children");
       this.showQuestions = this.permissionList?.includes("view-questions");
+      this.showCategories = this.permissionList?.includes("view-categories");
       this.showStatus = this.permissionList?.includes("view-statuses");
       this.showPrograms = this.permissionList?.includes("view-programs");
       this.showEvaluation = this.permissionList?.includes("view-evaluations");
@@ -40,6 +42,7 @@ export class SidebarMenuComponent implements OnInit {
       this.showGaurdian = true;
       this.showChildrens = true;
       this.showQuestions = true;
+      this.showCategories = true;
       this.showStatus = true;
       this.showPrograms = true;
       this.showEvaluation = true;

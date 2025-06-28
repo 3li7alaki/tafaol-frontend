@@ -7,8 +7,27 @@ import { TranslateService } from "@ngx-translate/core";
 import { ToastrService } from "ngx-toastr";
 import { ApiService } from "src/app/services/api.service";
 
-interface form {
-  id: any;
+interface Form {
+  id: number;
+  name: string;
+  questions: Question[];
+}
+
+interface Question {
+  id: number;
+  title: string;
+  type: string;
+  options: string[] | null;
+  category_id: number;
+  category?: {
+    id: number;
+    name: string;
+  };
+}
+
+interface Category {
+  id: number;
+  name: string;
 }
 
 @Component({
@@ -17,15 +36,16 @@ interface form {
   styleUrl: "./add-evaluation.component.scss",
 })
 export class AddEvaluationComponent implements OnInit {
-  statusForm: FormGroup;
+  form: FormGroup;
   loading = false;
-  formList: any;
-  questionList: any;
-  adminList: any;
-  selectedAdmins: [] = [];
+  formList: Form[] = [];
+  adminList: any[] = [];
+  selectedAdmins: number[] = [];
   program: any;
-  selectedFileNationalID: File;
-  imageUrlNationalID: string;
+  selectedFile: File | null = null;
+  selectedForm: Form | null = null;
+  categories: Category[] = [];
+
   constructor(
     public activeModal: NgbActiveModal,
     private apiService: ApiService,
@@ -38,14 +58,14 @@ export class AddEvaluationComponent implements OnInit {
   ) {
     this.program = JSON.parse(localStorage.getItem("program_id")!);
   }
+
   ngOnInit(): void {
-    this.getEvalutaions();
     this.initForm();
-    this.getQuestions();
-    this.getAdmins();
+    this.loadData();
   }
-  initForm() {
-    this.statusForm = this.formBuilder.group({
+
+  private initForm(): void {
+    this.form = this.formBuilder.group({
       form_id: [null, [Validators.required]],
       users: [null],
       date_1: [""],
@@ -56,168 +76,217 @@ export class AddEvaluationComponent implements OnInit {
       pass: [false],
       questions: this.formBuilder.array([]),
     });
-    this.items().get('question_id')?.disable()
-  }
-  get f() {
-    return this.statusForm.controls;
-  }
-  getEvalutaions() {
-    this.apiService.getEvaluations().subscribe(
-      (res: any) => {
-
-        this.formList = res;
-        this.cdr.detectChanges();
-      },
-      (error: any) => {
-
-        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
-      }
-    );
-  }
-  getQuestions() {
-    this.apiService.getQuestions().subscribe(
-      (res) => {
-
-        this.questionList = res;
-        this.cdr.detectChanges();
-      },
-      (error) => {
-
-        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
-      }
-    );
   }
 
-  getAdmins() {
-    this.apiService.getAdmins().subscribe(
-      (res) => {
-
-        this.adminList = res;
-        this.cdr.detectChanges();
-      },
-      (error) => {
-
-        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
-      }
-    );
-  }
-
-  items(): FormArray {
-    return this.statusForm.get("questions") as FormArray;
-  }
-
-  addGaurd() {
-    this.loading = true;
-
-    const formData = new FormData();
-    const scheduleControls = (this.f.questions as FormArray).controls;
-    for (let i = 0; i < scheduleControls.length; i++) {
-      formData.append(
-        `questions[${i}][question_id]`,
-        scheduleControls[i].get("question_id")?.value
-      );
-      formData.append(
-        `questions[${i}][note]`,
-        scheduleControls[i].get("note")?.value
-      );
-      formData.append(
-        `questions[${i}][answer]`,
-        scheduleControls[i].get("answer")?.value
-      );
-    }
-    // Log the FormData object to the console
-    formData.append("form_id", this.f.form_id.value);
-    formData.append("note", this.f.note.value);
-
-    formData.append(
-      "date_1",
-      this.datePipe.transform(this.f.date_1.value, "yyyy-MM-dd")!
-    );
-    formData.append(
-      "date_2",
-      this.datePipe.transform(this.f.date_2.value, "yyyy-MM-dd")!
-    );
-    formData.append(
-        "date_3",
-        this.datePipe.transform(this.f.date_3.value, "yyyy-MM-dd")!
-    );
-    formData.append("done", this.f.done.value == true ? "1" : "0");
-    formData.append("pass", this.f.pass.value == true ? "1" : "0");
-    for (let i = 0; i < this.selectedAdmins.length; i++) {
-      const user = this.selectedAdmins[i];
-      formData.append(`users[${i}]`, user);
-    }
-    if (this.selectedFileNationalID) {
-      formData.append("path", this.selectedFileNationalID);
-    }
-    this.apiService.addChildProgramEvaluation(formData, this.program).subscribe(
-      (res) => {
-        this.loading = false;
-
-        this.toastr.success(this.translate.instant("evaluatedSuccessfully"));
-        this.activeModal.close();
-        this.cdr.detectChanges();
-      },
-      (error) => {
-        this.toastr.error(error.message ?? error.error.message ?? error.error ?? error);
-        this.loading = false;
-        this.cdr.detectChanges();
-      }
-    );
-  }
-  onFileSelectedNational(event: any) {
-    // Get the selected file from the event
-    const file = event.target.files[0];
-    this.selectedFileNationalID = file;
-    // Create a FileReader object to read the file contents
-
-    const reader = new FileReader();
-
-    // Set the onload event handler of the reader
-    reader.onload = (e: ProgressEvent) => {
-      // Set the data URL of the image
-      this.imageUrlNationalID = (<FileReader>e.target).result as string;
-      this.cdr.detectChanges();
-    };
-
-    // Read the contents of the file as a data URL
-    reader.readAsDataURL(file);
-  }
-  onFormSelectionChange(event: any) {
-    const id = event.target.value;
-
-    if (id) {
-      
-      const selectedForm = this.formList.find((form: form) => form.id == id);
-
-      if (selectedForm) {
-        const questions = selectedForm.questions;
-        this.statusForm.setControl("questions", this.formBuilder.array([]));
-        questions.forEach((question: any) => {
-          this.addQuestion(question);
-        });
-        this.questionList = selectedForm.questions;
-      } else {
-        
-      }
+  private async loadData(): Promise<void> {
+    try {
+      await Promise.all([
+        this.loadForms(),
+        this.loadAdmins()
+      ]);
+    } catch (error) {
+      this.handleError(error);
     }
   }
-  addQuestion(question?: any) {
-    this.items().push(this.newQuestion(question));
-  }
 
-  newQuestion(question?: any): FormGroup {
-    return this.formBuilder.group({
-      question_id: [question?.id, Validators.required],
-      note: [question?.note, Validators.nullValidator],
-      answer: [question?.answer, Validators.required],
+  private loadForms(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.apiService.getEvaluations().subscribe({
+        next: (res: Form[]) => {
+          this.formList = res;
+          this.cdr.detectChanges();
+          resolve();
+        },
+        error: (error) => {
+          this.handleError(error);
+          reject(error);
+        }
+      });
     });
-  };
-  hasOptions(index: number): boolean {
-    const questionFormGroup = this.items().at(index);
-    questionFormGroup.get("question_id")?.disable();
-    const selectedQuestionId = questionFormGroup.get('question_id')?.value;
-    const selectedQuestion = this.questionList.find((question: any) => question.id === selectedQuestionId);
-    return selectedQuestion && selectedQuestion.options === null;
+  }
+
+  private loadAdmins(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.apiService.getAdmins().subscribe({
+        next: (res) => {
+          this.adminList = res;
+          this.cdr.detectChanges();
+          resolve();
+        },
+        error: (error) => {
+          this.handleError(error);
+          reject(error);
+        }
+      });
+    });
+  }
+
+  get f() {
+    return this.form.controls;
+  }
+
+  get questionsArray(): FormArray {
+    return this.form.get("questions") as FormArray;
+  }
+
+  onFormSelectionChange(event: any): void {
+    const formId = parseInt(event.target.value);
+    if (formId) {
+      this.selectedForm = this.formList.find(form => form.id === formId) || null;
+      this.buildQuestionsForm();
+      this.extractCategories();
+    } else {
+      this.selectedForm = null;
+      this.resetQuestionsForm();
+      this.categories = [];
+    }
+  }
+
+  private buildQuestionsForm(): void {
+    if (!this.selectedForm?.questions) return;
+
+    this.resetQuestionsForm();
+    
+    this.selectedForm.questions.forEach(question => {
+      const questionGroup = this.createQuestionFormGroup(question);
+      this.questionsArray.push(questionGroup);
+    });
+  }
+
+  private createQuestionFormGroup(question: Question): FormGroup {
+    return this.formBuilder.group({
+      question_id: [{ value: question.id, disabled: true }, Validators.required],
+      note: [""],
+      answer: ["", Validators.required],
+    });
+  }
+
+  private resetQuestionsForm(): void {
+    while (this.questionsArray.length !== 0) {
+      this.questionsArray.removeAt(0);
+    }
+  }
+
+  private extractCategories(): void {
+    if (!this.selectedForm?.questions) {
+      this.categories = [];
+      return;
+    }
+
+    const categoryMap = new Map<number, Category>();
+    
+    this.selectedForm.questions.forEach(question => {
+      if (question.category && !categoryMap.has(question.category.id)) {
+        categoryMap.set(question.category.id, question.category);
+      }
+    });
+
+    this.categories = Array.from(categoryMap.values());
+  }
+
+  getQuestionsByCategory(categoryId: number): { question: Question; index: number }[] {
+    if (!this.selectedForm?.questions) return [];
+
+    return this.selectedForm.questions
+      .map((question, index) => ({ question, index }))
+      .filter(item => item.question.category?.id === categoryId);
+  }
+
+  hasOptions(question: Question): boolean {
+    return question.options === null;
+  }
+
+  getQuestionOptions(question: Question): string[] {
+    return question.options || [];
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files?.[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
+
+  addGaurd(): void {
+    if (this.form.invalid) {
+      this.markFormGroupTouched();
+      return;
+    }
+
+    this.loading = true;
+    const formData = this.buildFormData();
+
+    this.apiService.addChildProgramEvaluation(formData, this.program).subscribe({
+      next: (res) => {
+        this.loading = false;
+        this.toastr.success(this.translate.instant("evaluatedSuccessfully"));
+        this.activeModal.close(res);
+      },
+      error: (error) => {
+        this.loading = false;
+        this.handleError(error);
+      }
+    });
+  }
+
+  private buildFormData(): FormData {
+    const formData = new FormData();
+    const formValues = this.form.getRawValue(); // Get all values including disabled fields
+
+    // Basic form data
+    formData.append("form_id", formValues.form_id);
+    formData.append("note", formValues.note || "");
+    formData.append("done", formValues.done ? "1" : "0");
+    formData.append("pass", formValues.pass ? "1" : "0");
+
+    // Dates
+    if (formValues.date_1) {
+      formData.append("date_1", this.datePipe.transform(formValues.date_1, "yyyy-MM-dd")!);
+    }
+    if (formValues.date_2) {
+      formData.append("date_2", this.datePipe.transform(formValues.date_2, "yyyy-MM-dd")!);
+    }
+    if (formValues.date_3) {
+      formData.append("date_3", this.datePipe.transform(formValues.date_3, "yyyy-MM-dd")!);
+    }
+
+    // Users
+    this.selectedAdmins.forEach((userId, index) => {
+      formData.append(`users[${index}]`, userId.toString());
+    });
+
+    // Questions
+    formValues.questions.forEach((question: any, index: number) => {
+      formData.append(`questions[${index}][question_id]`, question.question_id);
+      formData.append(`questions[${index}][note]`, question.note || "");
+      formData.append(`questions[${index}][answer]`, question.answer || "");
+    });
+
+    // File attachment
+    if (this.selectedFile) {
+      formData.append("path", this.selectedFile);
+    }
+
+    return formData;
+  }
+
+  private markFormGroupTouched(): void {
+    Object.keys(this.form.controls).forEach(key => {
+      const control = this.form.get(key);
+      control?.markAsTouched();
+
+      if (control instanceof FormArray) {
+        control.controls.forEach(formGroup => {
+          Object.keys((formGroup as FormGroup).controls).forEach(nestedKey => {
+            (formGroup as FormGroup).get(nestedKey)?.markAsTouched();
+          });
+        });
+      }
+    });
+  }
+
+  private handleError(error: any): void {
+    const errorMessage = error?.message || error?.error?.message || error?.error || error || 'An error occurred';
+    this.toastr.error(errorMessage);
   }
 }

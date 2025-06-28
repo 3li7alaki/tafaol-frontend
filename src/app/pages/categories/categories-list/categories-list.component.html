@@ -3,7 +3,7 @@
   <div class="card-header border-0 pt-5">
     <h3 class="card-title align-items-start flex-column">
       <span class="card-label fw-bolder fs-3 mb-1">{{
-        "questionsList" | translate
+        "categoriesList" | translate
       }}</span>
     </h3>
     <div
@@ -12,14 +12,14 @@
       data-bs-placement="top"
       data-bs-trigger="hover"
       title="Click to add a user"
-      *ngIf="showAddQuestion"
+      *ngIf="showAddCategory"
     >
       <a
-        routerLink="/apps/questions/add-question"
+        routerLink="/apps/categories/add-category"
         class="btn btn-sm btn-light-primary"
       >
         <span><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
-        {{ "addQuestion" | translate }}
+        {{ "addCategory" | translate }}
       </a>
     </div>
   </div>
@@ -35,45 +35,31 @@
         <!-- begin::Table head -->
         <thead>
           <tr class="fw-bolder text-muted">
-            <th class="min-w-130px">{{ "title" | translate }}</th>
-            <th class="min-w-130px">{{ "category" | translate }}</th>
-            <th class="min-w-120px">{{ "type" | translate }}</th>
+            <th class="min-w-120px">{{ "name" | translate }}</th>
             <th class="min-w-100px text-end">{{ "Actions" | translate }}</th>
           </tr>
         </thead>
         <!-- end::Table head -->
         <!-- begin::Table body -->
         <tbody>
-          <tr *ngFor="let question of questionsList">
+          <tr *ngFor="let category of categoriesList">
             <td>
               <div class="d-flex align-items-center">
                 <div class="d-flex justify-content-start flex-column">
                   <a
-                    [routerLink]="['/apps/questions/edit-question/' + question.id]"
+                    [routerLink]="['/apps/categories/edit-category/' + category.id]"
                     class="text-dark fw-bolder text-hover-primary fs-6"
                   >
-                    {{ question.title }}
+                    {{ category.name }}
                   </a>
                 </div>
               </div>
             </td>
-
-            <td>
-              <a class="text-dark fw-bolder text-hover-primary d-block fs-6">
-                {{ question.category.name }}
-              </a>
-            </td>
-
-            <td>
-              <a class="text-dark fw-bolder text-hover-primary d-block fs-6">
-                {{ question.type | translate }}
-              </a>
-            </td>
             <td>
               <div class="d-flex justify-content-end flex-shrink-0">
                 <a
-                *ngIf="showEditQuestion"
-                  [routerLink]="['/apps/questions/edit-question/' + question.id]"
+                *ngIf="showEditCategory"
+                  [routerLink]="['/apps/categories/edit-category/' + category.id]"
                   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                 >
                   <span
@@ -82,8 +68,8 @@
                   ></span>
                 </a>
                 <a
-                *ngIf="showDeleteQuestion"
-                  (click)="deleteQuestions(question.id)"
+                *ngIf="showDeleteCategory"
+                  (click)="deleteCategory(category.id)"
                   class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-1"
                 >
                   <span

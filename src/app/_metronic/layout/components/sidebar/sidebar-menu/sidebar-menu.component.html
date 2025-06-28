@@ -86,6 +86,14 @@
             <span class="menu-title" translate="MENU.QUESTIONS"></span>
           </a>
         </div>
+        <div *ngIf="showCategories" class="menu-item">
+          <a class="menu-link without-sub" routerLink="apps/categories" routerLinkActive="active">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" translate="MENU.CATEGORIES"></span>
+          </a>
+        </div>
         <div *ngIf="showForms" class="menu-item">
           <a class="menu-link without-sub" routerLink="apps/evaluation" routerLinkActive="active">
             <span class="menu-bullet">

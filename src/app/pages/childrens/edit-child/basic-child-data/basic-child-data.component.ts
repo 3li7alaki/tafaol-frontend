@@ -23,6 +23,12 @@ export class BasicChildDataComponent implements OnInit {
   imageUrl: string;
   selectedFileNationalID: File;
   imageUrlNationalID: string;
+  governorateList: string[] = [
+    'المحرق',
+    'الجنوبية',
+    'الشمالية',
+    'العاصمة',
+  ];
 
   myFiles: any[] = [];
   sMsg: string = "";
@@ -101,6 +107,7 @@ export class BasicChildDataComponent implements OnInit {
       street: [this.children.street, [Validators.required]],
       block: [this.children.block, [Validators.required]],
       area: [this.children.area, [Validators.required]],
+      governorate: [this.children.governorate, [Validators.required]],
       apartment: [this.children.apartment, [Validators.required]],
       age: [this.children.age, [Validators.required]],
       nationality_id: [this.children.nationality_id, [Validators.required]],
@@ -199,6 +206,7 @@ export class BasicChildDataComponent implements OnInit {
     formData.append("street", this.f.street.value);
     formData.append("block", this.f.block.value);
     formData.append("area", this.f.area.value);
+    formData.append("governorate", this.f.governorate.value);
     formData.append("apartment", this.f.apartment.value);
 
     this.loading = true;

@@ -95,41 +95,68 @@ export class EvaluationPdfExportUtil {
       pdf.setFontSize(12);
       pdf.setTextColor(0, 0, 0);
 
-      // Create table data for questions and answers
-      const tableData = evaluationData.questions.map((q: any) => [
-        q.note || '',
-        q.answer || '',
-        q.title || ''
-      ]);
-
-      // Add table headers
-      const headers = [['ملاحظات', 'الإجابة', 'السؤال']];
-
-      // Add table using autoTable
-      autoTable(pdf, {
-        head: headers,
-        body: tableData,
-        startY: yPosition,
-        theme: 'striped',
-        styles: {
-          fontSize: 10,
-          cellWidth: 'auto',
-          halign: 'right',
-          valign: 'middle',
-          font: 'Amiri',
-        },
-        headStyles: {
-          fillColor: [44, 61, 138],
-          font: 'Amiri',
-        },
-        columnStyles: {
-          0: { cellWidth: 60 }, // Notes
-          1: { cellWidth: 50 }, // Answer
-          2: { cellWidth: 80 }, // Question
+      // Group questions by category
+      const questionsByCategory = evaluationData.questions.reduce((groups: any, question: any) => {
+        const category = question.category || 'أخرى';
+        if (!groups[category]) {
+          groups[category] = [];
         }
-      });
+        groups[category].push(question);
+        return groups;
+      }, {});
 
-      // Get the final y position after the table
+      // Process each category
+      let isFirstCategory = true;
+      for (const category in questionsByCategory) {
+        // Add category header
+        if (!isFirstCategory) {
+          // Add some space before the next category
+          yPosition = (pdf as any).lastAutoTable.finalY + 8;
+        }
+
+        pdf.setFontSize(13);
+        pdf.setTextColor(44, 61, 138);
+        pdf.text(`المهارة: ${category}`, pageWidth - 15, yPosition, { align: 'right' });
+        yPosition += 6;
+
+        // Create table data for questions and answers in this category
+        const tableData = questionsByCategory[category].map((q: any) => [
+          q.note || '',
+          q.answer || '',
+          q.title || '',
+        ]);
+
+        // Add table headers
+        const headers = [['ملاحظات', 'الإجابة', 'السؤال']];
+
+        // Add table using autoTable
+        autoTable(pdf, {
+          head: headers,
+          body: tableData,
+          startY: yPosition,
+          theme: 'striped',
+          styles: {
+            fontSize: 10,
+            cellWidth: 'auto',
+            halign: 'right',
+            valign: 'middle',
+            font: 'Amiri',
+          },
+          headStyles: {
+            fillColor: [44, 61, 138],
+            font: 'Amiri',
+          },
+          columnStyles: {
+            0: { cellWidth: 40 }, // Notes
+            1: { cellWidth: 50 }, // Answer
+            2: { cellWidth: 90 }, // Question
+          }
+        });
+
+        isFirstCategory = false;
+      }
+
+      // Get the final y position after all tables
       yPosition = (pdf as any).lastAutoTable.finalY + 10;
     }
 
@@ -144,5 +171,6 @@ export class EvaluationPdfExportUtil {
 
     // Save the PDF
     pdf.save(fileName);
+    return true;
   }
 }
